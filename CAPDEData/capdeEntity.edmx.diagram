@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="aca463e50c5a4bee93aa4613a37d0c48" Name="Diagram1">
+        <EntityTypeShape EntityType="capdeModel.Capacitacao" Width="1.5" PointX="2.75" PointY="3.125" />
+        <EntityTypeShape EntityType="capdeModel.Cargo" Width="1.5" PointX="7.25" PointY="4.875" />
+        <EntityTypeShape EntityType="capdeModel.Cidade" Width="1.5" PointX="2.875" PointY="7.125" />
+        <EntityTypeShape EntityType="capdeModel.CJ" Width="1.5" PointX="0.5" PointY="7" />
+        <EntityTypeShape EntityType="capdeModel.DatabaseConfig" Width="1.5" PointX="5.5" PointY="1" />
+        <EntityTypeShape EntityType="capdeModel.Pessoa" Width="1.5" PointX="5" PointY="3" />
+        <EntityTypeShape EntityType="capdeModel.RAJ" Width="1.5" PointX="0.5" PointY="3.5" />
+        <EntityTypeShape EntityType="capdeModel.Setor" Width="1.5" PointX="5.25" PointY="7.25" />
+        <EntityTypeShape EntityType="capdeModel.Turma" Width="1.5" PointX="2.75" PointY="0.75" />
+        <AssociationConnector Association="capdeModel.FK__Capacitac__RajId__35BCFE0A" />
+        <AssociationConnector Association="capdeModel.FK__Capacitac__Turma__34C8D9D1" />
+        <AssociationConnector Association="capdeModel.FK__Pessoa__Capacita__38996AB5" />
+        <AssociationConnector Association="capdeModel.FK__Pessoa__CargoId__36B12243" />
+        <AssociationConnector Association="capdeModel.FK__Cidade__CjId__3A81B327" />
+        <AssociationConnector Association="capdeModel.FK__Setor__CidadeId__398D8EEE" />
+        <AssociationConnector Association="capdeModel.FK__CJ__RajId__3B75D760" />
+        <AssociationConnector Association="capdeModel.FK__Pessoa__SetorId__37A5467C" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

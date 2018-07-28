@@ -1,0 +1,609 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="capdeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Capacitacao">
+          <Key>
+            <PropertyRef Name="CapacitacaoId" />
+          </Key>
+          <Property Name="CapacitacaoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsCapacitado" Type="bit" Nullable="false" />
+          <Property Name="DataInicio" Type="datetime" />
+          <Property Name="DataFim" Type="datetime" />
+          <Property Name="IsEAD" Type="bit" />
+          <Property Name="RajId" Type="int" />
+          <Property Name="TurmaId" Type="int" />
+        </EntityType>
+        <EntityType Name="Cargo">
+          <Key>
+            <PropertyRef Name="CargoId" />
+          </Key>
+          <Property Name="CargoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomeCargo" Type="varchar" MaxLength="60" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cidade">
+          <Key>
+            <PropertyRef Name="CidadeId" />
+          </Key>
+          <Property Name="CidadeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CjId" Type="int" Nullable="false" />
+          <Property Name="NomeCidade" Type="varchar" MaxLength="40" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CJ">
+          <Key>
+            <PropertyRef Name="CjId" />
+          </Key>
+          <Property Name="CjId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RajId" Type="int" Nullable="false" />
+          <Property Name="CjIdent" Type="int" Nullable="false" />
+          <Property Name="CjNome" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DatabaseConfig">
+          <Key>
+            <PropertyRef Name="DatabaseConfigId" />
+          </Key>
+          <Property Name="DatabaseConfigId" Type="int" Nullable="false" />
+          <Property Name="HasChanged" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pessoa">
+          <Key>
+            <PropertyRef Name="PessoaId" />
+          </Key>
+          <Property Name="PessoaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Registro" Type="varchar" MaxLength="11" />
+          <Property Name="Nome" Type="varchar" MaxLength="70" Nullable="false" />
+          <Property Name="EMail" Type="varchar" MaxLength="50" />
+          <Property Name="CargoId" Type="int" />
+          <Property Name="SetorId" Type="int" Nullable="false" />
+          <Property Name="CapacitacaoId" Type="int" />
+          <Property Name="Obs" Type="varchar" MaxLength="300" />
+          <Property Name="IsExcluido" Type="bit" />
+        </EntityType>
+        <EntityType Name="RAJ">
+          <Key>
+            <PropertyRef Name="RajId" />
+          </Key>
+          <Property Name="RajId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RajIdent" Type="int" Nullable="false" />
+          <Property Name="NomeRaj" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Setor">
+          <Key>
+            <PropertyRef Name="SetorId" />
+          </Key>
+          <Property Name="SetorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CidadeId" Type="int" Nullable="false" />
+          <Property Name="NomeSetor" Type="varchar" MaxLength="200" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Turma">
+          <Key>
+            <PropertyRef Name="TurmaId" />
+          </Key>
+          <Property Name="TurmaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomeTurma" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <Association Name="FK__Capacitac__RajId__35BCFE0A">
+          <End Role="RAJ" Type="Self.RAJ" Multiplicity="0..1" />
+          <End Role="Capacitacao" Type="Self.Capacitacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RAJ">
+              <PropertyRef Name="RajId" />
+            </Principal>
+            <Dependent Role="Capacitacao">
+              <PropertyRef Name="RajId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Capacitac__Turma__34C8D9D1">
+          <End Role="Turma" Type="Self.Turma" Multiplicity="0..1" />
+          <End Role="Capacitacao" Type="Self.Capacitacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Turma">
+              <PropertyRef Name="TurmaId" />
+            </Principal>
+            <Dependent Role="Capacitacao">
+              <PropertyRef Name="TurmaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cidade__CjId__3A81B327">
+          <End Role="CJ" Type="Self.CJ" Multiplicity="1" />
+          <End Role="Cidade" Type="Self.Cidade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CJ">
+              <PropertyRef Name="CjId" />
+            </Principal>
+            <Dependent Role="Cidade">
+              <PropertyRef Name="CjId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CJ__RajId__3B75D760">
+          <End Role="RAJ" Type="Self.RAJ" Multiplicity="1" />
+          <End Role="CJ" Type="Self.CJ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RAJ">
+              <PropertyRef Name="RajId" />
+            </Principal>
+            <Dependent Role="CJ">
+              <PropertyRef Name="RajId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pessoa__Capacita__38996AB5">
+          <End Role="Capacitacao" Type="Self.Capacitacao" Multiplicity="0..1" />
+          <End Role="Pessoa" Type="Self.Pessoa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Capacitacao">
+              <PropertyRef Name="CapacitacaoId" />
+            </Principal>
+            <Dependent Role="Pessoa">
+              <PropertyRef Name="CapacitacaoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pessoa__CargoId__36B12243">
+          <End Role="Cargo" Type="Self.Cargo" Multiplicity="0..1" />
+          <End Role="Pessoa" Type="Self.Pessoa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargo">
+              <PropertyRef Name="CargoId" />
+            </Principal>
+            <Dependent Role="Pessoa">
+              <PropertyRef Name="CargoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pessoa__SetorId__37A5467C">
+          <End Role="Setor" Type="Self.Setor" Multiplicity="1" />
+          <End Role="Pessoa" Type="Self.Pessoa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Setor">
+              <PropertyRef Name="SetorId" />
+            </Principal>
+            <Dependent Role="Pessoa">
+              <PropertyRef Name="SetorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Setor__CidadeId__398D8EEE">
+          <End Role="Cidade" Type="Self.Cidade" Multiplicity="1" />
+          <End Role="Setor" Type="Self.Setor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cidade">
+              <PropertyRef Name="CidadeId" />
+            </Principal>
+            <Dependent Role="Setor">
+              <PropertyRef Name="CidadeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Backup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="myBackupLocation" Type="varchar(max)" Mode="In" />
+          <Parameter Name="myBaseName" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="Restore" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="myBaseName" Type="varchar(max)" Mode="In" />
+          <Parameter Name="myBackup" Type="varchar(max)" Mode="In" />
+        </Function>
+        <EntityContainer Name="capdeModelStoreContainer">
+          <EntitySet Name="Capacitacao" EntityType="Self.Capacitacao" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cargo" EntityType="Self.Cargo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cidade" EntityType="Self.Cidade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CJ" EntityType="Self.CJ" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DatabaseConfig" EntityType="Self.DatabaseConfig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pessoa" EntityType="Self.Pessoa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RAJ" EntityType="Self.RAJ" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Setor" EntityType="Self.Setor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Turma" EntityType="Self.Turma" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Capacitac__RajId__35BCFE0A" Association="Self.FK__Capacitac__RajId__35BCFE0A">
+            <End Role="RAJ" EntitySet="RAJ" />
+            <End Role="Capacitacao" EntitySet="Capacitacao" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Capacitac__Turma__34C8D9D1" Association="Self.FK__Capacitac__Turma__34C8D9D1">
+            <End Role="Turma" EntitySet="Turma" />
+            <End Role="Capacitacao" EntitySet="Capacitacao" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cidade__CjId__3A81B327" Association="Self.FK__Cidade__CjId__3A81B327">
+            <End Role="CJ" EntitySet="CJ" />
+            <End Role="Cidade" EntitySet="Cidade" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CJ__RajId__3B75D760" Association="Self.FK__CJ__RajId__3B75D760">
+            <End Role="RAJ" EntitySet="RAJ" />
+            <End Role="CJ" EntitySet="CJ" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pessoa__Capacita__38996AB5" Association="Self.FK__Pessoa__Capacita__38996AB5">
+            <End Role="Capacitacao" EntitySet="Capacitacao" />
+            <End Role="Pessoa" EntitySet="Pessoa" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pessoa__CargoId__36B12243" Association="Self.FK__Pessoa__CargoId__36B12243">
+            <End Role="Cargo" EntitySet="Cargo" />
+            <End Role="Pessoa" EntitySet="Pessoa" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pessoa__SetorId__37A5467C" Association="Self.FK__Pessoa__SetorId__37A5467C">
+            <End Role="Setor" EntitySet="Setor" />
+            <End Role="Pessoa" EntitySet="Pessoa" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Setor__CidadeId__398D8EEE" Association="Self.FK__Setor__CidadeId__398D8EEE">
+            <End Role="Cidade" EntitySet="Cidade" />
+            <End Role="Setor" EntitySet="Setor" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="capdeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="capdeEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="Backup">
+            <Parameter Name="myBackupLocation" Mode="In" Type="String" />
+            <Parameter Name="myBaseName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Restore">
+            <Parameter Name="myBaseName" Mode="In" Type="String" />
+            <Parameter Name="myBackup" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Backup1">
+            <Parameter Name="myBackupLocation" Mode="In" Type="String" />
+            <Parameter Name="myBaseName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Restore1">
+            <Parameter Name="myBaseName" Mode="In" Type="String" />
+            <Parameter Name="myBackup" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="Capacitacaos" EntityType="capdeModel.Capacitacao" />
+          <EntitySet Name="Cargoes" EntityType="capdeModel.Cargo" />
+          <EntitySet Name="Cidades" EntityType="capdeModel.Cidade" />
+          <EntitySet Name="CJs" EntityType="capdeModel.CJ" />
+          <EntitySet Name="DatabaseConfigs" EntityType="capdeModel.DatabaseConfig" />
+          <EntitySet Name="Pessoas" EntityType="capdeModel.Pessoa" />
+          <EntitySet Name="RAJs" EntityType="capdeModel.RAJ" />
+          <EntitySet Name="Setors" EntityType="capdeModel.Setor" />
+          <EntitySet Name="Turmas" EntityType="capdeModel.Turma" />
+          <AssociationSet Name="FK__Capacitac__RajId__35BCFE0A" Association="capdeModel.FK__Capacitac__RajId__35BCFE0A">
+            <End Role="RAJ" EntitySet="RAJs" />
+            <End Role="Capacitacao" EntitySet="Capacitacaos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Capacitac__Turma__34C8D9D1" Association="capdeModel.FK__Capacitac__Turma__34C8D9D1">
+            <End Role="Turma" EntitySet="Turmas" />
+            <End Role="Capacitacao" EntitySet="Capacitacaos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pessoa__Capacita__38996AB5" Association="capdeModel.FK__Pessoa__Capacita__38996AB5">
+            <End Role="Capacitacao" EntitySet="Capacitacaos" />
+            <End Role="Pessoa" EntitySet="Pessoas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pessoa__CargoId__36B12243" Association="capdeModel.FK__Pessoa__CargoId__36B12243">
+            <End Role="Cargo" EntitySet="Cargoes" />
+            <End Role="Pessoa" EntitySet="Pessoas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cidade__CjId__3A81B327" Association="capdeModel.FK__Cidade__CjId__3A81B327">
+            <End Role="CJ" EntitySet="CJs" />
+            <End Role="Cidade" EntitySet="Cidades" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Setor__CidadeId__398D8EEE" Association="capdeModel.FK__Setor__CidadeId__398D8EEE">
+            <End Role="Cidade" EntitySet="Cidades" />
+            <End Role="Setor" EntitySet="Setors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CJ__RajId__3B75D760" Association="capdeModel.FK__CJ__RajId__3B75D760">
+            <End Role="RAJ" EntitySet="RAJs" />
+            <End Role="CJ" EntitySet="CJs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Pessoa__SetorId__37A5467C" Association="capdeModel.FK__Pessoa__SetorId__37A5467C">
+            <End Role="Setor" EntitySet="Setors" />
+            <End Role="Pessoa" EntitySet="Pessoas" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Capacitacao">
+          <Key>
+            <PropertyRef Name="CapacitacaoId" />
+          </Key>
+          <Property Name="CapacitacaoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsCapacitado" Type="Boolean" Nullable="false" />
+          <Property Name="DataInicio" Type="DateTime" Precision="3" />
+          <Property Name="DataFim" Type="DateTime" Precision="3" />
+          <Property Name="IsEAD" Type="Boolean" />
+          <Property Name="RajId" Type="Int32" />
+          <Property Name="TurmaId" Type="Int32" />
+          <NavigationProperty Name="RAJ" Relationship="capdeModel.FK__Capacitac__RajId__35BCFE0A" FromRole="Capacitacao" ToRole="RAJ" />
+          <NavigationProperty Name="Turma" Relationship="capdeModel.FK__Capacitac__Turma__34C8D9D1" FromRole="Capacitacao" ToRole="Turma" />
+          <NavigationProperty Name="Pessoas" Relationship="capdeModel.FK__Pessoa__Capacita__38996AB5" FromRole="Capacitacao" ToRole="Pessoa" />
+        </EntityType>
+        <EntityType Name="Cargo">
+          <Key>
+            <PropertyRef Name="CargoId" />
+          </Key>
+          <Property Name="CargoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NomeCargo" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pessoas" Relationship="capdeModel.FK__Pessoa__CargoId__36B12243" FromRole="Cargo" ToRole="Pessoa" />
+        </EntityType>
+        <EntityType Name="Cidade">
+          <Key>
+            <PropertyRef Name="CidadeId" />
+          </Key>
+          <Property Name="CidadeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CjId" Type="Int32" Nullable="false" />
+          <Property Name="NomeCidade" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CJ" Relationship="capdeModel.FK__Cidade__CjId__3A81B327" FromRole="Cidade" ToRole="CJ" />
+          <NavigationProperty Name="Setors" Relationship="capdeModel.FK__Setor__CidadeId__398D8EEE" FromRole="Cidade" ToRole="Setor" />
+        </EntityType>
+        <EntityType Name="CJ">
+          <Key>
+            <PropertyRef Name="CjId" />
+          </Key>
+          <Property Name="CjId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RajId" Type="Int32" Nullable="false" />
+          <Property Name="CjIdent" Type="Int32" Nullable="false" />
+          <Property Name="CjNome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cidades" Relationship="capdeModel.FK__Cidade__CjId__3A81B327" FromRole="CJ" ToRole="Cidade" />
+          <NavigationProperty Name="RAJ" Relationship="capdeModel.FK__CJ__RajId__3B75D760" FromRole="CJ" ToRole="RAJ" />
+        </EntityType>
+        <EntityType Name="DatabaseConfig">
+          <Key>
+            <PropertyRef Name="DatabaseConfigId" />
+          </Key>
+          <Property Name="DatabaseConfigId" Type="Int32" Nullable="false" />
+          <Property Name="HasChanged" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pessoa">
+          <Key>
+            <PropertyRef Name="PessoaId" />
+          </Key>
+          <Property Name="PessoaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Registro" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="70" FixedLength="false" Unicode="false" />
+          <Property Name="EMail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CargoId" Type="Int32" />
+          <Property Name="SetorId" Type="Int32" Nullable="false" />
+          <Property Name="CapacitacaoId" Type="Int32" />
+          <Property Name="Obs" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="IsExcluido" Type="Boolean" />
+          <NavigationProperty Name="Capacitacao" Relationship="capdeModel.FK__Pessoa__Capacita__38996AB5" FromRole="Pessoa" ToRole="Capacitacao" />
+          <NavigationProperty Name="Cargo" Relationship="capdeModel.FK__Pessoa__CargoId__36B12243" FromRole="Pessoa" ToRole="Cargo" />
+          <NavigationProperty Name="Setor" Relationship="capdeModel.FK__Pessoa__SetorId__37A5467C" FromRole="Pessoa" ToRole="Setor" />
+        </EntityType>
+        <EntityType Name="RAJ">
+          <Key>
+            <PropertyRef Name="RajId" />
+          </Key>
+          <Property Name="RajId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RajIdent" Type="Int32" Nullable="false" />
+          <Property Name="NomeRaj" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Capacitacaos" Relationship="capdeModel.FK__Capacitac__RajId__35BCFE0A" FromRole="RAJ" ToRole="Capacitacao" />
+          <NavigationProperty Name="CJs" Relationship="capdeModel.FK__CJ__RajId__3B75D760" FromRole="RAJ" ToRole="CJ" />
+        </EntityType>
+        <EntityType Name="Setor">
+          <Key>
+            <PropertyRef Name="SetorId" />
+          </Key>
+          <Property Name="SetorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CidadeId" Type="Int32" Nullable="false" />
+          <Property Name="NomeSetor" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cidade" Relationship="capdeModel.FK__Setor__CidadeId__398D8EEE" FromRole="Setor" ToRole="Cidade" />
+          <NavigationProperty Name="Pessoas" Relationship="capdeModel.FK__Pessoa__SetorId__37A5467C" FromRole="Setor" ToRole="Pessoa" />
+        </EntityType>
+        <EntityType Name="Turma">
+          <Key>
+            <PropertyRef Name="TurmaId" />
+          </Key>
+          <Property Name="TurmaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NomeTurma" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Capacitacaos" Relationship="capdeModel.FK__Capacitac__Turma__34C8D9D1" FromRole="Turma" ToRole="Capacitacao" />
+        </EntityType>
+        <Association Name="FK__Capacitac__RajId__35BCFE0A">
+          <End Type="capdeModel.RAJ" Role="RAJ" Multiplicity="0..1" />
+          <End Type="capdeModel.Capacitacao" Role="Capacitacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RAJ">
+              <PropertyRef Name="RajId" />
+            </Principal>
+            <Dependent Role="Capacitacao">
+              <PropertyRef Name="RajId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Capacitac__Turma__34C8D9D1">
+          <End Type="capdeModel.Turma" Role="Turma" Multiplicity="0..1" />
+          <End Type="capdeModel.Capacitacao" Role="Capacitacao" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Turma">
+              <PropertyRef Name="TurmaId" />
+            </Principal>
+            <Dependent Role="Capacitacao">
+              <PropertyRef Name="TurmaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pessoa__Capacita__38996AB5">
+          <End Type="capdeModel.Capacitacao" Role="Capacitacao" Multiplicity="0..1" />
+          <End Type="capdeModel.Pessoa" Role="Pessoa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Capacitacao">
+              <PropertyRef Name="CapacitacaoId" />
+            </Principal>
+            <Dependent Role="Pessoa">
+              <PropertyRef Name="CapacitacaoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pessoa__CargoId__36B12243">
+          <End Type="capdeModel.Cargo" Role="Cargo" Multiplicity="0..1" />
+          <End Type="capdeModel.Pessoa" Role="Pessoa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cargo">
+              <PropertyRef Name="CargoId" />
+            </Principal>
+            <Dependent Role="Pessoa">
+              <PropertyRef Name="CargoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cidade__CjId__3A81B327">
+          <End Type="capdeModel.CJ" Role="CJ" Multiplicity="1" />
+          <End Type="capdeModel.Cidade" Role="Cidade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CJ">
+              <PropertyRef Name="CjId" />
+            </Principal>
+            <Dependent Role="Cidade">
+              <PropertyRef Name="CjId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Setor__CidadeId__398D8EEE">
+          <End Type="capdeModel.Cidade" Role="Cidade" Multiplicity="1" />
+          <End Type="capdeModel.Setor" Role="Setor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cidade">
+              <PropertyRef Name="CidadeId" />
+            </Principal>
+            <Dependent Role="Setor">
+              <PropertyRef Name="CidadeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CJ__RajId__3B75D760">
+          <End Type="capdeModel.RAJ" Role="RAJ" Multiplicity="1" />
+          <End Type="capdeModel.CJ" Role="CJ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RAJ">
+              <PropertyRef Name="RajId" />
+            </Principal>
+            <Dependent Role="CJ">
+              <PropertyRef Name="RajId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Pessoa__SetorId__37A5467C">
+          <End Type="capdeModel.Setor" Role="Setor" Multiplicity="1" />
+          <End Type="capdeModel.Pessoa" Role="Pessoa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Setor">
+              <PropertyRef Name="SetorId" />
+            </Principal>
+            <Dependent Role="Pessoa">
+              <PropertyRef Name="SetorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="capdeModelStoreContainer" CdmEntityContainer="capdeEntities">
+          <FunctionImportMapping FunctionImportName="Backup1" FunctionName="capdeModel.Store.Backup" />
+          <FunctionImportMapping FunctionImportName="Restore1" FunctionName="capdeModel.Store.Restore" />
+          <EntitySetMapping Name="Capacitacaos">
+            <EntityTypeMapping TypeName="capdeModel.Capacitacao">
+              <MappingFragment StoreEntitySet="Capacitacao">
+                <ScalarProperty Name="TurmaId" ColumnName="TurmaId" />
+                <ScalarProperty Name="RajId" ColumnName="RajId" />
+                <ScalarProperty Name="IsEAD" ColumnName="IsEAD" />
+                <ScalarProperty Name="DataFim" ColumnName="DataFim" />
+                <ScalarProperty Name="DataInicio" ColumnName="DataInicio" />
+                <ScalarProperty Name="IsCapacitado" ColumnName="IsCapacitado" />
+                <ScalarProperty Name="CapacitacaoId" ColumnName="CapacitacaoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cargoes">
+            <EntityTypeMapping TypeName="capdeModel.Cargo">
+              <MappingFragment StoreEntitySet="Cargo">
+                <ScalarProperty Name="NomeCargo" ColumnName="NomeCargo" />
+                <ScalarProperty Name="CargoId" ColumnName="CargoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cidades">
+            <EntityTypeMapping TypeName="capdeModel.Cidade">
+              <MappingFragment StoreEntitySet="Cidade">
+                <ScalarProperty Name="NomeCidade" ColumnName="NomeCidade" />
+                <ScalarProperty Name="CjId" ColumnName="CjId" />
+                <ScalarProperty Name="CidadeId" ColumnName="CidadeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CJs">
+            <EntityTypeMapping TypeName="capdeModel.CJ">
+              <MappingFragment StoreEntitySet="CJ">
+                <ScalarProperty Name="CjNome" ColumnName="CjNome" />
+                <ScalarProperty Name="CjIdent" ColumnName="CjIdent" />
+                <ScalarProperty Name="RajId" ColumnName="RajId" />
+                <ScalarProperty Name="CjId" ColumnName="CjId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DatabaseConfigs">
+            <EntityTypeMapping TypeName="capdeModel.DatabaseConfig">
+              <MappingFragment StoreEntitySet="DatabaseConfig">
+                <ScalarProperty Name="HasChanged" ColumnName="HasChanged" />
+                <ScalarProperty Name="DatabaseConfigId" ColumnName="DatabaseConfigId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pessoas">
+            <EntityTypeMapping TypeName="capdeModel.Pessoa">
+              <MappingFragment StoreEntitySet="Pessoa">
+                <ScalarProperty Name="IsExcluido" ColumnName="IsExcluido" />
+                <ScalarProperty Name="Obs" ColumnName="Obs" />
+                <ScalarProperty Name="CapacitacaoId" ColumnName="CapacitacaoId" />
+                <ScalarProperty Name="SetorId" ColumnName="SetorId" />
+                <ScalarProperty Name="CargoId" ColumnName="CargoId" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Registro" ColumnName="Registro" />
+                <ScalarProperty Name="PessoaId" ColumnName="PessoaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RAJs">
+            <EntityTypeMapping TypeName="capdeModel.RAJ">
+              <MappingFragment StoreEntitySet="RAJ">
+                <ScalarProperty Name="NomeRaj" ColumnName="NomeRaj" />
+                <ScalarProperty Name="RajIdent" ColumnName="RajIdent" />
+                <ScalarProperty Name="RajId" ColumnName="RajId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Setors">
+            <EntityTypeMapping TypeName="capdeModel.Setor">
+              <MappingFragment StoreEntitySet="Setor">
+                <ScalarProperty Name="NomeSetor" ColumnName="NomeSetor" />
+                <ScalarProperty Name="CidadeId" ColumnName="CidadeId" />
+                <ScalarProperty Name="SetorId" ColumnName="SetorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Turmas">
+            <EntityTypeMapping TypeName="capdeModel.Turma">
+              <MappingFragment StoreEntitySet="Turma">
+                <ScalarProperty Name="NomeTurma" ColumnName="NomeTurma" />
+                <ScalarProperty Name="TurmaId" ColumnName="TurmaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
