@@ -1,34 +1,67 @@
 ﻿using CAPDEData;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Reflection;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Common.CAPDEEnums;
 using static Common.Backup;
-using static Common.GoogleDrive;
+using static Common.CAPDEEnums;
+using CAPDELogin;
 
 namespace CAPDE
 {
-    public partial class Form1 : Form
+    public partial class FormCAPDE : Form
     {
-        Common common = new Common();
+        Common.Common common = new Common.Common();
         int capacitadoId = (int)FiltroCapacitado.All;
+
+        bool isRequireAdmin = false;
+        bool isAdmin = false;
+        bool hasUserAdmin = false;
+
+        private string userName = String.Empty;
+        private string logedUser = String.Empty;
 
         string filtro = String.Empty;
 
-        public Form1()
+        public FormCAPDE()
         {
             InitializeComponent();
 
+            isRequireAdmin = Form.ModifierKeys == Keys.Shift;
+            if (isRequireAdmin) isAdmin = ShowLogin((int)TypeForm.Login, (int)SizeForm_Cad.Login);
+            hasUserAdmin = (isAdmin)? true : verifyUserAdmin_OnDatabase();
             ProcessInitial();
+        }
+
+        private bool ShowLogin(int form, int heightForm)
+        {
+            FormLogin fLogin = new FormLogin(form, heightForm);
+            if (fLogin.ShowDialog() == DialogResult.Yes)
+            {
+                userName = fLogin.LogedUserName;
+                logedUser = fLogin.LogedUser;
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool verifyUserAdmin_OnDatabase()
+        {
+            using(capdeEntities context = new capdeEntities())
+            {
+                Usuario user = context.Usuarios.Where(x => x.IsAdmin == true).FirstOrDefault();
+                if (user != null) return true;
+                else ShowLogin((int)TypeForm.CadastroLogin, (int)SizeForm_Cad.Login_Cad);
+            }
+
+            return false;
         }
 
         private void ProcessInitial()
@@ -36,6 +69,17 @@ namespace CAPDE
             VerifiRestoredDataBase();
             VerifiBackupSuccess();
             AtualizaPreencheInicial();
+
+            if (isAdmin)
+            {
+                desaposentarToolStripMenuItem.Visible = true;
+                IncluirtoolStripMenuItem.Visible = true;
+                radioAposentado.Visible = true;
+                radioExcluido.Visible = true;
+                this.Text += " Admin Mode";
+                tslUser.Visible = true;
+                tslUser.Text = userName;
+            }
 
             if (!File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "capdeRestore.mdf")))
             {
@@ -49,7 +93,7 @@ namespace CAPDE
             
             using (capdeEntities context = new capdeEntities())
             {
-                IEnumerable<dynamic> RAJ = context.RAJs.OrderByDescending(x=>x.NomeRaj == "TODOS").ThenBy(x=>x.NomeRaj)
+                IEnumerable<dynamic> RAJ = context.RAJs.OrderByDescending(x=>x.NomeRaj == StringBase.TODOS.ToString()).ThenBy(x=>x.NomeRaj)
                     .Select(x => new { x.RajId, x.NomeRaj }).ToList();
                 tscRAJ = common.PreencheCombo(tscRAJ, RAJ, "RajId", "NomeRaj");
             }
@@ -87,7 +131,7 @@ namespace CAPDE
 
         private void pessoaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormCadPessoa pessoa = new FormCadPessoa();
+            FormCadPessoa pessoa = new FormCadPessoa(isAdmin);
             if (pessoa.ShowDialog() == DialogResult.OK)
             {
                 AtualizaPreencheInicial();
@@ -117,7 +161,7 @@ namespace CAPDE
 
         private void newFormCad(int formType, int heightForm)
         {
-            FormCad cad = new FormCad(formType, heightForm);
+            FormCad cad = new FormCad(formType, heightForm, isAdmin);
             if (cad.ShowDialog() == DialogResult.OK)
             {
                 AtualizaPreencheInicial();
@@ -151,7 +195,7 @@ namespace CAPDE
 
         private void tsbPessoa_Click(object sender, EventArgs e)
         {
-            FormCadPessoa pessoa = new FormCadPessoa();
+            FormCadPessoa pessoa = new FormCadPessoa(isAdmin);
             if (pessoa.ShowDialog() == DialogResult.OK) AtualizaPreencheInicial();
         }
 
@@ -188,6 +232,18 @@ namespace CAPDE
         private void radioButton2_Click(object sender, EventArgs e)
         {
             capacitadoId = (int)FiltroCapacitado.Incapacitado;
+            Task_PreencherGrid();
+        }
+
+        private void radioAposentado_Click(object sender, EventArgs e)
+        {
+            capacitadoId = (int)FiltroCapacitado.Aposentado;
+            Task_PreencherGrid();
+        }
+
+        private void radioExcluido_Click(object sender, EventArgs e)
+        {
+            capacitadoId = (int)FiltroCapacitado.Excluido;
             Task_PreencherGrid();
         }
 
@@ -246,7 +302,7 @@ namespace CAPDE
             {
                 using (capdeEntities context = new capdeEntities())
                 {
-                    IEnumerable<dynamic> CJ = context.CJs.Where(x => x.RajId == (int)cmbRAJ.SelectedValue && x.CjNome != "TODOS")
+                    IEnumerable<dynamic> CJ = context.CJs.Where(x => x.RajId == (int)cmbRAJ.SelectedValue && x.CjNome != StringBase.TODOS.ToString())
                         .OrderBy(x=>x.CjNome).Select(x => new { x.CjId, x.CjNome }).ToList();
                     cmbCJ = common.PreencheCombo(cmbCJ, CJ, "CjId", "CjNome");
                 }
@@ -259,8 +315,8 @@ namespace CAPDE
             {
                 using (capdeEntities context = new capdeEntities())
                 {
-                    IEnumerable<dynamic> cidade = context.Cidades.Where(x => x.CjId == (int)cmbCJ.SelectedValue && x.NomeCidade != "TODOS")
-                        .OrderBy(X=>X.NomeCidade).Select(x => new { x.CidadeId, x.NomeCidade }).ToList();
+                    IEnumerable<dynamic> cidade = context.Cidades.Where(x => x.CjId == (int)cmbCJ.SelectedValue && 
+                    x.NomeCidade != StringBase.TODOS.ToString()).OrderBy(X=>X.NomeCidade).Select(x => new { x.CidadeId, x.NomeCidade }).ToList();
 
                     cmbCidade = common.PreencheCombo(cmbCidade, cidade, "CidadeId", "NomeCidade");
                 }
@@ -295,7 +351,7 @@ namespace CAPDE
         private void radioEAD_Click(object sender, EventArgs e)
         {
             cmbCapacitacao.Enabled = true;
-            lblCapacitacao.Text = "Turma";
+            lblCapacitacao.Text = TypeForm.Turma.ToString();
 
             cmbCapacitacao = common.LoadTurmaCombo(cmbCapacitacao);
         }
@@ -303,11 +359,11 @@ namespace CAPDE
         private void radioPresencial_Click(object sender, EventArgs e)
         {
             cmbCapacitacao.Enabled = true;
-            lblCapacitacao.Text = "RAJ";
+            lblCapacitacao.Text = TypeForm.RAJ.ToString();
 
             using (capdeEntities context = new capdeEntities())
             {
-                IEnumerable<dynamic> capacitado = context.RAJs.Where(x=>x.NomeRaj != "TODOS").OrderBy(X=>X.NomeRaj)
+                IEnumerable<dynamic> capacitado = context.RAJs.Where(x=>x.NomeRaj != StringBase.TODOS.ToString()).OrderBy(X=>X.NomeRaj)
                     .Select(x => new { x.RajId, x.NomeRaj }).ToList();
                 cmbCapacitacao = common.PreencheCombo(cmbCapacitacao, capacitado, "RajId", "NomeRaj");
             }
@@ -344,7 +400,9 @@ namespace CAPDE
                     cmbSetor.SelectedValue = pessoa.SetorId;
                     txtOBS.Text = pessoa.Obs;
 
-                    if (pessoa.Capacitacao.IsCapacitado)
+                    if ((bool)pessoa.IsExcluido) gBoxPessoa.BackColor = Color.MistyRose;
+                    else if((bool)pessoa.IsAposentado) gBoxPessoa.BackColor = Color.Gray;
+                    else if (pessoa.Capacitacao.IsCapacitado)
                     {
                         gBoxPessoa.BackColor = Color.PaleGreen;
                         ckCapacitado.Checked = true;
@@ -357,7 +415,7 @@ namespace CAPDE
                             radioEAD.Checked = (pessoa.Capacitacao.IsEAD == true) ? true : false;
                             radioEAD.PerformClick();
                             cmbCapacitacao.SelectedValue = (pessoa.Capacitacao.TurmaId != null) ? pessoa.Capacitacao.TurmaId : -1;
-                            lblCapacitacao.Text = "Turma";
+                            lblCapacitacao.Text = TypeForm.Turma.ToString();
                         }
                         else if (pessoa.Capacitacao.RajId != null)
                         {
@@ -365,7 +423,7 @@ namespace CAPDE
                             radioPresencial.PerformClick();
                             cmbCapacitacao.SelectedValue = pessoa.Capacitacao.RajId;
                             cmbCapacitacao.Enabled = true;
-                            lblCapacitacao.Text = "RAJ";
+                            lblCapacitacao.Text = TypeForm.RAJ.ToString();
                         }
                         else
                         {
@@ -397,12 +455,14 @@ namespace CAPDE
         private string returnRelatorioName()
         {
             string relatorio = "Relatório ";
-            if (radioButton1.Checked) relatorio += "de Capacitados ";
-            else if (radioButton2.Checked) relatorio += "de Incapacitados ";
+            if (radioCapacitado.Checked) relatorio += "de Capacitados ";
+            else if (radioIncapacitado.Checked) relatorio += "de Incapacitados ";
 
-            if (tscCidade.Text != String.Empty && tscCidade.Text != "TODOS") relatorio += "Cidade de " + returnFirstMaiuscula(tscCidade.Text.ToLower());
-            else if (tscCJ.Text != String.Empty && tscCJ.Text != "TODOS") relatorio += "da CJ de " + returnFirstMaiuscula(tscCJ.Text.ToLower());
-            else if (tscRAJ.Text == "TODOS") relatorio += "Geral";
+            if (tscCidade.Text != String.Empty && tscCidade.Text != StringBase.TODOS.ToString()) relatorio += 
+                    "Cidade de " + returnFirstMaiuscula(tscCidade.Text.ToLower());
+            else if (tscCJ.Text != String.Empty && tscCJ.Text != StringBase.TODOS.ToString()) relatorio += 
+                    "da CJ de " + returnFirstMaiuscula(tscCJ.Text.ToLower());
+            else if (tscRAJ.Text == StringBase.TODOS.ToString()) relatorio += "Geral";
             else if (tscRAJ.Text != String.Empty) relatorio += "da RAJ de " + returnFirstMaiuscula(tscRAJ.Text.ToLower());
 
             return relatorio;
@@ -424,11 +484,6 @@ namespace CAPDE
             return returText;
         }
 
-        private void radioEAD_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void tscRAJ_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(tscRAJ.ComboBox.ValueMember != "" && tscRAJ.ComboBox.SelectedValue != null)
@@ -436,7 +491,8 @@ namespace CAPDE
                 using (capdeEntities context = new capdeEntities())
                 {
                     IEnumerable<dynamic> CJ = context.CJs.Where(x => x.RajId == (int)tscRAJ.ComboBox.SelectedValue)
-                        .OrderByDescending(x=>x.CjNome == "TODOS").ThenBy(x=>x.CjNome).Select(x => new { x.CjId, x.CjNome }).ToList();
+                        .OrderByDescending(x=>x.CjNome == StringBase.TODOS.ToString()).ThenBy(x=>x.CjNome)
+                        .Select(x => new { x.CjId, x.CjNome }).ToList();
                     tscCJ = common.PreencheCombo(tscCJ, CJ, "CjId", "CjNome");
                 }
             }
@@ -451,7 +507,7 @@ namespace CAPDE
         private async void Task_PreencherGrid()
         {
             await FilterGrid();
-            tsProgressBar.Maximum = Convert.ToInt32(tslValorTotal.Text);
+            //if(Convert.ToInt32(tslValorTotal.Text) > 0) tsProgressBar.Maximum = Convert.ToInt32(tslValorTotal.Text);
         }
 
         private async Task FilterGrid()
@@ -462,20 +518,18 @@ namespace CAPDE
                 {
                     IEnumerable<dynamic> pessoas = context.Pessoas.ToList();
 
-                    if (filtro != String.Empty)
-                    {
-                        pessoas = pessoas.Where(x => x.Nome.Contains(filtro) || x.Registro.Contains(filtro)).ToList();
-                    }
+                    if (filtro != String.Empty) pessoas = pessoas.Where(x => x.Nome.Contains(filtro) || x.Registro.Contains(filtro)).ToList();
+
                     if (capacitadoId == (int)FiltroCapacitado.Incapacitado || capacitadoId == (int)FiltroCapacitado.Capacitado)
-                    {
                         pessoas = pessoas.Where(x => x.Capacitacao.IsCapacitado == Convert.ToBoolean(capacitadoId)).ToList();
-                    }
-                        
+                    else if (capacitadoId == (int)FiltroCapacitado.Aposentado) pessoas = pessoas.Where(x => x.IsAposentado == true).ToList();
+                    else if (capacitadoId == (int)FiltroCapacitado.Excluido) pessoas = pessoas.Where(x => x.IsExcluido == true).ToList();
+
                     if (this.tscRAJ.ComboBox.InvokeRequired)
                     {
                         this.Invoke((MethodInvoker)delegate
                         {
-                            if (tscRAJ.ComboBox.SelectedValue != null && tscRAJ.ComboBox.Text != "TODOS")
+                            if (tscRAJ.ComboBox.SelectedValue != null && tscRAJ.ComboBox.Text != StringBase.TODOS.ToString())
                             {
                                 pessoas = pessoas.Where(x => x.Setor.Cidade.CJ.RajId == (int)tscRAJ.ComboBox.SelectedValue).ToList();
                             }
@@ -486,7 +540,7 @@ namespace CAPDE
                     {
                         this.Invoke((MethodInvoker)delegate
                         {
-                            if (tscCJ.ComboBox.SelectedValue != null && tscCJ.ComboBox.Text != "TODOS")
+                            if (tscCJ.ComboBox.SelectedValue != null && tscCJ.ComboBox.Text != StringBase.TODOS.ToString())
                             {
                                 pessoas = pessoas.Where(x => x.Setor.Cidade.CjId == (int)tscCJ.ComboBox.SelectedValue).ToList();
                             }   
@@ -497,14 +551,18 @@ namespace CAPDE
                     {
                         this.Invoke((MethodInvoker)delegate
                         {
-                            if (tscCidade.ComboBox.SelectedValue != null && tscCidade.ComboBox.Text != "TODOS")
+                            if (tscCidade.ComboBox.SelectedValue != null && tscCidade.ComboBox.Text != StringBase.TODOS.ToString())
                             {
                                 pessoas = pessoas.Where(x => x.Setor.CidadeId == (int)tscCidade.ComboBox.SelectedValue).ToList();
                             }
                         });
                     }
 
-                    pessoas = pessoas.OrderBy(x => x.Nome).Select(x => new { x.Registro, x.Nome, x.Capacitacao.IsCapacitado }).ToList();
+                    if(isAdmin) pessoas = pessoas.OrderBy(x => x.Nome)
+                        .Select(x => new { x.Registro, x.Nome, x.Capacitacao.IsCapacitado, x.IsAposentado, x.IsExcluido }).ToList();
+                    else pessoas = pessoas.Where(x=>x.IsExcluido == false && x.IsAposentado == false).OrderBy(x => x.Nome)
+                        .Select(x => new { x.Registro, x.Nome, x.Capacitacao.IsCapacitado, x.IsAposentado, x.IsExcluido }).ToList();
+
                     tslValorTotal.Text = pessoas.Count().ToString();
 
                     if (this.dtGrid.InvokeRequired)
@@ -515,6 +573,8 @@ namespace CAPDE
                             dtGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                             dtGrid.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                             dtGrid.Columns[2].Visible = false;
+                            dtGrid.Columns[3].Visible = false;
+                            dtGrid.Columns[4].Visible = false;
                         });
                     }
                 }
@@ -529,7 +589,13 @@ namespace CAPDE
             {
                 foreach(DataGridViewRow i in (sender as DataGridView).Rows)
                 {
-                    if ((bool)i.Cells[2].Value)
+                    bool isExcluido = (bool)i.Cells[4].Value;
+                    bool isAposentado = (bool)i.Cells[3].Value;
+                    bool isCapacitado = (bool)i.Cells[2].Value;
+
+                    if (isExcluido) i.DefaultCellStyle.BackColor = Color.Tomato;
+                    else if(isAposentado) i.DefaultCellStyle.BackColor = Color.Gray;
+                    else if (isCapacitado)
                     {
                         i.DefaultCellStyle.BackColor = Color.PaleGreen;
                         totalCapacitados++;
@@ -537,8 +603,8 @@ namespace CAPDE
                 }
 
                 tslValorCapacitados.Text = totalCapacitados.ToString();
-                tsProgressBar.ToolTipText = porcentagemCapacitados().ToString();
-                tsProgressBar.Value = totalCapacitados;
+                //tsProgressBar.ToolTipText = porcentagemCapacitados().ToString();
+                //tsProgressBar.Value = totalCapacitados;
             }
             catch(IndexOutOfRangeException f)
             {
@@ -584,16 +650,16 @@ namespace CAPDE
 
         private void dtGrid_MouseClick(object sender, MouseEventArgs e)
         {
-            //if(e.Button == MouseButtons.Right)
-            //{
-            //    int rowIndex = dtGrid.HitTest(e.Location.X, e.Location.Y).RowIndex;
+            if (e.Button == MouseButtons.Right)
+            {
+                int rowIndex = dtGrid.HitTest(e.Location.X, e.Location.Y).RowIndex;
 
-            //    if(rowIndex >= 0)
-            //    {
-            //        dtGrid.Rows[rowIndex].Selected = true;
-            //        contextMenuStrip1.Show(dtGrid, new Point(e.Location.X, e.Location.Y));
-            //    }
-            //}
+                if (rowIndex >= 0)
+                {
+                    dtGrid.Rows[rowIndex].Selected = true;
+                    contextMenuStrip1.Show(dtGrid, new Point(e.Location.X, e.Location.Y));
+                }
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -673,6 +739,79 @@ namespace CAPDE
         private void restoreToolStripMenuItem_Click(object sender, EventArgs e)
         {
             common.OpenFileDialog_RestoreLocalBackup("Backup File | *.bak");
+            this.Close();
+        }
+
+        private void aposentadoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AposentarServidor(StatusServidor.Aposentar.ToString(), true);
+        }
+
+        private void desaposentarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AposentarServidor(StatusServidor.Desaposentar.ToString(), false);
+        }
+
+        private void ExcluirtoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExcluirServidor(StatusServidor.Excluir.ToString(), true);
+        }
+
+        private void IncluirtoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExcluirServidor(StatusServidor.Incluir.ToString(), false);
+        }
+
+        private void AposentarServidor(string statusServidor, bool status)
+        {
+            if (MessageBox.Show("Deseja " + statusServidor + " o servidor " + txtNome.Text + "?", statusServidor, MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                using (capdeEntities context = new capdeEntities())
+                {
+                    Pessoa pessoa = context.Pessoas.Where(x => x.Registro == txtRegistro.Text && x.Nome == txtNome.Text).First();
+                    pessoa.IsAposentado = status;
+
+                    DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
+                    config.HasChanged = true;
+
+                    context.SaveChanges();
+                    Task_PreencherGrid();
+                }
+            }
+        }
+
+        private void ExcluirServidor(string statusServidor, bool status)
+        {
+            MessageBoxIcon msgIcon;
+            string msg = String.Empty;
+            if (isAdmin)
+            {
+                msgIcon = MessageBoxIcon.Warning;
+                msg = "Deseja " + statusServidor + " o servidor " + txtNome.Text + "Permanentemente?";
+            }
+            else
+            {
+                msgIcon = MessageBoxIcon.Question;
+                msg = "Deseja " + statusServidor + " o servidor " + txtNome.Text + "?";
+            }
+
+            if (MessageBox.Show(msg, statusServidor, MessageBoxButtons.YesNo, msgIcon) == DialogResult.Yes)
+            {
+                using (capdeEntities context = new capdeEntities())
+                {
+                    Pessoa pessoa = context.Pessoas.Where(x => x.Registro == txtRegistro.Text && x.Nome == txtNome.Text).First();
+
+                    if (isAdmin) context.Pessoas.Remove(pessoa);
+                    else pessoa.IsExcluido = status;
+
+                    DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
+                    config.HasChanged = true;
+
+                    context.SaveChanges();
+                    Task_PreencherGrid();
+                }
+            }
         }
     }
 }

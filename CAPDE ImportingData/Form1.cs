@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Common.CAPDEEnums;
 
 namespace CAPDE_ImportingData
 {
@@ -117,7 +118,7 @@ namespace CAPDE_ImportingData
         {
             File.AppendAllLines("C:\\Users\\Wesley\\Desktop\\docsLiene\\registro\\log.txt", logMatricula);
             progressBar1.Value = 0;
-            MessageBox.Show("DAdos salvos");
+            MessageBox.Show("Dados salvos");
         }
 
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -166,7 +167,7 @@ namespace CAPDE_ImportingData
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             progressBar1.Value = 0;
-            MessageBox.Show("DAdos salvos");
+            MessageBox.Show("Dados salvos");
         }
 
         private void BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -176,7 +177,7 @@ namespace CAPDE_ImportingData
 
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            CadastroRaj("TODOS");
+            CadastroRaj(StringBase.TODOS.ToString());
 
             matricula = File.ReadAllLines(textBox2.Text, Encoding.Default);
             nome = File.ReadAllLines(textBox3.Text, Encoding.Default);
@@ -236,6 +237,7 @@ namespace CAPDE_ImportingData
                         Obs = obs[i],
                         CargoId = cargoId,
                         CapacitacaoId = capacitacao.CapacitacaoId,
+                        IsAposentado = false,
                         IsExcluido = false,
                     };
 
@@ -278,13 +280,13 @@ namespace CAPDE_ImportingData
                 {
                     RajId = newRaj.RajId,
                     CjIdent = context.CJs.Count() + 1,
-                    CjNome = "TODOS"
+                    CjNome = StringBase.TODOS.ToString()
                 };
 
                 Cidade cidade = new Cidade
                 {
                     CjId = cj.CjId,
-                    NomeCidade = "TODOS",
+                    NomeCidade = StringBase.TODOS.ToString(),
                 };
 
                 context.RAJs.Add(newRaj);
@@ -309,7 +311,7 @@ namespace CAPDE_ImportingData
                 Cidade cidade = new Cidade
                 {
                     CJ = newCJ,
-                    NomeCidade = "TODOS",
+                    NomeCidade = StringBase.TODOS.ToString(),
                 };
 
                 context.CJs.Add(newCJ);

@@ -42,7 +42,7 @@ namespace Common
                     @"EXEC [dbo].[Backup] @myBackupLocation = '" + fileBak + "', @myBaseName = '" + localDb + "'");
             }
 
-            UploadGoogleDrive();
+            if(File.Exists(Path.Combine(local, "client_secret.json"))) UploadGoogleDrive();
         }
 
         public static void CreateLocalBackup(string fileBackup)

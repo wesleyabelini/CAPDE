@@ -23,6 +23,7 @@
           </Key>
           <Property Name="CargoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NomeCargo" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="IsExcluido" Type="bit" />
         </EntityType>
         <EntityType Name="Cidade">
           <Key>
@@ -31,6 +32,7 @@
           <Property Name="CidadeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CjId" Type="int" Nullable="false" />
           <Property Name="NomeCidade" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="IsExcluido" Type="bit" />
         </EntityType>
         <EntityType Name="CJ">
           <Key>
@@ -40,6 +42,7 @@
           <Property Name="RajId" Type="int" Nullable="false" />
           <Property Name="CjIdent" Type="int" Nullable="false" />
           <Property Name="CjNome" Type="varchar" MaxLength="50" />
+          <Property Name="IsExcluido" Type="bit" />
         </EntityType>
         <EntityType Name="DatabaseConfig">
           <Key>
@@ -61,6 +64,7 @@
           <Property Name="CapacitacaoId" Type="int" />
           <Property Name="Obs" Type="varchar" MaxLength="300" />
           <Property Name="IsExcluido" Type="bit" />
+          <Property Name="IsAposentado" Type="bit" />
         </EntityType>
         <EntityType Name="RAJ">
           <Key>
@@ -69,6 +73,7 @@
           <Property Name="RajId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RajIdent" Type="int" Nullable="false" />
           <Property Name="NomeRaj" Type="varchar" MaxLength="50" />
+          <Property Name="IsExcluido" Type="bit" />
         </EntityType>
         <EntityType Name="Setor">
           <Key>
@@ -77,6 +82,7 @@
           <Property Name="SetorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CidadeId" Type="int" Nullable="false" />
           <Property Name="NomeSetor" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="IsExcluido" Type="bit" />
         </EntityType>
         <EntityType Name="Turma">
           <Key>
@@ -84,6 +90,18 @@
           </Key>
           <Property Name="TurmaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NomeTurma" Type="varchar" MaxLength="15" />
+          <Property Name="IsExcluido" Type="bit" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="UsuarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Senha" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="IsAdmin" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK__Capacitac__RajId__35BCFE0A">
           <End Role="RAJ" Type="Self.RAJ" Multiplicity="0..1" />
@@ -199,6 +217,7 @@
           <EntitySet Name="RAJ" EntityType="Self.RAJ" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Setor" EntityType="Self.Setor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Turma" EntityType="Self.Turma" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Capacitac__RajId__35BCFE0A" Association="Self.FK__Capacitac__RajId__35BCFE0A">
             <End Role="RAJ" EntitySet="RAJ" />
             <End Role="Capacitacao" EntitySet="Capacitacao" />
@@ -294,6 +313,7 @@
             <End Role="Setor" EntitySet="Setors" />
             <End Role="Pessoa" EntitySet="Pessoas" />
           </AssociationSet>
+          <EntitySet Name="Usuarios" EntityType="capdeModel.Usuario" />
           </EntityContainer>
         <EntityType Name="Capacitacao">
           <Key>
@@ -317,6 +337,7 @@
           <Property Name="CargoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NomeCargo" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Pessoas" Relationship="capdeModel.FK__Pessoa__CargoId__36B12243" FromRole="Cargo" ToRole="Pessoa" />
+          <Property Name="IsExcluido" Type="Boolean" />
         </EntityType>
         <EntityType Name="Cidade">
           <Key>
@@ -327,6 +348,7 @@
           <Property Name="NomeCidade" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CJ" Relationship="capdeModel.FK__Cidade__CjId__3A81B327" FromRole="Cidade" ToRole="CJ" />
           <NavigationProperty Name="Setors" Relationship="capdeModel.FK__Setor__CidadeId__398D8EEE" FromRole="Cidade" ToRole="Setor" />
+          <Property Name="IsExcluido" Type="Boolean" />
         </EntityType>
         <EntityType Name="CJ">
           <Key>
@@ -338,6 +360,7 @@
           <Property Name="CjNome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Cidades" Relationship="capdeModel.FK__Cidade__CjId__3A81B327" FromRole="CJ" ToRole="Cidade" />
           <NavigationProperty Name="RAJ" Relationship="capdeModel.FK__CJ__RajId__3B75D760" FromRole="CJ" ToRole="RAJ" />
+          <Property Name="IsExcluido" Type="Boolean" />
         </EntityType>
         <EntityType Name="DatabaseConfig">
           <Key>
@@ -362,6 +385,7 @@
           <NavigationProperty Name="Capacitacao" Relationship="capdeModel.FK__Pessoa__Capacita__38996AB5" FromRole="Pessoa" ToRole="Capacitacao" />
           <NavigationProperty Name="Cargo" Relationship="capdeModel.FK__Pessoa__CargoId__36B12243" FromRole="Pessoa" ToRole="Cargo" />
           <NavigationProperty Name="Setor" Relationship="capdeModel.FK__Pessoa__SetorId__37A5467C" FromRole="Pessoa" ToRole="Setor" />
+          <Property Name="IsAposentado" Type="Boolean" />
         </EntityType>
         <EntityType Name="RAJ">
           <Key>
@@ -372,6 +396,7 @@
           <Property Name="NomeRaj" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Capacitacaos" Relationship="capdeModel.FK__Capacitac__RajId__35BCFE0A" FromRole="RAJ" ToRole="Capacitacao" />
           <NavigationProperty Name="CJs" Relationship="capdeModel.FK__CJ__RajId__3B75D760" FromRole="RAJ" ToRole="CJ" />
+          <Property Name="IsExcluido" Type="Boolean" />
         </EntityType>
         <EntityType Name="Setor">
           <Key>
@@ -382,6 +407,7 @@
           <Property Name="NomeSetor" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Cidade" Relationship="capdeModel.FK__Setor__CidadeId__398D8EEE" FromRole="Setor" ToRole="Cidade" />
           <NavigationProperty Name="Pessoas" Relationship="capdeModel.FK__Pessoa__SetorId__37A5467C" FromRole="Setor" ToRole="Pessoa" />
+          <Property Name="IsExcluido" Type="Boolean" />
         </EntityType>
         <EntityType Name="Turma">
           <Key>
@@ -390,6 +416,7 @@
           <Property Name="TurmaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NomeTurma" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Capacitacaos" Relationship="capdeModel.FK__Capacitac__Turma__34C8D9D1" FromRole="Turma" ToRole="Capacitacao" />
+          <Property Name="IsExcluido" Type="Boolean" />
         </EntityType>
         <Association Name="FK__Capacitac__RajId__35BCFE0A">
           <End Type="capdeModel.RAJ" Role="RAJ" Multiplicity="0..1" />
@@ -487,6 +514,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Senha" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -511,6 +549,7 @@
           <EntitySetMapping Name="Cargoes">
             <EntityTypeMapping TypeName="capdeModel.Cargo">
               <MappingFragment StoreEntitySet="Cargo">
+                <ScalarProperty Name="IsExcluido" ColumnName="IsExcluido" />
                 <ScalarProperty Name="NomeCargo" ColumnName="NomeCargo" />
                 <ScalarProperty Name="CargoId" ColumnName="CargoId" />
               </MappingFragment>
@@ -519,6 +558,7 @@
           <EntitySetMapping Name="Cidades">
             <EntityTypeMapping TypeName="capdeModel.Cidade">
               <MappingFragment StoreEntitySet="Cidade">
+                <ScalarProperty Name="IsExcluido" ColumnName="IsExcluido" />
                 <ScalarProperty Name="NomeCidade" ColumnName="NomeCidade" />
                 <ScalarProperty Name="CjId" ColumnName="CjId" />
                 <ScalarProperty Name="CidadeId" ColumnName="CidadeId" />
@@ -528,6 +568,7 @@
           <EntitySetMapping Name="CJs">
             <EntityTypeMapping TypeName="capdeModel.CJ">
               <MappingFragment StoreEntitySet="CJ">
+                <ScalarProperty Name="IsExcluido" ColumnName="IsExcluido" />
                 <ScalarProperty Name="CjNome" ColumnName="CjNome" />
                 <ScalarProperty Name="CjIdent" ColumnName="CjIdent" />
                 <ScalarProperty Name="RajId" ColumnName="RajId" />
@@ -546,6 +587,7 @@
           <EntitySetMapping Name="Pessoas">
             <EntityTypeMapping TypeName="capdeModel.Pessoa">
               <MappingFragment StoreEntitySet="Pessoa">
+                <ScalarProperty Name="IsAposentado" ColumnName="IsAposentado" />
                 <ScalarProperty Name="IsExcluido" ColumnName="IsExcluido" />
                 <ScalarProperty Name="Obs" ColumnName="Obs" />
                 <ScalarProperty Name="CapacitacaoId" ColumnName="CapacitacaoId" />
@@ -561,6 +603,7 @@
           <EntitySetMapping Name="RAJs">
             <EntityTypeMapping TypeName="capdeModel.RAJ">
               <MappingFragment StoreEntitySet="RAJ">
+                <ScalarProperty Name="IsExcluido" ColumnName="IsExcluido" />
                 <ScalarProperty Name="NomeRaj" ColumnName="NomeRaj" />
                 <ScalarProperty Name="RajIdent" ColumnName="RajIdent" />
                 <ScalarProperty Name="RajId" ColumnName="RajId" />
@@ -570,6 +613,7 @@
           <EntitySetMapping Name="Setors">
             <EntityTypeMapping TypeName="capdeModel.Setor">
               <MappingFragment StoreEntitySet="Setor">
+                <ScalarProperty Name="IsExcluido" ColumnName="IsExcluido" />
                 <ScalarProperty Name="NomeSetor" ColumnName="NomeSetor" />
                 <ScalarProperty Name="CidadeId" ColumnName="CidadeId" />
                 <ScalarProperty Name="SetorId" ColumnName="SetorId" />
@@ -579,8 +623,21 @@
           <EntitySetMapping Name="Turmas">
             <EntityTypeMapping TypeName="capdeModel.Turma">
               <MappingFragment StoreEntitySet="Turma">
+                <ScalarProperty Name="IsExcluido" ColumnName="IsExcluido" />
                 <ScalarProperty Name="NomeTurma" ColumnName="NomeTurma" />
                 <ScalarProperty Name="TurmaId" ColumnName="TurmaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="capdeModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="Senha" ColumnName="Senha" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

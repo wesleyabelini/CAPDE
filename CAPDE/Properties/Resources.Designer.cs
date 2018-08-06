@@ -273,6 +273,16 @@ namespace CAPDE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap People___Girl {
+            get {
+                object obj = ResourceManager.GetObject("People - Girl", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap People___Steven_Spielberg {
             get {
                 object obj = ResourceManager.GetObject("People - Steven Spielberg", resourceCulture);
@@ -286,6 +296,26 @@ namespace CAPDE.Properties {
         internal static System.Drawing.Bitmap Table__3_ {
             get {
                 object obj = ResourceManager.GetObject("Table (3)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap X__8_ {
+            get {
+                object obj = ResourceManager.GetObject("X (8)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Zoom______2_ {
+            get {
+                object obj = ResourceManager.GetObject("Zoom (+) (2)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

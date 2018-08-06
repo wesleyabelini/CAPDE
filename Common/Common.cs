@@ -1,16 +1,30 @@
 ﻿using CAPDEData;
-using Common;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Common.CAPDEEnums;
 
-namespace CAPDE
+namespace Common
 {
     public class Common
     {
+        public object MudarStatusVisible(object obj, bool valor, string text)
+        {
+            if (obj is Label)
+            {
+                (obj as Label).Visible = valor;
+                (obj as Label).Text = text;
+            }
+            else if (obj is TextBox) (obj as TextBox).Visible = valor;
+            else if (obj is ComboBox) (obj as ComboBox).Visible = valor;
+            else if (obj is Button) (obj as Button).Visible = valor;
+            else if (obj is RadioButton) (obj as RadioButton).Visible = valor;
+            else if (obj is CheckBox) (obj as CheckBox).Visible = valor;
+            else if (obj is DateTimePicker) (obj as DateTimePicker).Visible = valor;
+
+            return obj;
+        }
+
         public void PreencheCombos_Pessoa(ComboBox cmbRAJ, ComboBox cmbCJ, ComboBox cmbCidade, ComboBox cmbCargo, ComboBox cmbSetor,
             ComboBox cmbTurma)
         {
@@ -20,15 +34,16 @@ namespace CAPDE
                 {
                     IEnumerable<dynamic> cargo = context.Cargoes.OrderBy(x => x.NomeCargo).Select(x => new { x.CargoId, x.NomeCargo }).ToList();
 
-                    IEnumerable<dynamic> RAJ = context.RAJs.Where(x => x.NomeRaj != "TODOS").OrderByDescending(x => x.NomeRaj == "TODOS")
-                        .ThenBy(x => x.NomeRaj).Select(x => new { x.RajId, x.NomeRaj }).ToList();
+                    IEnumerable<dynamic> RAJ = context.RAJs.Where(x => x.NomeRaj != StringBase.TODOS.ToString())
+                        .OrderByDescending(x => x.NomeRaj == StringBase.TODOS.ToString()).ThenBy(x => x.NomeRaj)
+                        .Select(x => new { x.RajId, x.NomeRaj }).ToList();
                     cmbRAJ = PreencheCombo(cmbRAJ, RAJ, "RajId", "NomeRaj");
 
-                    IEnumerable<dynamic> CJ = context.CJs.Where(x => x.CjNome != "TODOS" && x.RajId == (int)cmbRAJ.SelectedValue).OrderBy(x => x.CjNome)
-                        .Select(x => new { x.CjId, x.CjNome }).ToList();
+                    IEnumerable<dynamic> CJ = context.CJs.Where(x => x.CjNome != StringBase.TODOS.ToString() && x.RajId == (int)cmbRAJ.SelectedValue)
+                        .OrderBy(x => x.CjNome).Select(x => new { x.CjId, x.CjNome }).ToList();
                     cmbCJ = PreencheCombo(cmbCJ, CJ, "CjId", "CjNome");
 
-                    IEnumerable<dynamic> cidade = context.Cidades.Where(x => x.NomeCidade != "TODOS" && x.CjId == (int)cmbCJ.SelectedValue)
+                    IEnumerable<dynamic> cidade = context.Cidades.Where(x => x.NomeCidade != StringBase.TODOS.ToString() && x.CjId == (int)cmbCJ.SelectedValue)
                         .OrderBy(x => x.NomeCidade).Select(x => new { x.CidadeId, x.NomeCidade }).ToList();
                     cmbCidade = PreencheCombo(cmbCidade, cidade, "CidadeId", "NomeCidade");
 
@@ -45,10 +60,10 @@ namespace CAPDE
                 {
                     DialogResult message = MessageBox.Show("Não existem dados cadastrais. Deseja importar por um backup?.", "Acesso dados",
                         MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                    if(message == DialogResult.Yes)
+                    if (message == DialogResult.Yes)
                     {
                         OpenFileDialog_RestoreLocalBackup("Backup File | *.bak");
-                    } 
+                    }
                 }
             }
         }
@@ -82,7 +97,7 @@ namespace CAPDE
         {
             using (capdeEntities context = new capdeEntities())
             {
-                IEnumerable<dynamic> capacitado = context.Turmas.OrderBy(x=>x.NomeTurma).Select(x => new { x.TurmaId, x.NomeTurma }).ToList();
+                IEnumerable<dynamic> capacitado = context.Turmas.OrderBy(x => x.NomeTurma).Select(x => new { x.TurmaId, x.NomeTurma }).ToList();
                 cmbTurma = PreencheCombo(cmbTurma, capacitado, "TurmaId", "NomeTurma");
             }
 

@@ -17,6 +17,8 @@ namespace Common
             Cargo = 210,
             Turma = 210,
             Lote = 330,
+            Login = 187,
+            Login_Cad = 308
         }
 
         public enum TypeForm
@@ -27,7 +29,9 @@ namespace Common
             Setor = 4,
             Cargo = 5,
             Turma = 6,
-            Lote_Capacitar = 7
+            Lote_Capacitar = 7,
+            Login = 8,
+            CadastroLogin = 9
         }
 
         public enum FiltroCapacitado
@@ -35,6 +39,21 @@ namespace Common
             Incapacitado = 0,
             Capacitado = 1,
             All = 2,
+            Aposentado = 3,
+            Excluido = 4,
+        }
+
+        public enum StatusServidor
+        {
+            Aposentar = 1,
+            Desaposentar = 2,
+            Excluir = 3,
+            Incluir = 4
+        }
+
+        public enum StringBase
+        {
+            TODOS = 1,
         }
     }
 }

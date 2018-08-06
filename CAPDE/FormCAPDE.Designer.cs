@@ -1,6 +1,6 @@
 ﻿namespace CAPDE
 {
-    partial class Form1
+    partial class FormCAPDE
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCAPDE));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.cadastroToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cadastroToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -113,12 +113,19 @@
             this.label1 = new System.Windows.Forms.Label();
             this.dtGrid = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioExcluido = new System.Windows.Forms.RadioButton();
+            this.radioAposentado = new System.Windows.Forms.RadioButton();
+            this.radioIncapacitado = new System.Windows.Forms.RadioButton();
+            this.radioCapacitado = new System.Windows.Forms.RadioButton();
             this.radioAll = new System.Windows.Forms.RadioButton();
             this.txtBusca = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.aposentadoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.desaposentarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.ExcluirtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.IncluirtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tslUser = new System.Windows.Forms.ToolStripLabel();
             this.menuStrip1.SuspendLayout();
             this.tsInferior.SuspendLayout();
             this.tsSuperior.SuspendLayout();
@@ -141,7 +148,7 @@
             this.sobreToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1121, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1171, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -197,7 +204,7 @@
             // 
             this.cidadeToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Christ_The_Redeemer;
             this.cidadeToolStripMenuItem.Name = "cidadeToolStripMenuItem";
-            this.cidadeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cidadeToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.cidadeToolStripMenuItem.Text = "Cidade";
             this.cidadeToolStripMenuItem.Click += new System.EventHandler(this.cidadeToolStripMenuItem_Click);
             // 
@@ -205,7 +212,7 @@
             // 
             this.cJToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Building__7_;
             this.cJToolStripMenuItem.Name = "cJToolStripMenuItem";
-            this.cJToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cJToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.cJToolStripMenuItem.Text = "CJ";
             this.cJToolStripMenuItem.Click += new System.EventHandler(this.cJToolStripMenuItem_Click);
             // 
@@ -213,7 +220,7 @@
             // 
             this.rAJToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Globe__13_;
             this.rAJToolStripMenuItem.Name = "rAJToolStripMenuItem";
-            this.rAJToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.rAJToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.rAJToolStripMenuItem.Text = "RAJ";
             this.rAJToolStripMenuItem.Click += new System.EventHandler(this.rAJToolStripMenuItem_Click);
             // 
@@ -221,20 +228,20 @@
             // 
             this.setorToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Table__3_;
             this.setorToolStripMenuItem.Name = "setorToolStripMenuItem";
-            this.setorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setorToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.setorToolStripMenuItem.Text = "Setor";
             this.setorToolStripMenuItem.Click += new System.EventHandler(this.setorToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(108, 6);
             // 
             // cargoToolStripMenuItem
             // 
             this.cargoToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Judge;
             this.cargoToolStripMenuItem.Name = "cargoToolStripMenuItem";
-            this.cargoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cargoToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.cargoToolStripMenuItem.Text = "Cargo";
             this.cargoToolStripMenuItem.Click += new System.EventHandler(this.cargoToolStripMenuItem_Click);
             // 
@@ -242,7 +249,7 @@
             // 
             this.pessoaToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Audience__2_;
             this.pessoaToolStripMenuItem.Name = "pessoaToolStripMenuItem";
-            this.pessoaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pessoaToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.pessoaToolStripMenuItem.Text = "Pessoa";
             this.pessoaToolStripMenuItem.Click += new System.EventHandler(this.pessoaToolStripMenuItem_Click);
             // 
@@ -250,7 +257,7 @@
             // 
             this.turmaToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Computer___Laptop__2_;
             this.turmaToolStripMenuItem.Name = "turmaToolStripMenuItem";
-            this.turmaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.turmaToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.turmaToolStripMenuItem.Text = "Turma";
             this.turmaToolStripMenuItem.Click += new System.EventHandler(this.turmaToolStripMenuItem_Click);
             // 
@@ -345,7 +352,7 @@
             this.tsInferior.Location = new System.Drawing.Point(0, 681);
             this.tsInferior.Name = "tsInferior";
             this.tsInferior.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsInferior.Size = new System.Drawing.Size(1121, 25);
+            this.tsInferior.Size = new System.Drawing.Size(1171, 25);
             this.tsInferior.TabIndex = 4;
             this.tsInferior.Text = "toolStrip1";
             // 
@@ -450,12 +457,13 @@
             this.tsbTurma,
             this.tsbPessoa,
             this.toolStripSeparator4,
-            this.tsbRelatorio});
+            this.tsbRelatorio,
+            this.tslUser});
             this.tsSuperior.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.tsSuperior.Location = new System.Drawing.Point(0, 24);
             this.tsSuperior.Name = "tsSuperior";
             this.tsSuperior.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.tsSuperior.Size = new System.Drawing.Size(1121, 25);
+            this.tsSuperior.Size = new System.Drawing.Size(1171, 25);
             this.tsSuperior.TabIndex = 5;
             this.tsSuperior.Text = "toolStrip2";
             // 
@@ -557,7 +565,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 49);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1121, 632);
+            this.panel1.Size = new System.Drawing.Size(1171, 632);
             this.panel1.TabIndex = 6;
             // 
             // gBoxPessoa
@@ -578,7 +586,7 @@
             this.gBoxPessoa.Controls.Add(this.txtRegistro);
             this.gBoxPessoa.Controls.Add(this.label1);
             this.gBoxPessoa.Dock = System.Windows.Forms.DockStyle.Right;
-            this.gBoxPessoa.Location = new System.Drawing.Point(679, 0);
+            this.gBoxPessoa.Location = new System.Drawing.Point(729, 0);
             this.gBoxPessoa.Name = "gBoxPessoa";
             this.gBoxPessoa.Size = new System.Drawing.Size(442, 632);
             this.gBoxPessoa.TabIndex = 9;
@@ -909,7 +917,7 @@
             this.dtGrid.ReadOnly = true;
             this.dtGrid.RowHeadersVisible = false;
             this.dtGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dtGrid.Size = new System.Drawing.Size(680, 584);
+            this.dtGrid.Size = new System.Drawing.Size(730, 584);
             this.dtGrid.TabIndex = 7;
             this.dtGrid.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dtGrid_RowPrePaint);
             this.dtGrid.SelectionChanged += new System.EventHandler(this.dtGrid_SelectionChanged);
@@ -920,42 +928,72 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.BackColor = System.Drawing.Color.DimGray;
-            this.groupBox1.Controls.Add(this.radioButton2);
-            this.groupBox1.Controls.Add(this.radioButton1);
+            this.groupBox1.Controls.Add(this.radioExcluido);
+            this.groupBox1.Controls.Add(this.radioAposentado);
+            this.groupBox1.Controls.Add(this.radioIncapacitado);
+            this.groupBox1.Controls.Add(this.radioCapacitado);
             this.groupBox1.Controls.Add(this.radioAll);
             this.groupBox1.Controls.Add(this.txtBusca);
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(679, 52);
+            this.groupBox1.Size = new System.Drawing.Size(729, 52);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             // 
-            // radioButton2
+            // radioExcluido
             // 
-            this.radioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.radioExcluido.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(553, 20);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(87, 17);
-            this.radioButton2.TabIndex = 22;
-            this.radioButton2.Text = "Incapacitado";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.Click += new System.EventHandler(this.radioButton2_Click);
+            this.radioExcluido.AutoSize = true;
+            this.radioExcluido.Location = new System.Drawing.Point(662, 20);
+            this.radioExcluido.Name = "radioExcluido";
+            this.radioExcluido.Size = new System.Drawing.Size(65, 17);
+            this.radioExcluido.TabIndex = 24;
+            this.radioExcluido.Text = "Excluido";
+            this.radioExcluido.UseVisualStyleBackColor = true;
+            this.radioExcluido.Visible = false;
+            this.radioExcluido.Click += new System.EventHandler(this.radioExcluido_Click);
             // 
-            // radioButton1
+            // radioAposentado
             // 
-            this.radioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.radioAposentado.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.radioButton1.Location = new System.Drawing.Point(468, 20);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(79, 17);
-            this.radioButton1.TabIndex = 21;
-            this.radioButton1.Text = "Capacitado";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.Click += new System.EventHandler(this.radioButton1_Click);
+            this.radioAposentado.AutoSize = true;
+            this.radioAposentado.Location = new System.Drawing.Point(574, 20);
+            this.radioAposentado.Name = "radioAposentado";
+            this.radioAposentado.Size = new System.Drawing.Size(82, 17);
+            this.radioAposentado.TabIndex = 23;
+            this.radioAposentado.Text = "Aposentado";
+            this.radioAposentado.UseVisualStyleBackColor = true;
+            this.radioAposentado.Visible = false;
+            this.radioAposentado.Click += new System.EventHandler(this.radioAposentado_Click);
+            // 
+            // radioIncapacitado
+            // 
+            this.radioIncapacitado.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioIncapacitado.AutoSize = true;
+            this.radioIncapacitado.Location = new System.Drawing.Point(481, 20);
+            this.radioIncapacitado.Name = "radioIncapacitado";
+            this.radioIncapacitado.Size = new System.Drawing.Size(87, 17);
+            this.radioIncapacitado.TabIndex = 22;
+            this.radioIncapacitado.Text = "Incapacitado";
+            this.radioIncapacitado.UseVisualStyleBackColor = true;
+            this.radioIncapacitado.Click += new System.EventHandler(this.radioButton2_Click);
+            // 
+            // radioCapacitado
+            // 
+            this.radioCapacitado.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioCapacitado.AutoSize = true;
+            this.radioCapacitado.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.radioCapacitado.Location = new System.Drawing.Point(396, 20);
+            this.radioCapacitado.Name = "radioCapacitado";
+            this.radioCapacitado.Size = new System.Drawing.Size(79, 17);
+            this.radioCapacitado.TabIndex = 21;
+            this.radioCapacitado.Text = "Capacitado";
+            this.radioCapacitado.UseVisualStyleBackColor = true;
+            this.radioCapacitado.Click += new System.EventHandler(this.radioButton1_Click);
             // 
             // radioAll
             // 
@@ -963,7 +1001,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.radioAll.AutoSize = true;
             this.radioAll.Checked = true;
-            this.radioAll.Location = new System.Drawing.Point(426, 20);
+            this.radioAll.Location = new System.Drawing.Point(354, 20);
             this.radioAll.Name = "radioAll";
             this.radioAll.Size = new System.Drawing.Size(36, 17);
             this.radioAll.TabIndex = 20;
@@ -977,38 +1015,88 @@
             this.txtBusca.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.txtBusca.Location = new System.Drawing.Point(6, 19);
             this.txtBusca.Name = "txtBusca";
-            this.txtBusca.Size = new System.Drawing.Size(402, 20);
+            this.txtBusca.Size = new System.Drawing.Size(333, 20);
             this.txtBusca.TabIndex = 0;
             this.txtBusca.TextChanged += new System.EventHandler(this.txtBusca_TextChanged);
             // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.Enabled = false;
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aposentadoToolStripMenuItem});
+            this.aposentadoToolStripMenuItem,
+            this.desaposentarToolStripMenuItem,
+            this.toolStripSeparator8,
+            this.ExcluirtoolStripMenuItem,
+            this.IncluirtoolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(139, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(146, 98);
             // 
             // aposentadoToolStripMenuItem
             // 
-            this.aposentadoToolStripMenuItem.Enabled = false;
             this.aposentadoToolStripMenuItem.Image = global::CAPDE.Properties.Resources.People___Steven_Spielberg;
             this.aposentadoToolStripMenuItem.Name = "aposentadoToolStripMenuItem";
-            this.aposentadoToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
-            this.aposentadoToolStripMenuItem.Text = "Aposentado";
+            this.aposentadoToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.aposentadoToolStripMenuItem.Text = "Aposentar";
+            this.aposentadoToolStripMenuItem.Click += new System.EventHandler(this.aposentadoToolStripMenuItem_Click);
             // 
-            // Form1
+            // desaposentarToolStripMenuItem
+            // 
+            this.desaposentarToolStripMenuItem.Image = global::CAPDE.Properties.Resources.People___Girl;
+            this.desaposentarToolStripMenuItem.Name = "desaposentarToolStripMenuItem";
+            this.desaposentarToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.desaposentarToolStripMenuItem.Text = "Desaposentar";
+            this.desaposentarToolStripMenuItem.Visible = false;
+            this.desaposentarToolStripMenuItem.Click += new System.EventHandler(this.desaposentarToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(142, 6);
+            // 
+            // ExcluirtoolStripMenuItem
+            // 
+            this.ExcluirtoolStripMenuItem.Image = global::CAPDE.Properties.Resources.X__8_;
+            this.ExcluirtoolStripMenuItem.Name = "ExcluirtoolStripMenuItem";
+            this.ExcluirtoolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.ExcluirtoolStripMenuItem.Text = "Excluir";
+            this.ExcluirtoolStripMenuItem.Click += new System.EventHandler(this.ExcluirtoolStripMenuItem_Click);
+            // 
+            // IncluirtoolStripMenuItem
+            // 
+            this.IncluirtoolStripMenuItem.Image = global::CAPDE.Properties.Resources.Zoom______2_;
+            this.IncluirtoolStripMenuItem.Name = "IncluirtoolStripMenuItem";
+            this.IncluirtoolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.IncluirtoolStripMenuItem.Text = "Incluir";
+            this.IncluirtoolStripMenuItem.Visible = false;
+            this.IncluirtoolStripMenuItem.Click += new System.EventHandler(this.IncluirtoolStripMenuItem_Click);
+            // 
+            // tslUser
+            // 
+            this.tslUser.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
+            this.tslUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tslUser.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.tslUser.ForeColor = System.Drawing.Color.AliceBlue;
+            this.tslUser.IsLink = true;
+            this.tslUser.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.tslUser.LinkColor = System.Drawing.SystemColors.HighlightText;
+            this.tslUser.Name = "tslUser";
+            this.tslUser.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.tslUser.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tslUser.Size = new System.Drawing.Size(91, 22);
+            this.tslUser.Text = "Nome Pessoa";
+            this.tslUser.Visible = false;
+            // 
+            // FormCAPDE
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1121, 706);
+            this.ClientSize = new System.Drawing.Size(1171, 706);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tsSuperior);
             this.Controls.Add(this.tsInferior);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
+            this.Name = "FormCAPDE";
             this.Text = "CAPDE";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
@@ -1104,8 +1192,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dtGrid;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioIncapacitado;
+        private System.Windows.Forms.RadioButton radioCapacitado;
         private System.Windows.Forms.RadioButton radioAll;
         private System.Windows.Forms.TextBox txtBusca;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
@@ -1125,6 +1213,13 @@
         private System.Windows.Forms.ToolStripMenuItem restoreToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loteToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem capacitaçãoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem ExcluirtoolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem IncluirtoolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem desaposentarToolStripMenuItem;
+        private System.Windows.Forms.RadioButton radioAposentado;
+        private System.Windows.Forms.RadioButton radioExcluido;
+        private System.Windows.Forms.ToolStripLabel tslUser;
     }
 }
 

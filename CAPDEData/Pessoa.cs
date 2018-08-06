@@ -23,6 +23,7 @@ namespace CAPDEData
         public Nullable<int> CapacitacaoId { get; set; }
         public string Obs { get; set; }
         public Nullable<bool> IsExcluido { get; set; }
+        public Nullable<bool> IsAposentado { get; set; }
     
         public virtual Capacitacao Capacitacao { get; set; }
         public virtual Cargo Cargo { get; set; }

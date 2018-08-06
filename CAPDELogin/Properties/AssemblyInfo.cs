@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CAPDE")]
-[assembly: AssemblyDescription("O CAPDE é um software de código aberto, desenvolvido com o intuito de auxiliar no processo de gerenciamento dos servidores, de modo que, facilite o cadastro, capacitação e identificação de servidores devidamente aptos para colaborar em determinada região. O software é distribuído sob MIT Licence. Demais informações, bem como o código, podem ser conferidos em: https://github.com/wesleyabelini/CAPDE")]
+[assembly: AssemblyTitle("CAPDELogin")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CAPDE")]
+[assembly: AssemblyProduct("CAPDELogin")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("df0f7416-26a9-4580-a78d-6c13a7464bb1")]
+[assembly: Guid("4bfb7fd7-df0e-4226-a8ab-e556e3f8de29")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.9.7.0")]
-[assembly: AssemblyFileVersion("0.9.7.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

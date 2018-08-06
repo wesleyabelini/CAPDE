@@ -67,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="capde.mdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="capdeEntity.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -81,7 +81,7 @@
     </Content>
     <Content Include="capde_log.ldf">
       <DependentUpon>capde.mdf</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +137,9 @@
       <DependentUpon>capdeEntity.tt</DependentUpon>
     </Compile>
     <Compile Include="Turma.cs">
+      <DependentUpon>capdeEntity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Usuario.cs">
       <DependentUpon>capdeEntity.tt</DependentUpon>
     </Compile>
   </ItemGroup>

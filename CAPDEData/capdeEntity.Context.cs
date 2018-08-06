@@ -36,6 +36,7 @@ namespace CAPDEData
         public virtual DbSet<RAJ> RAJs { get; set; }
         public virtual DbSet<Setor> Setors { get; set; }
         public virtual DbSet<Turma> Turmas { get; set; }
+        public virtual DbSet<Usuario> Usuarios { get; set; }
     
         public virtual int Backup(string myBackupLocation, string myBaseName)
         {

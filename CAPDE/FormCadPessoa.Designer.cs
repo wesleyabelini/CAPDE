@@ -35,6 +35,7 @@
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.panelCapacitado = new System.Windows.Forms.Panel();
+            this.radioOutros = new System.Windows.Forms.RadioButton();
             this.dateTFim = new System.Windows.Forms.DateTimePicker();
             this.dateTInicio = new System.Windows.Forms.DateTimePicker();
             this.radioPresencial = new System.Windows.Forms.RadioButton();
@@ -68,7 +69,6 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbCargo = new System.Windows.Forms.ToolStripButton();
             this.tsbTurma = new System.Windows.Forms.ToolStripButton();
-            this.radioOutros = new System.Windows.Forms.RadioButton();
             this.groupBox2.SuspendLayout();
             this.panelCapacitado.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -144,6 +144,17 @@
             this.panelCapacitado.Name = "panelCapacitado";
             this.panelCapacitado.Size = new System.Drawing.Size(413, 127);
             this.panelCapacitado.TabIndex = 10;
+            // 
+            // radioOutros
+            // 
+            this.radioOutros.AutoSize = true;
+            this.radioOutros.Location = new System.Drawing.Point(12, 103);
+            this.radioOutros.Name = "radioOutros";
+            this.radioOutros.Size = new System.Drawing.Size(56, 17);
+            this.radioOutros.TabIndex = 26;
+            this.radioOutros.Text = "Outros";
+            this.radioOutros.UseVisualStyleBackColor = true;
+            this.radioOutros.Click += new System.EventHandler(this.radioOutros_Click);
             // 
             // dateTFim
             // 
@@ -386,6 +397,7 @@
             // 
             // toolStrip2
             // 
+            this.toolStrip2.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.toolStrip2.BackColor = System.Drawing.Color.DimGray;
             this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -398,6 +410,7 @@
             this.tsbTurma});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
             this.toolStrip2.Size = new System.Drawing.Size(451, 25);
             this.toolStrip2.TabIndex = 19;
             this.toolStrip2.Text = "toolStrip2";
@@ -466,17 +479,6 @@
             this.tsbTurma.Size = new System.Drawing.Size(23, 22);
             this.tsbTurma.Text = "Turma";
             this.tsbTurma.Click += new System.EventHandler(this.tsbTurma_Click);
-            // 
-            // radioOutros
-            // 
-            this.radioOutros.AutoSize = true;
-            this.radioOutros.Location = new System.Drawing.Point(12, 103);
-            this.radioOutros.Name = "radioOutros";
-            this.radioOutros.Size = new System.Drawing.Size(56, 17);
-            this.radioOutros.TabIndex = 26;
-            this.radioOutros.Text = "Outros";
-            this.radioOutros.UseVisualStyleBackColor = true;
-            this.radioOutros.Click += new System.EventHandler(this.radioOutros_Click);
             // 
             // FormCadPessoa
             // 

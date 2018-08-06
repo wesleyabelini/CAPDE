@@ -135,12 +135,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>capdeDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Common.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="FormCAPDE.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="FormCAPDE.Designer.cs">
+      <DependentUpon>FormCAPDE.cs</DependentUpon>
     </Compile>
     <Compile Include="FormCad.cs">
       <SubType>Form</SubType>
@@ -171,8 +170,8 @@
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="FormCAPDE.resx">
+      <DependentUpon>FormCAPDE.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormCad.resx">
       <DependentUpon>FormCad.cs</DependentUpon>
@@ -242,6 +241,9 @@
     <Content Include="Resources\logocadalltransparency_t57_icon.ico" />
     <None Include="Resources\People - Steven Spielberg.ico" />
     <None Include="Resources\Table %283%29.ico" />
+    <None Include="Resources\X %288%29.ico" />
+    <None Include="Resources\Zoom %28+%29 %282%29.ico" />
+    <None Include="Resources\People - Girl.ico" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -281,6 +283,10 @@
       <Project>{0d68de24-da25-4201-9474-f639ae39d5a3}</Project>
       <Name>CAPDEData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\CAPDELogin\CAPDELogin.csproj">
+      <Project>{4bfb7fd7-df0e-4226-a8ab-e556e3f8de29}</Project>
+      <Name>CAPDELogin</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\CAPDECommon.csproj">
       <Project>{c0f8c0dd-b03b-4752-8cb1-37d0b861a2ed}</Project>
       <Name>CAPDECommon</Name>
@@ -289,22 +295,22 @@
   <ItemGroup>
     <PublishFile Include="capde.mdf">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="capde_log.ldf">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
   </ItemGroup>

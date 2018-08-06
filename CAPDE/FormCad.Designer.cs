@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormCad));
             this.btCadastrar = new System.Windows.Forms.Button();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
@@ -47,8 +48,16 @@
             this.radioPresencial = new System.Windows.Forms.RadioButton();
             this.radioEAD = new System.Windows.Forms.RadioButton();
             this.radioOutro = new System.Windows.Forms.RadioButton();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.excluirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.incluirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbCad.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btCadastrar
@@ -80,6 +89,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(316, 21);
             this.comboBox1.TabIndex = 1;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // comboBox3
             // 
@@ -100,6 +110,7 @@
             this.textBox1.Size = new System.Drawing.Size(316, 45);
             this.textBox1.TabIndex = 0;
             this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
+            this.textBox1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyUp);
             // 
             // label1
             // 
@@ -191,7 +202,7 @@
             this.tspProgressBar});
             this.statusStrip1.Location = new System.Drawing.Point(0, 274);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(370, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(695, 22);
             this.statusStrip1.TabIndex = 7;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -241,12 +252,69 @@
             this.radioOutro.Visible = false;
             this.radioOutro.CheckedChanged += new System.EventHandler(this.radioOutro_CheckedChanged);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.dataGridView1);
+            this.groupBox1.Location = new System.Drawing.Point(364, -11);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(331, 282);
+            this.groupBox1.TabIndex = 23;
+            this.groupBox1.TabStop = false;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToResizeColumns = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dataGridView1.Location = new System.Drawing.Point(3, 16);
+            this.dataGridView1.MultiSelect = false;
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.Size = new System.Drawing.Size(325, 263);
+            this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dataGridView1_RowPrePaint);
+            this.dataGridView1.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
+            this.dataGridView1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseClick);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.excluirToolStripMenuItem,
+            this.incluirToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(109, 48);
+            // 
+            // excluirToolStripMenuItem
+            // 
+            this.excluirToolStripMenuItem.Image = global::CAPDE.Properties.Resources.X__8_;
+            this.excluirToolStripMenuItem.Name = "excluirToolStripMenuItem";
+            this.excluirToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.excluirToolStripMenuItem.Text = "Excluir";
+            this.excluirToolStripMenuItem.Click += new System.EventHandler(this.excluirToolStripMenuItem_Click);
+            // 
+            // incluirToolStripMenuItem
+            // 
+            this.incluirToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Zoom______2_;
+            this.incluirToolStripMenuItem.Name = "incluirToolStripMenuItem";
+            this.incluirToolStripMenuItem.Size = new System.Drawing.Size(108, 22);
+            this.incluirToolStripMenuItem.Text = "Incluir";
+            this.incluirToolStripMenuItem.Visible = false;
+            this.incluirToolStripMenuItem.Click += new System.EventHandler(this.incluirToolStripMenuItem_Click);
+            // 
             // FormCad
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
-            this.ClientSize = new System.Drawing.Size(370, 296);
+            this.ClientSize = new System.Drawing.Size(695, 296);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.radioOutro);
             this.Controls.Add(this.radioPresencial);
             this.Controls.Add(this.statusStrip1);
@@ -267,6 +335,9 @@
             this.gbCad.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -291,5 +362,10 @@
         private System.Windows.Forms.DateTimePicker dtPicker2;
         private System.Windows.Forms.DateTimePicker dtPicker1;
         private System.Windows.Forms.RadioButton radioOutro;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem excluirToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem incluirToolStripMenuItem;
     }
 }

@@ -14,13 +14,15 @@ namespace CAPDE
 {
     public partial class FormCadPessoa : Form
     {
-        Common common = new Common();
+        Common.Common common = new Common.Common();
         bool insertedData = false;
+        bool isAdmin = false;
 
-        public FormCadPessoa()
+        public FormCadPessoa(bool _isAdmin)
         {
             InitializeComponent();
 
+            isAdmin = _isAdmin;
             common.PreencheCombos_Pessoa(cmbRAJ, cmbCJ, cmbCidade, cmbCargo, cmbSetor, cmbCapacitacao);
         }
 
@@ -59,6 +61,7 @@ namespace CAPDE
                     Capacitacao = capacitacao,
                     Obs = txtOBS.Text,
                     IsExcluido = false,
+                    IsAposentado = false,
                 };
 
                 DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
@@ -175,7 +178,7 @@ namespace CAPDE
 
         public void newFormCad(int form, int heightForm)
         {
-            FormCad cad = new FormCad(form, heightForm);
+            FormCad cad = new FormCad(form, heightForm, isAdmin);
             if (cad.ShowDialog() == DialogResult.OK)
             {
                 common.PreencheCombos_Pessoa(cmbRAJ, cmbCJ, cmbCidade, cmbCargo, cmbSetor, cmbCapacitacao);

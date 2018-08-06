@@ -72,7 +72,11 @@ namespace Common
             using (var stream = new FileStream("client_secret.json", FileMode.Open, FileAccess.Read))
             {
                 var diretorioAtual = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var diretorioCredencial = Path.Combine(diretorioAtual, "credencial");
+                var diretorioCredencial = Path.Combine(diretorioAtual, "credencial\\drive");
+
+                if (!Directory.Exists(diretorioAtual + "\\credencial")) Directory.CreateDirectory(diretorioAtual + "\\credencial");
+                if (!Directory.Exists(diretorioCredencial)) Directory.CreateDirectory(diretorioCredencial);
+
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(GoogleClientSecrets.Load(stream).Secrets, 
                     new[] { DriveService.Scope.Drive}, "user", CancellationToken.None,
                     new FileDataStore(diretorioCredencial, true)).Result;
