@@ -387,12 +387,15 @@
             // 
             // btCadastrar
             // 
+            this.btCadastrar.BackColor = System.Drawing.Color.PaleGreen;
+            this.btCadastrar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btCadastrar.ForeColor = System.Drawing.Color.DarkGreen;
             this.btCadastrar.Location = new System.Drawing.Point(12, 577);
             this.btCadastrar.Name = "btCadastrar";
             this.btCadastrar.Size = new System.Drawing.Size(429, 38);
             this.btCadastrar.TabIndex = 18;
             this.btCadastrar.Text = "CADASTRAR";
-            this.btCadastrar.UseVisualStyleBackColor = true;
+            this.btCadastrar.UseVisualStyleBackColor = false;
             this.btCadastrar.Click += new System.EventHandler(this.btCadastrar_Click);
             // 
             // toolStrip2

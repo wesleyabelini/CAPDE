@@ -236,6 +236,7 @@
     <None Include="Resources\Arrow-Down.ico" />
     <None Include="Resources\Exit Door.ICO" />
     <None Include="Resources\capgraduate.ico" />
+    <None Include="Resources\Contacts %284%29.ico" />
     <Content Include="Resources\logocadalltransparency_ark_icon.ico" />
     <Content Include="Resources\logocadalltransparency_kOq_icon.ico" />
     <Content Include="Resources\logocadalltransparency_t57_icon.ico" />
@@ -295,22 +296,22 @@
   <ItemGroup>
     <PublishFile Include="capde.mdf">
       <Visible>False</Visible>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="capde_log.ldf">
       <Visible>False</Visible>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
   </ItemGroup>

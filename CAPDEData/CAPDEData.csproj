@@ -67,7 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="capde.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="capdeEntity.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -81,7 +81,7 @@
     </Content>
     <Content Include="capde_log.ldf">
       <DependentUpon>capde.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>

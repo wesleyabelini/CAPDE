@@ -63,12 +63,14 @@
             // btCadastrar
             // 
             this.btCadastrar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btCadastrar.BackColor = System.Drawing.Color.LightGreen;
+            this.btCadastrar.ForeColor = System.Drawing.Color.DarkGreen;
             this.btCadastrar.Location = new System.Drawing.Point(283, 233);
             this.btCadastrar.Name = "btCadastrar";
             this.btCadastrar.Size = new System.Drawing.Size(75, 23);
             this.btCadastrar.TabIndex = 5;
             this.btCadastrar.Text = "Cadastrar";
-            this.btCadastrar.UseVisualStyleBackColor = true;
+            this.btCadastrar.UseVisualStyleBackColor = false;
             this.btCadastrar.Click += new System.EventHandler(this.btCadastrar_Click);
             // 
             // comboBox2

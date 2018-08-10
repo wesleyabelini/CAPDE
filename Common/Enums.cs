@@ -8,7 +8,7 @@ namespace Common
 {
     public class CAPDEEnums
     {
-        public enum SizeForm_Cad
+        public enum SizeForm
         {
             RAJ = 210,
             CJ = 250,
@@ -31,7 +31,9 @@ namespace Common
             Turma = 6,
             Lote_Capacitar = 7,
             Login = 8,
-            CadastroLogin = 9
+            LoginAdmin = 9,
+            LoginNovo = 10,
+            ChangeLogin = 11
         }
 
         public enum FiltroCapacitado

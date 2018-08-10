@@ -1,12 +1,8 @@
 ﻿using CAPDEData;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Common.CAPDEEnums;
 
@@ -64,13 +60,10 @@ namespace CAPDE
                     IsAposentado = false,
                 };
 
-                DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
-                config.HasChanged = true;
-
                 context.Capacitacaos.Add(capacitacao);
                 context.Pessoas.Add(pessoa);
 
-                context.SaveChanges();
+                common.SaveChanges_Database(context, true);
             }
 
             LimpaCampos();
@@ -187,32 +180,32 @@ namespace CAPDE
 
         private void tsbRAJ_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.RAJ, (int)SizeForm_Cad.RAJ);
+            newFormCad((int)TypeForm.RAJ, (int)SizeForm.RAJ);
         }
 
         private void tsbCJ_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.CJ, (int)SizeForm_Cad.CJ);
+            newFormCad((int)TypeForm.CJ, (int)SizeForm.CJ);
         }
 
         private void tsbCidade_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.Cidade, (int)SizeForm_Cad.Cidade);
+            newFormCad((int)TypeForm.Cidade, (int)SizeForm.Cidade);
         }
 
         private void tsbSetor_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.Setor, (int)SizeForm_Cad.Setor);
+            newFormCad((int)TypeForm.Setor, (int)SizeForm.Setor);
         }
 
         private void tsbCargo_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.Cargo, (int)SizeForm_Cad.Cargo);
+            newFormCad((int)TypeForm.Cargo, (int)SizeForm.Cargo);
         }
 
         private void tsbTurma_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.Turma, (int)SizeForm_Cad.Turma);
+            newFormCad((int)TypeForm.Turma, (int)SizeForm.Turma);
         }
     }
 }

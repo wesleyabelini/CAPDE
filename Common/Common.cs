@@ -32,28 +32,31 @@ namespace Common
             {
                 try
                 {
-                    IEnumerable<dynamic> cargo = context.Cargoes.OrderBy(x => x.NomeCargo).Select(x => new { x.CargoId, x.NomeCargo }).ToList();
+                    IEnumerable<dynamic> cargo = context.Cargoes.Where(x=>x.IsExcluido == false).OrderBy(x => x.NomeCargo)
+                        .Select(x => new { x.CargoId, x.NomeCargo }).ToList();
 
-                    IEnumerable<dynamic> RAJ = context.RAJs.Where(x => x.NomeRaj != StringBase.TODOS.ToString())
+                    IEnumerable<dynamic> RAJ = context.RAJs.Where(x => x.NomeRaj != StringBase.TODOS.ToString() && x.IsExcluido == false)
                         .OrderByDescending(x => x.NomeRaj == StringBase.TODOS.ToString()).ThenBy(x => x.NomeRaj)
                         .Select(x => new { x.RajId, x.NomeRaj }).ToList();
                     cmbRAJ = PreencheCombo(cmbRAJ, RAJ, "RajId", "NomeRaj");
 
-                    IEnumerable<dynamic> CJ = context.CJs.Where(x => x.CjNome != StringBase.TODOS.ToString() && x.RajId == (int)cmbRAJ.SelectedValue)
-                        .OrderBy(x => x.CjNome).Select(x => new { x.CjId, x.CjNome }).ToList();
+                    IEnumerable<dynamic> CJ = context.CJs.Where(x => x.CjNome != StringBase.TODOS.ToString() && x.RajId == (int)cmbRAJ.SelectedValue && 
+                    x.IsExcluido == false).OrderBy(x => x.CjNome).Select(x => new { x.CjId, x.CjNome }).ToList();
                     cmbCJ = PreencheCombo(cmbCJ, CJ, "CjId", "CjNome");
 
-                    IEnumerable<dynamic> cidade = context.Cidades.Where(x => x.NomeCidade != StringBase.TODOS.ToString() && x.CjId == (int)cmbCJ.SelectedValue)
-                        .OrderBy(x => x.NomeCidade).Select(x => new { x.CidadeId, x.NomeCidade }).ToList();
+                    IEnumerable<dynamic> cidade = context.Cidades.Where(x => x.NomeCidade != StringBase.TODOS.ToString() && 
+                    x.CjId == (int)cmbCJ.SelectedValue && x.IsExcluido == false).OrderBy(x => x.NomeCidade)
+                    .Select(x => new { x.CidadeId, x.NomeCidade }).ToList();
                     cmbCidade = PreencheCombo(cmbCidade, cidade, "CidadeId", "NomeCidade");
 
-                    IEnumerable<dynamic> setor = context.Setors.Where(x => x.CidadeId == (int)cmbCidade.SelectedValue).OrderBy(x => x.NomeSetor)
-                        .Select(x => new { x.SetorId, x.NomeSetor }).ToList();
+                    IEnumerable<dynamic> setor = context.Setors.Where(x => x.CidadeId == (int)cmbCidade.SelectedValue && x.IsExcluido == false)
+                        .OrderBy(x => x.NomeSetor).Select(x => new { x.SetorId, x.NomeSetor }).ToList();
 
                     cmbCargo = PreencheCombo(cmbCargo, cargo, "CargoId", "NomeCargo");
                     cmbSetor = PreencheCombo(cmbSetor, setor, "SetorId", "NomeSetor");
 
-                    IEnumerable<dynamic> turma = context.Turmas.OrderBy(x => x.NomeTurma).Select(x => new { x.TurmaId, x.NomeTurma }).ToList();
+                    IEnumerable<dynamic> turma = context.Turmas.Where(x=>x.IsExcluido == false).OrderBy(x => x.NomeTurma)
+                        .Select(x => new { x.TurmaId, x.NomeTurma }).ToList();
                     cmbTurma = PreencheCombo(cmbTurma, turma, "TurmaId", "NomeTurma");
                 }
                 catch
@@ -97,11 +100,30 @@ namespace Common
         {
             using (capdeEntities context = new capdeEntities())
             {
-                IEnumerable<dynamic> capacitado = context.Turmas.OrderBy(x => x.NomeTurma).Select(x => new { x.TurmaId, x.NomeTurma }).ToList();
+                IEnumerable<dynamic> capacitado = context.Turmas.Where(x=>x.IsExcluido == false).OrderBy(x => x.NomeTurma)
+                    .Select(x => new { x.TurmaId, x.NomeTurma }).ToList();
                 cmbTurma = PreencheCombo(cmbTurma, capacitado, "TurmaId", "NomeTurma");
             }
 
             return cmbTurma;
         }
+
+        public void SaveChanges_Database(capdeEntities context, bool changed)
+        {
+            DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
+            config.HasChanged = changed;
+
+            context.SaveChanges();
+        }
+
+        #region MessageBox
+
+        public void MessageBox_TryConnection(string e)
+        {
+            MessageBox.Show("Não foi possível completar o processo. Contato o administrador. Error: " + e, "Falha Processo",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        #endregion
     }
 }

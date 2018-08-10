@@ -44,22 +44,28 @@
             this.btnCancelar = new System.Windows.Forms.Button();
             this.lblEsqueci = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnNovo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // textBox1
             // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.Location = new System.Drawing.Point(107, 28);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(191, 20);
+            this.textBox1.Size = new System.Drawing.Size(209, 20);
             this.textBox1.TabIndex = 0;
             // 
             // textBox2
             // 
+            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox2.Location = new System.Drawing.Point(107, 67);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(191, 20);
+            this.textBox2.Size = new System.Drawing.Size(209, 20);
             this.textBox2.TabIndex = 1;
+            this.textBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown);
             // 
             // label1
             // 
@@ -90,9 +96,11 @@
             // 
             // txtUsuario
             // 
+            this.txtUsuario.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtUsuario.Location = new System.Drawing.Point(107, 107);
             this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(191, 20);
+            this.txtUsuario.Size = new System.Drawing.Size(209, 20);
             this.txtUsuario.TabIndex = 4;
             // 
             // lblSenha
@@ -106,10 +114,12 @@
             // 
             // txtSenha
             // 
+            this.txtSenha.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSenha.Location = new System.Drawing.Point(107, 147);
             this.txtSenha.Name = "txtSenha";
             this.txtSenha.PasswordChar = '*';
-            this.txtSenha.Size = new System.Drawing.Size(191, 20);
+            this.txtSenha.Size = new System.Drawing.Size(209, 20);
             this.txtSenha.TabIndex = 6;
             // 
             // lblCinfirmSenha
@@ -123,11 +133,14 @@
             // 
             // txtSenhaConfirm
             // 
+            this.txtSenhaConfirm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSenhaConfirm.Location = new System.Drawing.Point(107, 188);
             this.txtSenhaConfirm.Name = "txtSenhaConfirm";
             this.txtSenhaConfirm.PasswordChar = '*';
-            this.txtSenhaConfirm.Size = new System.Drawing.Size(191, 20);
+            this.txtSenhaConfirm.Size = new System.Drawing.Size(209, 20);
             this.txtSenhaConfirm.TabIndex = 8;
+            this.txtSenhaConfirm.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSenhaConfirm_KeyDown);
             // 
             // chkIsAdmin
             // 
@@ -143,13 +156,15 @@
             // 
             // btnConfirm
             // 
-            this.btnConfirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnConfirm.Location = new System.Drawing.Point(219, 244);
+            this.btnConfirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnConfirm.BackColor = System.Drawing.Color.LightGreen;
+            this.btnConfirm.ForeColor = System.Drawing.Color.DarkGreen;
+            this.btnConfirm.Location = new System.Drawing.Point(239, 244);
             this.btnConfirm.Name = "btnConfirm";
             this.btnConfirm.Size = new System.Drawing.Size(79, 22);
             this.btnConfirm.TabIndex = 11;
             this.btnConfirm.Text = "Login";
-            this.btnConfirm.UseVisualStyleBackColor = true;
+            this.btnConfirm.UseVisualStyleBackColor = false;
             this.btnConfirm.Click += new System.EventHandler(this.btnConfirm_Click);
             // 
             // btnCancelar
@@ -165,11 +180,11 @@
             // 
             // lblEsqueci
             // 
-            this.lblEsqueci.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblEsqueci.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lblEsqueci.AutoSize = true;
             this.lblEsqueci.Cursor = System.Windows.Forms.Cursors.Hand;
             this.lblEsqueci.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.lblEsqueci.Location = new System.Drawing.Point(186, 215);
+            this.lblEsqueci.Location = new System.Drawing.Point(206, 215);
             this.lblEsqueci.Name = "lblEsqueci";
             this.lblEsqueci.Size = new System.Drawing.Size(108, 13);
             this.lblEsqueci.TabIndex = 14;
@@ -189,14 +204,28 @@
             this.pictureBox1.TabIndex = 13;
             this.pictureBox1.TabStop = false;
             // 
+            // btnNovo
+            // 
+            this.btnNovo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnNovo.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnNovo.ForeColor = System.Drawing.Color.Blue;
+            this.btnNovo.Location = new System.Drawing.Point(8, 244);
+            this.btnNovo.Name = "btnNovo";
+            this.btnNovo.Size = new System.Drawing.Size(79, 22);
+            this.btnNovo.TabIndex = 15;
+            this.btnNovo.Text = "Novo";
+            this.btnNovo.UseVisualStyleBackColor = false;
+            this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
+            // 
             // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGray;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(306, 269);
+            this.ClientSize = new System.Drawing.Size(324, 269);
             this.ControlBox = false;
+            this.Controls.Add(this.btnNovo);
             this.Controls.Add(this.lblEsqueci);
             this.Controls.Add(this.btnCancelar);
             this.Controls.Add(this.btnConfirm);
@@ -212,6 +241,7 @@
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -241,6 +271,7 @@
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label lblEsqueci;
+        private System.Windows.Forms.Button btnNovo;
     }
 }
 

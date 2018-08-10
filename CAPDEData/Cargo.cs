@@ -22,7 +22,7 @@ namespace CAPDEData
     
         public int CargoId { get; set; }
         public string NomeCargo { get; set; }
-        public Nullable<bool> IsExcluido { get; set; }
+        public bool IsExcluido { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pessoa> Pessoas { get; set; }

@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Media;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -33,42 +32,22 @@ namespace CAPDE
         {
             InitializeComponent();
 
-            isRequireAdmin = Form.ModifierKeys == Keys.Shift;
-            if (isRequireAdmin) isAdmin = ShowLogin((int)TypeForm.Login, (int)SizeForm_Cad.Login);
-            hasUserAdmin = (isAdmin)? true : verifyUserAdmin_OnDatabase();
             ProcessInitial();
-        }
-
-        private bool ShowLogin(int form, int heightForm)
-        {
-            FormLogin fLogin = new FormLogin(form, heightForm);
-            if (fLogin.ShowDialog() == DialogResult.Yes)
-            {
-                userName = fLogin.LogedUserName;
-                logedUser = fLogin.LogedUser;
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool verifyUserAdmin_OnDatabase()
-        {
-            using(capdeEntities context = new capdeEntities())
-            {
-                Usuario user = context.Usuarios.Where(x => x.IsAdmin == true).FirstOrDefault();
-                if (user != null) return true;
-                else ShowLogin((int)TypeForm.CadastroLogin, (int)SizeForm_Cad.Login_Cad);
-            }
-
-            return false;
         }
 
         private void ProcessInitial()
         {
-            VerifiRestoredDataBase();
+            if (File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "capdeRestore.mdf")))
+                FixRestauredDatabase();
+
+            isRequireAdmin = Form.ModifierKeys == Keys.Shift;
+            if (isRequireAdmin) isAdmin = ShowLogin((int)TypeForm.Login, (int)SizeForm.Login);
+            hasUserAdmin = (isAdmin) ? true : verifyUserAdmin_OnDatabase();
+
             VerifiBackupSuccess();
             AtualizaPreencheInicial();
+
+            tslUser.Text = userName;
 
             if (isAdmin)
             {
@@ -76,15 +55,47 @@ namespace CAPDE
                 IncluirtoolStripMenuItem.Visible = true;
                 radioAposentado.Visible = true;
                 radioExcluido.Visible = true;
+                gerenciaToolStripMenuItem.Visible = true;
                 this.Text += " Admin Mode";
-                tslUser.Visible = true;
-                tslUser.Text = userName;
             }
 
-            if (!File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "capdeRestore.mdf")))
+            Task_PreencherGrid();
+        }
+
+        private bool ShowLogin(int form, int heightForm)
+        {
+            FormLogin fLogin = new FormLogin(form, heightForm, String.Empty);
+            if (fLogin.ShowDialog() == DialogResult.Yes)
             {
-                Task_PreencherGrid();
+                userName = fLogin.LogedUserName;
+                logedUser = fLogin.LogedUser;
+
+                return true;
             }
+
+            userName = fLogin.LogedUserName;
+            logedUser = fLogin.LogedUser;
+
+            return false;
+        }
+
+        private bool verifyUserAdmin_OnDatabase()
+        {
+            try
+            {
+                using (capdeEntities context = new capdeEntities())
+                {
+                    Usuario user = context.Usuarios.Where(x => x.IsAdmin == true).FirstOrDefault();
+                    if (user != null) return true;
+                    else ShowLogin((int)TypeForm.LoginAdmin, (int)SizeForm.Login_Cad);
+                }
+            }
+            catch (TimeoutException ex)
+            {
+                common.MessageBox_TryConnection(ex.ToString());
+            }
+
+            return false;
         }
 
         private void AtualizaPreencheInicial()
@@ -93,7 +104,8 @@ namespace CAPDE
             
             using (capdeEntities context = new capdeEntities())
             {
-                IEnumerable<dynamic> RAJ = context.RAJs.OrderByDescending(x=>x.NomeRaj == StringBase.TODOS.ToString()).ThenBy(x=>x.NomeRaj)
+                IEnumerable<dynamic> RAJ = context.RAJs.Where(x=>x.IsExcluido == false)
+                    .OrderByDescending(x=>x.NomeRaj == StringBase.TODOS.ToString()).ThenBy(x=>x.NomeRaj)
                     .Select(x => new { x.RajId, x.NomeRaj }).ToList();
                 tscRAJ = common.PreencheCombo(tscRAJ, RAJ, "RajId", "NomeRaj");
             }
@@ -101,7 +113,7 @@ namespace CAPDE
 
         private void cidadeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.Cidade, (int)SizeForm_Cad.Cidade);
+            newFormCad((int)TypeForm.Cidade, (int)SizeForm.Cidade);
         }
 
         private void sairToolStripMenuItem_Click(object sender, EventArgs e)
@@ -111,41 +123,38 @@ namespace CAPDE
 
         private void cJToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.CJ, (int)SizeForm_Cad.CJ);
+            newFormCad((int)TypeForm.CJ, (int)SizeForm.CJ);
         }
 
         private void rAJToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.RAJ, (int)SizeForm_Cad.RAJ);
+            newFormCad((int)TypeForm.RAJ, (int)SizeForm.RAJ);
         }
 
         private void setorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.Setor, (int)SizeForm_Cad.Setor);
+            newFormCad((int)TypeForm.Setor, (int)SizeForm.Setor);
         }
 
         private void capacitacaoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.Lote_Capacitar, (int)SizeForm_Cad.Lote);
+            newFormCad((int)TypeForm.Lote_Capacitar, (int)SizeForm.Lote);
         }
 
         private void pessoaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormCadPessoa pessoa = new FormCadPessoa(isAdmin);
-            if (pessoa.ShowDialog() == DialogResult.OK)
-            {
-                AtualizaPreencheInicial();
-            }
+            if (pessoa.ShowDialog() == DialogResult.OK) AtualizaPreencheInicial();
         }
 
         private void cargoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.Cargo, (int)SizeForm_Cad.Cargo);
+            newFormCad((int)TypeForm.Cargo, (int)SizeForm.Cargo);
         }
 
         private void turmaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.Turma, (int)SizeForm_Cad.Turma);
+            newFormCad((int)TypeForm.Turma, (int)SizeForm.Turma);
         }
 
         private void sobreToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -156,41 +165,38 @@ namespace CAPDE
 
         private void tsbRAJ_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.RAJ, (int)SizeForm_Cad.RAJ);
+            newFormCad((int)TypeForm.RAJ, (int)SizeForm.RAJ);
         }
 
         private void newFormCad(int formType, int heightForm)
         {
             FormCad cad = new FormCad(formType, heightForm, isAdmin);
-            if (cad.ShowDialog() == DialogResult.OK)
-            {
-                AtualizaPreencheInicial();
-            }
+            if (cad.ShowDialog() == DialogResult.OK) AtualizaPreencheInicial();
         }
 
         private void tsbCJ_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.CJ, (int)SizeForm_Cad.CJ);
+            newFormCad((int)TypeForm.CJ, (int)SizeForm.CJ);
         }
 
         private void tsbCidade_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.Cidade, (int)SizeForm_Cad.Cidade);
+            newFormCad((int)TypeForm.Cidade, (int)SizeForm.Cidade);
         }
 
         private void tsbSetor_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.Setor, (int)SizeForm_Cad.Setor);
+            newFormCad((int)TypeForm.Setor, (int)SizeForm.Setor);
         }
 
         private void tsbCargo_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.Cargo, (int)SizeForm_Cad.Cargo);
+            newFormCad((int)TypeForm.Cargo, (int)SizeForm.Cargo);
         }
 
         private void tsbTurma_Click(object sender, EventArgs e)
         {
-            newFormCad((int)TypeForm.Turma, (int)SizeForm_Cad.Turma);
+            newFormCad((int)TypeForm.Turma, (int)SizeForm.Turma);
         }
 
         private void tsbPessoa_Click(object sender, EventArgs e)
@@ -210,7 +216,7 @@ namespace CAPDE
             {
                 using (capdeEntities context = new capdeEntities())
                 {
-                    IEnumerable<dynamic> cidade = context.Cidades.Where(x => x.CjId == (int)tscCJ.ComboBox.SelectedValue)
+                    IEnumerable<dynamic> cidade = context.Cidades.Where(x => x.CjId == (int)tscCJ.ComboBox.SelectedValue && x.IsExcluido == false)
                         .Select(x => new { x.CidadeId, x.NomeCidade }).ToList();
                     tscCidade = common.PreencheCombo(tscCidade, cidade, "CidadeId", "NomeCidade");
                 }
@@ -255,9 +261,6 @@ namespace CAPDE
             {
                 Pessoa pessoa = context.Pessoas.Where(x => x.Registro == registro).FirstOrDefault();
 
-                DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
-                config.HasChanged = true;
-
                 if (ckCapacitado.Checked)
                 {
                     pessoa.Capacitacao.DataInicio = Convert.ToDateTime(dateTInicio.Text);
@@ -290,7 +293,7 @@ namespace CAPDE
                 pessoa.SetorId = (int)cmbSetor.SelectedValue;
                 pessoa.Obs = txtOBS.Text;
 
-                context.SaveChanges();
+                common.SaveChanges_Database(context, true);
             }
 
             AtualizaPreencheInicial();
@@ -363,8 +366,8 @@ namespace CAPDE
 
             using (capdeEntities context = new capdeEntities())
             {
-                IEnumerable<dynamic> capacitado = context.RAJs.Where(x=>x.NomeRaj != StringBase.TODOS.ToString()).OrderBy(X=>X.NomeRaj)
-                    .Select(x => new { x.RajId, x.NomeRaj }).ToList();
+                IEnumerable<dynamic> capacitado = context.RAJs.Where(x=>x.NomeRaj != StringBase.TODOS.ToString() && x.IsExcluido == false)
+                    .OrderBy(X=>X.NomeRaj).Select(x => new { x.RajId, x.NomeRaj }).ToList();
                 cmbCapacitacao = common.PreencheCombo(cmbCapacitacao, capacitado, "RajId", "NomeRaj");
             }
         }
@@ -490,7 +493,7 @@ namespace CAPDE
             {
                 using (capdeEntities context = new capdeEntities())
                 {
-                    IEnumerable<dynamic> CJ = context.CJs.Where(x => x.RajId == (int)tscRAJ.ComboBox.SelectedValue)
+                    IEnumerable<dynamic> CJ = context.CJs.Where(x => x.RajId == (int)tscRAJ.ComboBox.SelectedValue && x.IsExcluido == false)
                         .OrderByDescending(x=>x.CjNome == StringBase.TODOS.ToString()).ThenBy(x=>x.CjNome)
                         .Select(x => new { x.CjId, x.CjNome }).ToList();
                     tscCJ = common.PreencheCombo(tscCJ, CJ, "CjId", "CjNome");
@@ -676,11 +679,7 @@ namespace CAPDE
                     try
                     {
                         CreateLocalBackup();
-
-                        DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
-                        config.HasChanged = false;
-
-                        context.SaveChanges();
+                        common.SaveChanges_Database(context, false);
                     }
                     catch(Exception ex)
                     {
@@ -701,14 +700,6 @@ namespace CAPDE
 
                 if (hasChanged) MessageBox.Show("O backup não foi realizado na sessão anterior. Favor, contate o administrador.",
                      "Falha backup", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void VerifiRestoredDataBase()
-        {
-            if(File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "capdeRestore.mdf")))
-            {
-                FixRestauredDatabase();
             }
         }
 
@@ -772,10 +763,7 @@ namespace CAPDE
                     Pessoa pessoa = context.Pessoas.Where(x => x.Registro == txtRegistro.Text && x.Nome == txtNome.Text).First();
                     pessoa.IsAposentado = status;
 
-                    DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
-                    config.HasChanged = true;
-
-                    context.SaveChanges();
+                    common.SaveChanges_Database(context, true);
                     Task_PreencherGrid();
                 }
             }
@@ -805,13 +793,22 @@ namespace CAPDE
                     if (isAdmin) context.Pessoas.Remove(pessoa);
                     else pessoa.IsExcluido = status;
 
-                    DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
-                    config.HasChanged = true;
-
-                    context.SaveChanges();
+                    common.SaveChanges_Database(context, true);
                     Task_PreencherGrid();
                 }
             }
+        }
+
+        private void usuariosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormManageUser mUser = new FormManageUser();
+            mUser.Show();
+        }
+
+        private void tslUser_Click(object sender, EventArgs e)
+        {
+            FormLogin fLogin = new FormLogin((int)TypeForm.ChangeLogin, (int)SizeForm.Login_Cad, logedUser);
+            fLogin.Show();
         }
     }
 }

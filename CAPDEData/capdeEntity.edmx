@@ -23,7 +23,7 @@
           </Key>
           <Property Name="CargoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NomeCargo" Type="varchar" MaxLength="60" Nullable="false" />
-          <Property Name="IsExcluido" Type="bit" />
+          <Property Name="IsExcluido" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Cidade">
           <Key>
@@ -32,7 +32,7 @@
           <Property Name="CidadeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CjId" Type="int" Nullable="false" />
           <Property Name="NomeCidade" Type="varchar" MaxLength="40" Nullable="false" />
-          <Property Name="IsExcluido" Type="bit" />
+          <Property Name="IsExcluido" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="CJ">
           <Key>
@@ -41,8 +41,8 @@
           <Property Name="CjId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RajId" Type="int" Nullable="false" />
           <Property Name="CjIdent" Type="int" Nullable="false" />
-          <Property Name="CjNome" Type="varchar" MaxLength="50" />
-          <Property Name="IsExcluido" Type="bit" />
+          <Property Name="CjNome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsExcluido" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="DatabaseConfig">
           <Key>
@@ -63,7 +63,7 @@
           <Property Name="SetorId" Type="int" Nullable="false" />
           <Property Name="CapacitacaoId" Type="int" />
           <Property Name="Obs" Type="varchar" MaxLength="300" />
-          <Property Name="IsExcluido" Type="bit" />
+          <Property Name="IsExcluido" Type="bit" Nullable="false" />
           <Property Name="IsAposentado" Type="bit" />
         </EntityType>
         <EntityType Name="RAJ">
@@ -73,7 +73,7 @@
           <Property Name="RajId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RajIdent" Type="int" Nullable="false" />
           <Property Name="NomeRaj" Type="varchar" MaxLength="50" />
-          <Property Name="IsExcluido" Type="bit" />
+          <Property Name="IsExcluido" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Setor">
           <Key>
@@ -82,15 +82,15 @@
           <Property Name="SetorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CidadeId" Type="int" Nullable="false" />
           <Property Name="NomeSetor" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="IsExcluido" Type="bit" />
+          <Property Name="IsExcluido" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Turma">
           <Key>
             <PropertyRef Name="TurmaId" />
           </Key>
           <Property Name="TurmaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NomeTurma" Type="varchar" MaxLength="15" />
-          <Property Name="IsExcluido" Type="bit" />
+          <Property Name="NomeTurma" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="IsExcluido" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -337,7 +337,7 @@
           <Property Name="CargoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NomeCargo" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Pessoas" Relationship="capdeModel.FK__Pessoa__CargoId__36B12243" FromRole="Cargo" ToRole="Pessoa" />
-          <Property Name="IsExcluido" Type="Boolean" />
+          <Property Name="IsExcluido" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Cidade">
           <Key>
@@ -348,7 +348,7 @@
           <Property Name="NomeCidade" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="CJ" Relationship="capdeModel.FK__Cidade__CjId__3A81B327" FromRole="Cidade" ToRole="CJ" />
           <NavigationProperty Name="Setors" Relationship="capdeModel.FK__Setor__CidadeId__398D8EEE" FromRole="Cidade" ToRole="Setor" />
-          <Property Name="IsExcluido" Type="Boolean" />
+          <Property Name="IsExcluido" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="CJ">
           <Key>
@@ -357,10 +357,10 @@
           <Property Name="CjId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RajId" Type="Int32" Nullable="false" />
           <Property Name="CjIdent" Type="Int32" Nullable="false" />
-          <Property Name="CjNome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CjNome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Cidades" Relationship="capdeModel.FK__Cidade__CjId__3A81B327" FromRole="CJ" ToRole="Cidade" />
           <NavigationProperty Name="RAJ" Relationship="capdeModel.FK__CJ__RajId__3B75D760" FromRole="CJ" ToRole="RAJ" />
-          <Property Name="IsExcluido" Type="Boolean" />
+          <Property Name="IsExcluido" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="DatabaseConfig">
           <Key>
@@ -381,7 +381,7 @@
           <Property Name="SetorId" Type="Int32" Nullable="false" />
           <Property Name="CapacitacaoId" Type="Int32" />
           <Property Name="Obs" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="IsExcluido" Type="Boolean" />
+          <Property Name="IsExcluido" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Capacitacao" Relationship="capdeModel.FK__Pessoa__Capacita__38996AB5" FromRole="Pessoa" ToRole="Capacitacao" />
           <NavigationProperty Name="Cargo" Relationship="capdeModel.FK__Pessoa__CargoId__36B12243" FromRole="Pessoa" ToRole="Cargo" />
           <NavigationProperty Name="Setor" Relationship="capdeModel.FK__Pessoa__SetorId__37A5467C" FromRole="Pessoa" ToRole="Setor" />
@@ -396,7 +396,7 @@
           <Property Name="NomeRaj" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Capacitacaos" Relationship="capdeModel.FK__Capacitac__RajId__35BCFE0A" FromRole="RAJ" ToRole="Capacitacao" />
           <NavigationProperty Name="CJs" Relationship="capdeModel.FK__CJ__RajId__3B75D760" FromRole="RAJ" ToRole="CJ" />
-          <Property Name="IsExcluido" Type="Boolean" />
+          <Property Name="IsExcluido" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Setor">
           <Key>
@@ -407,16 +407,16 @@
           <Property Name="NomeSetor" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Cidade" Relationship="capdeModel.FK__Setor__CidadeId__398D8EEE" FromRole="Setor" ToRole="Cidade" />
           <NavigationProperty Name="Pessoas" Relationship="capdeModel.FK__Pessoa__SetorId__37A5467C" FromRole="Setor" ToRole="Pessoa" />
-          <Property Name="IsExcluido" Type="Boolean" />
+          <Property Name="IsExcluido" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Turma">
           <Key>
             <PropertyRef Name="TurmaId" />
           </Key>
           <Property Name="TurmaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NomeTurma" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="NomeTurma" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Capacitacaos" Relationship="capdeModel.FK__Capacitac__Turma__34C8D9D1" FromRole="Turma" ToRole="Capacitacao" />
-          <Property Name="IsExcluido" Type="Boolean" />
+          <Property Name="IsExcluido" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK__Capacitac__RajId__35BCFE0A">
           <End Type="capdeModel.RAJ" Role="RAJ" Multiplicity="0..1" />

@@ -24,7 +24,7 @@ namespace CAPDEData
         public int RajId { get; set; }
         public int CjIdent { get; set; }
         public string CjNome { get; set; }
-        public Nullable<bool> IsExcluido { get; set; }
+        public bool IsExcluido { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cidade> Cidades { get; set; }

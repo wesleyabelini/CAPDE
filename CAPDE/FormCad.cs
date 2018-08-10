@@ -74,7 +74,7 @@ namespace CAPDE
                 else if (formtypeParameters == (int)TypeForm.Cargo)
                 {
                     if(isAdmin) formCad = context.Cargoes.Where(x => x.NomeCargo != StringBase.TODOS.ToString())
-                        .Select(x => new { x.CargoId, x.NomeCargo, x.IsExcluido }).ToList();
+                         .Select(x => new { x.CargoId, x.NomeCargo, x.IsExcluido }).ToList();
                     else formCad = context.Cargoes.Where(x => x.NomeCargo != StringBase.TODOS.ToString() && x.IsExcluido == false)
                         .Select(x => new { x.CargoId, x.NomeCargo, x.IsExcluido }).ToList();
                 }
@@ -94,8 +94,8 @@ namespace CAPDE
 
             using (capdeEntities context = new capdeEntities())
             {
-                IEnumerable<dynamic> raj = context.RAJs.Where(x => x.NomeRaj != StringBase.TODOS.ToString()).OrderBy(x => x.NomeRaj)
-                    .Select(x => new { x.RajId, x.NomeRaj }).ToList();
+                IEnumerable<dynamic> raj = context.RAJs.Where(x => x.NomeRaj != StringBase.TODOS.ToString() && x.IsExcluido == false)
+                    .OrderBy(x => x.NomeRaj).Select(x => new { x.RajId, x.NomeRaj }).ToList();
                 comboBox1.SelectedIndexChanged -= comboBox1_SelectedIndexChanged;
                 common.PreencheCombo(comboBox1, raj, "RajId", "NomeRaj");
                 comboBox1.SelectedIndex = -1;
@@ -119,11 +119,11 @@ namespace CAPDE
             this.Text = "Cadastro Cidade";
             using (capdeEntities context = new capdeEntities())
             {
-                IEnumerable<dynamic> raj = context.RAJs.Where(x=>x.NomeRaj != StringBase.TODOS.ToString()).OrderBy(x=>x.NomeRaj)
+                IEnumerable<dynamic> raj = context.RAJs.Where(x=>x.NomeRaj != StringBase.TODOS.ToString() && x.IsExcluido == false).OrderBy(x=>x.NomeRaj)
                     .Select(x => new { x.RajId, x.NomeRaj }).ToList();
                 common.PreencheCombo(comboBox2, raj, "RajId", "NomeRaj");
-                IEnumerable<dynamic> cj = context.CJs.Where(x => x.CjNome != StringBase.TODOS.ToString() && x.RajId == (int)comboBox2.SelectedValue)
-                    .OrderBy(x=>x.CjNome).Select(x => new { x.CjId, x.CjNome }).ToList();
+                IEnumerable<dynamic> cj = context.CJs.Where(x => x.CjNome != StringBase.TODOS.ToString() && x.IsExcluido == false &&
+                    x.RajId == (int)comboBox2.SelectedValue).OrderBy(x=>x.CjNome).Select(x => new { x.CjId, x.CjNome }).ToList();
                 comboBox1.SelectedIndexChanged -= comboBox1_SelectedIndexChanged;
                 common.PreencheCombo(comboBox1, cj, "CjId", "CjNome");
                 comboBox1.SelectedIndex = -1;
@@ -150,16 +150,16 @@ namespace CAPDE
             {
                 if(formAtual == (int)TypeForm.Setor)
                 {
-                    IEnumerable<dynamic> raj = context.RAJs.Where(x => x.NomeRaj != StringBase.TODOS.ToString()).OrderBy(x => x.NomeRaj)
-                    .Select(x => new { x.RajId, x.NomeRaj }).ToList();
+                    IEnumerable<dynamic> raj = context.RAJs.Where(x => x.NomeRaj != StringBase.TODOS.ToString() && x.IsExcluido == false)
+                        .OrderBy(x => x.NomeRaj).Select(x => new { x.RajId, x.NomeRaj }).ToList();
                     common.PreencheCombo(comboBox3, raj, "RajId", "NomeRaj");
 
-                    IEnumerable<dynamic> cj = context.CJs.Where(x => x.CjNome != StringBase.TODOS.ToString() && x.RajId == (int)comboBox3.SelectedValue)
-                        .OrderBy(x => x.CjNome).Select(x => new { x.CjId, x.CjNome }).ToList();
+                    IEnumerable<dynamic> cj = context.CJs.Where(x => x.CjNome != StringBase.TODOS.ToString() && x.IsExcluido == false &&
+                        x.RajId == (int)comboBox3.SelectedValue).OrderBy(x => x.CjNome).Select(x => new { x.CjId, x.CjNome }).ToList();
                     common.PreencheCombo(comboBox2, cj, "CjId", "CjNome");
 
-                    IEnumerable<dynamic> cidade = context.Cidades.Where(x => x.NomeCidade != StringBase.TODOS.ToString() && x.CjId == (int)comboBox2.SelectedValue)
-                        .OrderBy(x => x.NomeCidade).Select(x => new { x.CidadeId, x.NomeCidade }).ToList();
+                    IEnumerable<dynamic> cidade = context.Cidades.Where(x => x.NomeCidade != StringBase.TODOS.ToString() && x.IsExcluido == false &&
+                        x.CjId == (int)comboBox2.SelectedValue).OrderBy(x => x.NomeCidade).Select(x => new { x.CidadeId, x.NomeCidade }).ToList();
                     common.PreencheCombo(comboBox1, cidade, "CidadeId", "NomeCidade");
 
                     label1 = (Label)common.MudarStatusVisible(label1, true, TypeForm.Setor.ToString());
@@ -177,7 +177,8 @@ namespace CAPDE
 
                     if (radioEAD.Checked)
                     {
-                        lote = context.Turmas.OrderBy(x => x.NomeTurma).Select(x => new { x.TurmaId, x.NomeTurma }).ToList();
+                        lote = context.Turmas.Where(x=>x.IsExcluido == false).OrderBy(x => x.NomeTurma)
+                            .Select(x => new { x.TurmaId, x.NomeTurma }).ToList();
                         comboBox1.Enabled = true;
                         common.PreencheCombo(comboBox1, lote, "TurmaId", "NomeTurma");
                         label2 = (Label)common.MudarStatusVisible(label2, true, TypeForm.Turma.ToString());
@@ -186,7 +187,7 @@ namespace CAPDE
                     }
                     else if (radioPresencial.Checked)
                     {
-                        lote = context.RAJs.Where(x => x.NomeRaj != StringBase.TODOS.ToString()).OrderBy(x => x.NomeRaj)
+                        lote = context.RAJs.Where(x => x.NomeRaj != StringBase.TODOS.ToString() && x.IsExcluido == false).OrderBy(x => x.NomeRaj)
                             .Select(x => new { x.RajId, x.NomeRaj }).ToList();
                         comboBox1.Enabled = true;
                         common.PreencheCombo(comboBox1, lote, "RajId", "NomeRaj");
@@ -287,11 +288,7 @@ namespace CAPDE
 
                 if (isEditing || rajVerif == null)
                 {
-                    DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
-                    config.HasChanged = true;
-
-                    context.SaveChanges();
-
+                    common.SaveChanges_Database(context, true);
                     OutEditing();
                 }
                 else MessageBox_AlreadyCadastrado(textBox1, TypeForm.RAJ.ToString());
@@ -322,10 +319,7 @@ namespace CAPDE
 
                 if (isEditing || verifTurma == null)
                 {
-                    DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
-                    config.HasChanged = true;
-
-                    context.SaveChanges();
+                    common.SaveChanges_Database(context, true);
                     OutEditing();
                 }
                 else MessageBox_AlreadyCadastrado(textBox1, TypeForm.Turma.ToString());
@@ -356,10 +350,7 @@ namespace CAPDE
 
                 if (isEditing || verifCargo == null)
                 {
-                    DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
-                    config.HasChanged = true;
-
-                    context.SaveChanges();
+                    common.SaveChanges_Database(context, true);
                     OutEditing();
                 }
                 else MessageBox_AlreadyCadastrado(textBox1, TypeForm.Cargo.ToString());
@@ -400,10 +391,7 @@ namespace CAPDE
 
                 if (isEditing || verifCJ == null)
                 {
-                    DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
-                    config.HasChanged = true;
-
-                    context.SaveChanges();
+                    common.SaveChanges_Database(context, true);
                     OutEditing();
                 }
                 else MessageBox_AlreadyCadastrado(textBox1, TypeForm.CJ.ToString());
@@ -435,10 +423,7 @@ namespace CAPDE
 
                 if (isEditing || verifCidade == null)
                 {
-                    DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
-                    config.HasChanged = true;
-
-                    context.SaveChanges();
+                    common.SaveChanges_Database(context, true);
                     OutEditing();
                 }
                 else MessageBox_AlreadyCadastrado(textBox1, TypeForm.Cidade.ToString());
@@ -470,10 +455,7 @@ namespace CAPDE
 
                 if (isEditing || verifSetor == null)
                 {
-                    DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
-                    config.HasChanged = true;
-
-                    context.SaveChanges();
+                    common.SaveChanges_Database(context, true);
                     OutEditing();
                 }
                 else MessageBox_AlreadyCadastrado(textBox1, TypeForm.Setor.ToString());
@@ -550,10 +532,7 @@ namespace CAPDE
                     (sender as BackgroundWorker).ReportProgress(i);
                 }
 
-                DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
-                config.HasChanged = true;
-
-                context.SaveChanges();
+                common.SaveChanges_Database(context, true);
             }
         }
 
@@ -593,14 +572,14 @@ namespace CAPDE
                 {
                     if (formAtual == (int)TypeForm.Setor)
                     {
-                        IEnumerable<dynamic> cidade = context.Cidades.Where(x => x.CjId == (int)comboBox2.SelectedValue && x.NomeCidade != StringBase.TODOS.ToString())
-                            .OrderBy(x=>x.NomeCidade).Select(x => new { x.CidadeId, x.NomeCidade }).ToList();
+                        IEnumerable<dynamic> cidade = context.Cidades.Where(x => x.CjId == (int)comboBox2.SelectedValue && x.IsExcluido == false &&
+                            x.NomeCidade != StringBase.TODOS.ToString()).OrderBy(x=>x.NomeCidade).Select(x => new { x.CidadeId, x.NomeCidade }).ToList();
                         common.PreencheCombo(comboBox1, cidade, "CidadeId", "NomeCidade");
                     }
                     else if (formAtual == (int)TypeForm.Cidade)
                     {
-                        IEnumerable<dynamic> cj = context.CJs.Where(x=>x.RajId == (int)comboBox2.SelectedValue && x.CjNome != StringBase.TODOS.ToString())
-                            .OrderBy(x=>x.CjNome).Select(x => new { x.CjId, x.CjNome }).ToList();
+                        IEnumerable<dynamic> cj = context.CJs.Where(x=>x.RajId == (int)comboBox2.SelectedValue && x.IsExcluido == false &&
+                            x.CjNome != StringBase.TODOS.ToString()).OrderBy(x=>x.CjNome).Select(x => new { x.CjId, x.CjNome }).ToList();
                         common.PreencheCombo(comboBox1, cj, "CjId", "CjNome");
                     }
                 }
@@ -656,7 +635,8 @@ namespace CAPDE
         {
             using(capdeEntities context = new capdeEntities())
             {
-                IEnumerable<dynamic> turma = context.Turmas.OrderBy(x => x.NomeTurma).Select(x => new { x.TurmaId, x.NomeTurma }).ToList();
+                IEnumerable<dynamic> turma = context.Turmas.Where(x=>x.IsExcluido == false).OrderBy(x => x.NomeTurma)
+                    .Select(x => new { x.TurmaId, x.NomeTurma }).ToList();
                 comboBox1.Enabled = true;
                 comboBox1 = common.PreencheCombo(comboBox1, turma, "TurmaId", "NomeTurma");
 
@@ -668,8 +648,8 @@ namespace CAPDE
         {
             using(capdeEntities context = new capdeEntities())
             {
-                IEnumerable<dynamic> raj = context.RAJs.Where(x=>x.NomeRaj != StringBase.TODOS.ToString()).OrderBy(x => x.NomeRaj)
-                    .Select(x => new { x.RajId, x.NomeRaj }).ToList();
+                IEnumerable<dynamic> raj = context.RAJs.Where(x=>x.NomeRaj != StringBase.TODOS.ToString() && x.IsExcluido == false)
+                    .OrderBy(x => x.NomeRaj).Select(x => new { x.RajId, x.NomeRaj }).ToList();
                 comboBox1.Enabled = true;
                 comboBox1 = common.PreencheCombo(comboBox1, raj, "RajId", "NomeRaj");
 
@@ -712,7 +692,7 @@ namespace CAPDE
                     {
                         headerText = TypeForm.Setor.ToString();
                         if(isAdmin) formEnum = context.Setors.Where(x => x.CidadeId == (int)comboBox1.SelectedValue)
-                            .Select(x => new { x.SetorId, x.NomeSetor, x.IsExcluido }).ToList();
+                             .Select(x => new { x.SetorId, x.NomeSetor, x.IsExcluido }).ToList();
                         else formEnum = context.Setors.Where(x => x.CidadeId == (int)comboBox1.SelectedValue && x.IsExcluido == false)
                             .Select(x => new { x.SetorId, x.NomeSetor, x.IsExcluido }).ToList();
                     }
@@ -764,25 +744,20 @@ namespace CAPDE
         private void excluirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             IncluirExcluirRegistro("Excluir", true);
+            registerInserted = true;
         }
 
         private void incluirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             IncluirExcluirRegistro("Incluir", false);
+            registerInserted = true;
         }
 
         private void IncluirExcluirRegistro(string acao, bool isExcluido)
         {
             using (capdeEntities context = new capdeEntities())
             {
-                Object objToDel = new Object();
-
-                if (formAtual == (int)TypeForm.RAJ) objToDel = context.RAJs.Where(x => x.RajId == idEditing).FirstOrDefault();
-                else if (formAtual == (int)TypeForm.CJ) objToDel = context.CJs.Where(x => x.CjId == idEditing).FirstOrDefault();
-                else if (formAtual == (int)TypeForm.Cidade) objToDel = context.Cidades.Where(x => x.CidadeId == idEditing).FirstOrDefault();
-                else if (formAtual == (int)TypeForm.Setor) objToDel = context.Setors.Where(x => x.SetorId == idEditing).FirstOrDefault();
-                else if (formAtual == (int)TypeForm.Cargo) objToDel = context.Cargoes.Where(x => x.CargoId == idEditing).FirstOrDefault();
-                else if (formAtual == (int)TypeForm.Turma) objToDel = context.Turmas.Where(x => x.TurmaId == idEditing).FirstOrDefault();
+                Object objToDel = WichObjectEditing(context);
 
                 string registro = dataGridView1.CurrentRow.Cells[1].Value.ToString();
 
@@ -790,65 +765,83 @@ namespace CAPDE
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     if (objToDel is RAJ)
-                        if (isAdmin)
-                        {
-                            if (isExcluido) context.RAJs.Remove((RAJ)objToDel);
-                            else context.RAJs.Add((RAJ)objToDel);
-                        }
-                        else (objToDel as RAJ).IsExcluido = isExcluido;
+                    {
+                        CJ cj = context.CJs.Where(x => x.RajId == idEditing && x.CjNome != StringBase.TODOS.ToString() && x.IsExcluido == false)
+                            .FirstOrDefault();
+                        if ((cj == null && isExcluido) || !isExcluido) (objToDel as RAJ).IsExcluido = isExcluido;
+                        else MessageBox_ExcludeValueImpossible();
+                    }
                     else if (objToDel is CJ)
-                        if (isAdmin)
-                        {
-                            if (isExcluido) context.CJs.Remove((CJ)objToDel);
-                            else context.CJs.Add((CJ)objToDel);
-                        }
-                        else (objToDel as CJ).IsExcluido = isExcluido;
+                    {
+                        Cidade cidade = context.Cidades.Where(x => x.CjId == idEditing && x.NomeCidade != StringBase.TODOS.ToString() && 
+                            x.IsExcluido == false).FirstOrDefault();
+                        if ((cidade == null && isExcluido) || !isExcluido) (objToDel as CJ).IsExcluido = isExcluido;
+                        else MessageBox_ExcludeValueImpossible();
+                    }
                     else if (objToDel is Cidade)
-                        if (isAdmin)
-                        {
-                            if (isExcluido) context.Cidades.Remove((Cidade)objToDel);
-                            else context.Cidades.Add((Cidade)objToDel);
-                        }
-                        else (objToDel as Cidade).IsExcluido = isExcluido;
+                    {
+                        Setor setor = context.Setors.Where(x => x.CidadeId == idEditing && x.NomeSetor != StringBase.TODOS.ToString() && 
+                            x.IsExcluido == false).FirstOrDefault();
+                        if ((setor == null && isExcluido) || !isExcluido) (objToDel as Cidade).IsExcluido = isExcluido;
+                        else MessageBox_ExcludeValueImpossible();
+                    }
                     else if (objToDel is Setor)
-                        if (isAdmin)
-                        {
-                            if (isExcluido) context.Setors.Remove((Setor)objToDel);
-                            else context.Setors.Add((Setor)objToDel);
-                        }
-                        else (objToDel as Setor).IsExcluido = isExcluido;
+                    {
+                        Pessoa pessoa = context.Pessoas.Where(x => x.SetorId == idEditing && x.IsExcluido == false).FirstOrDefault();
+                        if((pessoa == null && isExcluido) || !isExcluido) (objToDel as Setor).IsExcluido = isExcluido;
+                        else MessageBox_ExcludeValueImpossible();
+                    }
                     else if (objToDel is Cargo)
-                        if (isAdmin)
-                        {
-                            if (isExcluido) context.Cargoes.Remove((Cargo)objToDel);
-                            else context.Cargoes.Add((Cargo)objToDel);
-                        }
-                        else (objToDel as Cargo).IsExcluido = isExcluido;
+                    {
+                        Pessoa pessoa = context.Pessoas.Where(x => x.CargoId == idEditing && x.IsExcluido == false).FirstOrDefault();
+                        if((pessoa == null && isExcluido) || !isExcluido) (objToDel as Cargo).IsExcluido = isExcluido;
+                        else MessageBox_ExcludeValueImpossible();
+                    }
                     else if (objToDel is Turma)
-                        if (isAdmin)
-                        {
-                            if (isExcluido) context.Turmas.Remove((Turma)objToDel);
-                            else context.Turmas.Add((Turma)objToDel);
-                        }
-                        else (objToDel as Turma).IsExcluido = isExcluido;
+                    {
+                        Capacitacao capacitacao = context.Capacitacaos.Where(x => x.TurmaId == idEditing).FirstOrDefault();
+                        if((capacitacao == null && isExcluido) || !isExcluido) (objToDel as Turma).IsExcluido = isExcluido;
+                        else MessageBox_ExcludeValueImpossible();
+                    }
 
-                    DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
-                    config.HasChanged = true;
+                    common.SaveChanges_Database(context, true);
 
-                    context.SaveChanges();
                     condicaoInicial(formAtual);
                     OutEditing();
                 }
             }
         }
 
+        private Object WichObjectEditing(capdeEntities context)
+        {
+            Object objToDel = new Object();
+
+            if (formAtual == (int)TypeForm.RAJ) objToDel = context.RAJs.Where(x => x.RajId == idEditing).FirstOrDefault();
+            else if (formAtual == (int)TypeForm.CJ) objToDel = context.CJs.Where(x => x.CjId == idEditing).FirstOrDefault();
+            else if (formAtual == (int)TypeForm.Cidade) objToDel = context.Cidades.Where(x => x.CidadeId == idEditing).FirstOrDefault();
+            else if (formAtual == (int)TypeForm.Setor) objToDel = context.Setors.Where(x => x.SetorId == idEditing).FirstOrDefault();
+            else if (formAtual == (int)TypeForm.Cargo) objToDel = context.Cargoes.Where(x => x.CargoId == idEditing).FirstOrDefault();
+            else if (formAtual == (int)TypeForm.Turma) objToDel = context.Turmas.Where(x => x.TurmaId == idEditing).FirstOrDefault();
+
+            return objToDel;
+        }
+
+        private void MessageBox_ExcludeValueImpossible()
+        {
+            MessageBox.Show("Não foi possível excluir o registro. Vide dependências", "Falha Exclusão", 
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
         private void dataGridView1_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
         {
-            foreach(DataGridViewRow i in dataGridView1.Rows)
+            if(formAtual != (int)TypeForm.Lote_Capacitar)
             {
-                bool isExluido = (bool)i.Cells[2].Value;
+                foreach (DataGridViewRow i in dataGridView1.Rows)
+                {
+                    bool isExluido = (bool)i.Cells[2].Value;
 
-                if (isExluido) i.DefaultCellStyle.BackColor = Color.Tomato;
+                    if (isExluido) i.DefaultCellStyle.BackColor = Color.Tomato;
+                }
             }
         }
 

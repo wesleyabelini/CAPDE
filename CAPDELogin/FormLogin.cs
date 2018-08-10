@@ -33,19 +33,20 @@ namespace CAPDELogin
 
         int formAtual = 0;
 
-        public FormLogin(int form, int heightForm)
+        public FormLogin(int form, int heightForm, string userLogin)
         {
             InitializeComponent();
 
             formAtual = form;
             this.Height = heightForm;
-
+            if (!String.IsNullOrEmpty(userLogin)) logedUser = userLogin;
             condicaoInicial();
         }
 
         private void condicaoInicial()
         {
-            if (formAtual == (int)TypeForm.CadastroLogin) CadastroLogin_Form();
+            if (formAtual == (int)TypeForm.LoginAdmin || formAtual == (int)TypeForm.LoginNovo || formAtual == (int)TypeForm.ChangeLogin)
+                CadastroLogin_Form();
             else if (formAtual == (int)TypeForm.Login) Login_Form();
         }
 
@@ -54,6 +55,69 @@ namespace CAPDELogin
             this.Text = "Cadastro";
             btnConfirm.Text = "Cadastrar";
             lblEsqueci = (Label)common.MudarStatusVisible(lblEsqueci, false, String.Empty);
+
+            txtSenha = (TextBox)common.MudarStatusVisible(txtSenha, true, String.Empty);
+            txtSenhaConfirm = (TextBox)common.MudarStatusVisible(txtSenhaConfirm, true, String.Empty);
+            txtUsuario = (TextBox)common.MudarStatusVisible(txtUsuario, true, String.Empty);
+
+            label1.Text = "Nome";
+            label2.Text = "E-Mail";
+            lblCinfirmSenha = (Label)common.MudarStatusVisible(lblCinfirmSenha, true, "Confirmar Senha");
+            lblSenha = (Label)common.MudarStatusVisible(lblSenha, true, "Senha");
+            lblUsuario = (Label)common.MudarStatusVisible(lblUsuario, true, "Usuário");
+
+            if (formAtual == (int)TypeForm.LoginNovo)
+            {
+                chkIsAdmin = (CheckBox)common.MudarStatusVisible(chkIsAdmin, false, String.Empty);
+                chkIsAdmin.Checked = false;
+                textBox2.PasswordChar = '\0';
+            }
+
+            btnNovo = (Button)common.MudarStatusVisible(btnNovo, false, String.Empty);
+
+            if (formAtual == (int)TypeForm.ChangeLogin)
+            {
+                chkIsAdmin = (CheckBox)common.MudarStatusVisible(chkIsAdmin, false, String.Empty);
+                GetUserProfile();
+            }
+        }
+
+        private void GetUserProfile()
+        {
+            using(capdeEntities context = new capdeEntities())
+            {
+                Usuario user = context.Usuarios.Where(x => x.Login == logedUser).FirstOrDefault();
+
+                if(user != null)
+                {
+                    textBox1.Text = user.Nome;
+                    textBox2.Text = user.Email;
+                    txtUsuario.Text = user.Login;
+                } 
+            }
+        }
+
+        private void SaveUserProfile()
+        {
+            using (capdeEntities context = new capdeEntities())
+            {
+                string hash = crypt.newHash(txtUsuario.Text + txtSenha.Text);
+
+                if (txtSenha.Text == txtSenhaConfirm.Text)
+                {
+                    Usuario user = context.Usuarios.Where(x => x.Login == logedUser).FirstOrDefault();
+
+                    user.Nome = textBox1.Text;
+                    user.Email = textBox2.Text;
+                    user.Login = txtUsuario.Text;
+                    user.Senha = hash;
+
+                    common.SaveChanges_Database(context, true);
+                }
+                else MessageBox_SenhasDiferentes();
+            }
+
+            this.Close();
         }
 
         private void Login_Form()
@@ -78,16 +142,19 @@ namespace CAPDELogin
         private void btnConfirm_Click(object sender, EventArgs e)
         {
             if (formAtual == (int)TypeForm.Login) Login();
-            else if (formAtual == (int)TypeForm.CadastroLogin && txtSenha.Text == txtSenhaConfirm.Text) CadastroUser();
-            else if(formAtual == (int)TypeForm.CadastroLogin && txtSenha.Text != txtSenhaConfirm.Text)
-            {
-                MessageBox.Show("Os campos 'Senha' e 'Confirmar Senha' não correspondem.", "Password", MessageBoxButtons.OK,
+            else if ((formAtual == (int)TypeForm.LoginAdmin || formAtual == (int)TypeForm.LoginNovo) &&
+                txtSenha.Text == txtSenhaConfirm.Text) CadastroUser();
+            else if (formAtual == (int)TypeForm.ChangeLogin) SaveUserProfile();
+        }
+
+        private void MessageBox_SenhasDiferentes()
+        {
+            MessageBox.Show("Os campos 'Senha' e 'Confirmar Senha' não correspondem.", "Password", MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
-                txtSenha.Clear();
-                txtSenhaConfirm.Clear();
-                txtSenha.Focus();
-            }
+            txtSenha.Clear();
+            txtSenhaConfirm.Clear();
+            txtSenha.Focus();
         }
 
         private void Login()
@@ -97,13 +164,11 @@ namespace CAPDELogin
             using(capdeEntities context = new capdeEntities())
             {
                 Usuario user = context.Usuarios.Where(x => x.Senha == hash).FirstOrDefault();
-                if (user != null && user.IsAdmin)
-                {
-                    logedUser = user.Login;
-                    logedUsername = user.Nome;
-                    this.DialogResult = DialogResult.Yes;
-                }
+                if (user != null && user.IsAdmin) this.DialogResult = DialogResult.Yes;
                 else this.DialogResult = DialogResult.No;
+
+                logedUser = user.Login;
+                logedUsername = user.Nome;
             }
 
             this.Close();
@@ -116,23 +181,24 @@ namespace CAPDELogin
                 Usuario usuario = context.Usuarios.Where(x => x.Login == txtUsuario.Text).FirstOrDefault();
                 if (usuario == null)
                 {
-                    Usuario user = new Usuario
+                    if (txtSenha.Text == txtSenhaConfirm.Text)
                     {
-                        Nome = textBox1.Text,
-                        Email = textBox2.Text,
-                        Login = txtUsuario.Text,
-                        Senha = crypt.newHash(txtUsuario.Text + txtSenha.Text),
-                        IsAdmin = chkIsAdmin.Checked
-                    };
+                        Usuario user = new Usuario
+                        {
+                            Nome = textBox1.Text,
+                            Email = textBox2.Text,
+                            Login = txtUsuario.Text,
+                            Senha = crypt.newHash(txtUsuario.Text + txtSenha.Text),
+                            IsAdmin = chkIsAdmin.Checked
+                        };
 
-                    DatabaseConfig config = context.DatabaseConfigs.Where(x => x.DatabaseConfigId == 1).First();
-                    config.HasChanged = true;
+                        context.Usuarios.Add(user);
+                        common.SaveChanges_Database(context, true);
 
-                    context.Usuarios.Add(user);
-                    context.SaveChanges();
-
-                    this.DialogResult = DialogResult.No;
-                    this.Close();
+                        this.DialogResult = DialogResult.No;
+                        this.Close();
+                    }
+                    else MessageBox_SenhasDiferentes();
                 }
                 else
                 {
@@ -163,7 +229,7 @@ namespace CAPDELogin
                         string newPass = RandonNumer();
 
                         user.Senha = crypt.newHash(user.Login + newPass);
-                        context.SaveChanges();
+                        common.SaveChanges_Database(context, true);
 
                         UserCredential credential = gmail.Autenticate();
                         using(GmailService service = gmail.AbrirServico(credential))
@@ -203,6 +269,30 @@ namespace CAPDELogin
         {
             var inputBytes = System.Text.Encoding.UTF8.GetBytes(input);
             return Convert.ToBase64String(inputBytes).Replace("+", "-").Replace("/", "_").Replace("=", "");
+        }
+
+        private void btnNovo_Click(object sender, EventArgs e)
+        {
+            formAtual = (int)TypeForm.LoginNovo;
+            this.Height = (int)SizeForm.Login_Cad;
+
+            condicaoInicial();
+        }
+
+        private void textBox2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (formAtual == (int)TypeForm.Login) TextBoxEnterClick(e);
+        }
+
+        private void txtSenhaConfirm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (formAtual == (int)TypeForm.LoginAdmin || formAtual == (int)TypeForm.LoginNovo || formAtual == (int)TypeForm.ChangeLogin)
+                TextBoxEnterClick(e);
+        }
+
+        private void TextBoxEnterClick(KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter) btnConfirm.PerformClick();
         }
     }
 }

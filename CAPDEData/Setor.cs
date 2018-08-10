@@ -23,7 +23,7 @@ namespace CAPDEData
         public int SetorId { get; set; }
         public int CidadeId { get; set; }
         public string NomeSetor { get; set; }
-        public Nullable<bool> IsExcluido { get; set; }
+        public bool IsExcluido { get; set; }
     
         public virtual Cidade Cidade { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

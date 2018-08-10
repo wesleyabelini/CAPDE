@@ -16,7 +16,7 @@ namespace CAPDELogin
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormLogin(0, 308));
+            Application.Run(new FormLogin(0, 308, String.Empty));
         }
     }
 }

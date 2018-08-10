@@ -258,6 +258,7 @@ namespace CAPDE_ImportingData
                 Cargo newCargo = new Cargo
                 {
                     NomeCargo = cargo.ToUpper(),
+                    IsExcluido = false,
                 };
 
                 context.Cargoes.Add(newCargo);
@@ -274,6 +275,7 @@ namespace CAPDE_ImportingData
                 RAJ newRaj = new RAJ
                 {
                     NomeRaj = raj.ToUpper(),
+                    IsExcluido = false,
                 };
 
                 CJ cj = new CJ
@@ -306,12 +308,14 @@ namespace CAPDE_ImportingData
                 {
                     RajId = raj,
                     CjNome = cj.ToUpper(),
+                    IsExcluido = false,
                 };
 
                 Cidade cidade = new Cidade
                 {
                     CJ = newCJ,
                     NomeCidade = StringBase.TODOS.ToString(),
+                    IsExcluido = false,
                 };
 
                 context.CJs.Add(newCJ);
@@ -330,6 +334,7 @@ namespace CAPDE_ImportingData
                 {
                     CjId = cj,
                     NomeCidade = cidade.ToUpper(),
+                    IsExcluido = false,
                 };
 
                 context.Cidades.Add(newCidade);
@@ -346,7 +351,8 @@ namespace CAPDE_ImportingData
                 Setor newSetor = new Setor
                 {
                     CidadeId = cidade,
-                    NomeSetor = setor.ToUpper()
+                    NomeSetor = setor.ToUpper(),
+                    IsExcluido = false,
                 };
 
                 context.Setors.Add(newSetor);

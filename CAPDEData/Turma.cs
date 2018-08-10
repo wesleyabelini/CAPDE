@@ -22,7 +22,7 @@ namespace CAPDEData
     
         public int TurmaId { get; set; }
         public string NomeTurma { get; set; }
-        public Nullable<bool> IsExcluido { get; set; }
+        public bool IsExcluido { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Capacitacao> Capacitacaos { get; set; }

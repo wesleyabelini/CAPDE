@@ -44,6 +44,8 @@
             this.cargoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pessoaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.turmaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gerenciaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.usuariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,6 +80,7 @@
             this.tsbPessoa = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbRelatorio = new System.Windows.Forms.ToolStripButton();
+            this.tslUser = new System.Windows.Forms.ToolStripLabel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.gBoxPessoa = new System.Windows.Forms.GroupBox();
             this.btAtualizar = new System.Windows.Forms.Button();
@@ -125,7 +128,6 @@
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.ExcluirtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.IncluirtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tslUser = new System.Windows.Forms.ToolStripLabel();
             this.menuStrip1.SuspendLayout();
             this.tsInferior.SuspendLayout();
             this.tsSuperior.SuspendLayout();
@@ -144,6 +146,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cadastroToolStripMenuItem,
             this.cadastroToolStripMenuItem2,
+            this.gerenciaToolStripMenuItem,
             this.toolsToolStripMenuItem,
             this.sobreToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -174,11 +177,13 @@
             // 
             // toolStripSeparator1
             // 
+            this.toolStripSeparator1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(118, 6);
             // 
             // sairToolStripMenuItem
             // 
+            this.sairToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.sairToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Exit_Door;
             this.sairToolStripMenuItem.Name = "sairToolStripMenuItem";
             this.sairToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
@@ -260,6 +265,23 @@
             this.turmaToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.turmaToolStripMenuItem.Text = "Turma";
             this.turmaToolStripMenuItem.Click += new System.EventHandler(this.turmaToolStripMenuItem_Click);
+            // 
+            // gerenciaToolStripMenuItem
+            // 
+            this.gerenciaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.usuariosToolStripMenuItem});
+            this.gerenciaToolStripMenuItem.Name = "gerenciaToolStripMenuItem";
+            this.gerenciaToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.gerenciaToolStripMenuItem.Text = "Gerência";
+            this.gerenciaToolStripMenuItem.Visible = false;
+            // 
+            // usuariosToolStripMenuItem
+            // 
+            this.usuariosToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Contacts__4_;
+            this.usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
+            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.usuariosToolStripMenuItem.Text = "Usuários";
+            this.usuariosToolStripMenuItem.Click += new System.EventHandler(this.usuariosToolStripMenuItem_Click);
             // 
             // toolsToolStripMenuItem
             // 
@@ -557,6 +579,22 @@
             this.tsbRelatorio.Text = "Relatório";
             this.tsbRelatorio.Click += new System.EventHandler(this.tsbRelatorio_Click);
             // 
+            // tslUser
+            // 
+            this.tslUser.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
+            this.tslUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.tslUser.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.tslUser.ForeColor = System.Drawing.Color.AliceBlue;
+            this.tslUser.IsLink = true;
+            this.tslUser.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.tslUser.LinkColor = System.Drawing.SystemColors.HighlightText;
+            this.tslUser.Name = "tslUser";
+            this.tslUser.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.tslUser.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tslUser.Size = new System.Drawing.Size(91, 22);
+            this.tslUser.Text = "Nome Pessoa";
+            this.tslUser.Click += new System.EventHandler(this.tslUser_Click);
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.gBoxPessoa);
@@ -594,13 +632,16 @@
             // 
             // btAtualizar
             // 
+            this.btAtualizar.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.btAtualizar.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btAtualizar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.5F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btAtualizar.ForeColor = System.Drawing.Color.Blue;
             this.btAtualizar.Location = new System.Drawing.Point(3, 590);
             this.btAtualizar.Name = "btAtualizar";
             this.btAtualizar.Size = new System.Drawing.Size(436, 39);
             this.btAtualizar.TabIndex = 10;
             this.btAtualizar.Text = "ATUALIZAR";
-            this.btAtualizar.UseVisualStyleBackColor = true;
+            this.btAtualizar.UseVisualStyleBackColor = false;
             this.btAtualizar.Click += new System.EventHandler(this.btAtualizar_Click);
             // 
             // txtEmail
@@ -707,7 +748,6 @@
             this.radioEAD.TabStop = true;
             this.radioEAD.Text = "EAD";
             this.radioEAD.UseVisualStyleBackColor = true;
-            this.radioEAD.CheckedChanged += new System.EventHandler(this.radioEAD_Click);
             this.radioEAD.Click += new System.EventHandler(this.radioEAD_Click);
             // 
             // lblCapacitacao
@@ -1069,22 +1109,6 @@
             this.IncluirtoolStripMenuItem.Visible = false;
             this.IncluirtoolStripMenuItem.Click += new System.EventHandler(this.IncluirtoolStripMenuItem_Click);
             // 
-            // tslUser
-            // 
-            this.tslUser.ActiveLinkColor = System.Drawing.SystemColors.ActiveCaption;
-            this.tslUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.tslUser.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.tslUser.ForeColor = System.Drawing.Color.AliceBlue;
-            this.tslUser.IsLink = true;
-            this.tslUser.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.tslUser.LinkColor = System.Drawing.SystemColors.HighlightText;
-            this.tslUser.Name = "tslUser";
-            this.tslUser.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.tslUser.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tslUser.Size = new System.Drawing.Size(91, 22);
-            this.tslUser.Text = "Nome Pessoa";
-            this.tslUser.Visible = false;
-            // 
             // FormCAPDE
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1095,6 +1119,7 @@
             this.Controls.Add(this.tsSuperior);
             this.Controls.Add(this.tsInferior);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormCAPDE";
             this.Text = "CAPDE";
@@ -1220,6 +1245,8 @@
         private System.Windows.Forms.RadioButton radioAposentado;
         private System.Windows.Forms.RadioButton radioExcluido;
         private System.Windows.Forms.ToolStripLabel tslUser;
+        private System.Windows.Forms.ToolStripMenuItem gerenciaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem usuariosToolStripMenuItem;
     }
 }
 
