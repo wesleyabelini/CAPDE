@@ -118,85 +118,94 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Adobe Acrobat CS4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Adobe Acrobat CS4.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="People - Girl" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\People - Girl.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Briefcase (6)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Briefcase (6).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Table (3)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Table (3).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BitTorrent (4)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BitTorrent (4).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Arrow-Down" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Arrow-Down.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Zoom (+) (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Zoom (+) (2).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="logocadalltransparency_kOq_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\logocadalltransparency_kOq_icon.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Adobe Acrobat CS3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Adobe Acrobat CS3.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="People - Steven Spielberg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\People - Steven Spielberg.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Christ The Redeemer" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Christ The Redeemer.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Computer - Laptop (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Computer - Laptop (2).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Law (3)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Law (3).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Application (6)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Application (6).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Adobe - Help" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Adobe - Help.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Adobe Acrobat CS4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Adobe Acrobat CS4.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Globe (13)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Globe (13).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Arrow - Up (7)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Arrow - Up (7).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="X (8)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\X (8).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Building (7)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Building (7).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Law (3)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Law (3).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="logocadAllTransparency" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logocadAllTransparency.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Judge" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Judge.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="cidadeIco" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\cidadeIco.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Audience (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Audience (2).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Exit Door" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Exit Door.ICO;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Arrow - Up (7)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Arrow - Up (7).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="capgraduate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\capgraduate.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Database" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Database.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Arrow-Down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Arrow-Down.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="X (8)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\X (8).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="cidadeIco" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\cidadeIco.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Exit Door" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Exit Door.ICO;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="People - Girl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\People - Girl.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Adobe - Help" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Adobe - Help.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="People - Group4 Meeting Dark" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\People - Group4 Meeting Dark.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Table (3)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Table (3).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Zoom (+) (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Zoom (+) (2).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Adobe Acrobat CS3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Adobe Acrobat CS3.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Contacts (4)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Contacts (4).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Audience (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Audience (2).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Application (6)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Application (6).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="logocadalltransparency_kOq_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\logocadalltransparency_kOq_icon.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Briefcase (6)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Briefcase (6).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Computer - Laptop (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Computer - Laptop (2).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Database" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Database.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BitTorrent (4)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BitTorrent (4).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Search (16)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Search (16).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Building (7)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Building (7).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Judge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Judge.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Christ The Redeemer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Christ The Redeemer.ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Microsoft - Office - Excel (10)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Microsoft - Office - Excel (10).ico;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

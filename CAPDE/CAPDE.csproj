@@ -153,6 +153,18 @@
     <Compile Include="FormCadPessoa.Designer.cs">
       <DependentUpon>FormCadPessoa.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormDialogItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDialogItem.Designer.cs">
+      <DependentUpon>FormDialogItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLoteServidores.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLoteServidores.Designer.cs">
+      <DependentUpon>FormLoteServidores.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormRelatorio.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -179,6 +191,12 @@
     <EmbeddedResource Include="FormCadPessoa.resx">
       <DependentUpon>FormCadPessoa.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormDialogItem.resx">
+      <DependentUpon>FormDialogItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLoteServidores.resx">
+      <DependentUpon>FormLoteServidores.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormRelatorio.resx">
       <DependentUpon>FormRelatorio.cs</DependentUpon>
     </EmbeddedResource>
@@ -188,6 +206,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Report1.rdlc" />
+    <None Include="CAPDE.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="capdeDataSet.xsc">
       <DependentUpon>capdeDataSet.xsd</DependentUpon>
     </None>
@@ -245,6 +266,9 @@
     <None Include="Resources\X %288%29.ico" />
     <None Include="Resources\Zoom %28+%29 %282%29.ico" />
     <None Include="Resources\People - Girl.ico" />
+    <None Include="Resources\People - Group4 Meeting Dark.ico" />
+    <None Include="Resources\Search %2816%29.ico" />
+    <None Include="Resources\Microsoft - Office - Excel %2810%29.ico" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

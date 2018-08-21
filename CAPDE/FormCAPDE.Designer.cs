@@ -52,6 +52,7 @@
             this.restoreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.capacitaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.servidoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sobreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sobreToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tsInferior = new System.Windows.Forms.ToolStrip();
@@ -299,7 +300,7 @@
             this.restoreToolStripMenuItem});
             this.databaseToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Database;
             this.databaseToolStripMenuItem.Name = "databaseToolStripMenuItem";
-            this.databaseToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.databaseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.databaseToolStripMenuItem.Text = "Database";
             // 
             // backupToolStripMenuItem
@@ -321,19 +322,28 @@
             // loteToolStripMenuItem1
             // 
             this.loteToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.capacitaçãoToolStripMenuItem});
+            this.capacitaçãoToolStripMenuItem,
+            this.servidoresToolStripMenuItem});
             this.loteToolStripMenuItem1.Image = global::CAPDE.Properties.Resources.Briefcase__6_;
             this.loteToolStripMenuItem1.Name = "loteToolStripMenuItem1";
-            this.loteToolStripMenuItem1.Size = new System.Drawing.Size(122, 22);
+            this.loteToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.loteToolStripMenuItem1.Text = "Lote";
             // 
             // capacitaçãoToolStripMenuItem
             // 
             this.capacitaçãoToolStripMenuItem.Image = global::CAPDE.Properties.Resources.capgraduate;
             this.capacitaçãoToolStripMenuItem.Name = "capacitaçãoToolStripMenuItem";
-            this.capacitaçãoToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
+            this.capacitaçãoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.capacitaçãoToolStripMenuItem.Text = "Capacitação";
             this.capacitaçãoToolStripMenuItem.Click += new System.EventHandler(this.capacitacaoToolStripMenuItem_Click);
+            // 
+            // servidoresToolStripMenuItem
+            // 
+            this.servidoresToolStripMenuItem.Image = global::CAPDE.Properties.Resources.People___Group4_Meeting_Dark;
+            this.servidoresToolStripMenuItem.Name = "servidoresToolStripMenuItem";
+            this.servidoresToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.servidoresToolStripMenuItem.Text = "Servidores";
+            this.servidoresToolStripMenuItem.Click += new System.EventHandler(this.servidoresToolStripMenuItem_Click);
             // 
             // sobreToolStripMenuItem
             // 
@@ -1247,6 +1257,7 @@
         private System.Windows.Forms.ToolStripLabel tslUser;
         private System.Windows.Forms.ToolStripMenuItem gerenciaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem usuariosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem servidoresToolStripMenuItem;
     }
 }
 

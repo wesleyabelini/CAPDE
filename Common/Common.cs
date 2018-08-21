@@ -1,4 +1,5 @@
 ﻿using CAPDEData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -65,17 +66,27 @@ namespace Common
                         MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                     if (message == DialogResult.Yes)
                     {
-                        OpenFileDialog_RestoreLocalBackup("Backup File | *.bak");
+                        string dialogFileName = OpenFileDialog("Backup File | *.bak");
+                        if (!String.IsNullOrEmpty(dialogFileName)) Backup.RestoreLocalBackup(dialogFileName);
                     }
                 }
             }
         }
 
-        public void OpenFileDialog_RestoreLocalBackup(string filter)
+        public string OpenFileDialog(string filter)
         {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = filter;
-            if (dialog.ShowDialog() == DialogResult.OK) Backup.RestoreLocalBackup(dialog.FileName);
+            if (dialog.ShowDialog() == DialogResult.OK) return dialog.FileName;
+            else  return String.Empty;
+        }
+
+        public string SaveFileDrialog(string filter)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = filter;
+            if (dialog.ShowDialog() == DialogResult.OK) return dialog.FileName;
+            else return String.Empty;
         }
 
         public ComboBox PreencheCombo(ComboBox combo, IEnumerable<dynamic> entity, string valueMember, string displayMember)

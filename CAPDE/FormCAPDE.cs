@@ -729,7 +729,8 @@ namespace CAPDE
 
         private void restoreToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            common.OpenFileDialog_RestoreLocalBackup("Backup File | *.bak");
+            string fileBak = common.OpenFileDialog("Backup File | *.bak");
+            if (String.IsNullOrEmpty(fileBak)) RestoreLocalBackup(fileBak);
             this.Close();
         }
 
@@ -809,6 +810,12 @@ namespace CAPDE
         {
             FormLogin fLogin = new FormLogin((int)TypeForm.ChangeLogin, (int)SizeForm.Login_Cad, logedUser);
             fLogin.Show();
+        }
+
+        private void servidoresToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormLoteServidores loteServidores = new FormLoteServidores();
+            loteServidores.Show();
         }
     }
 }

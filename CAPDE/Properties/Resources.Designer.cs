@@ -283,6 +283,16 @@ namespace CAPDE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Microsoft___Office___Excel__10_ {
+            get {
+                object obj = ResourceManager.GetObject("Microsoft - Office - Excel (10)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap People___Girl {
             get {
                 object obj = ResourceManager.GetObject("People - Girl", resourceCulture);
@@ -293,9 +303,29 @@ namespace CAPDE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap People___Group4_Meeting_Dark {
+            get {
+                object obj = ResourceManager.GetObject("People - Group4 Meeting Dark", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap People___Steven_Spielberg {
             get {
                 object obj = ResourceManager.GetObject("People - Steven Spielberg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Search__16_ {
+            get {
+                object obj = ResourceManager.GetObject("Search (16)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
