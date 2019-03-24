@@ -62,13 +62,8 @@ namespace Common
                 }
                 catch
                 {
-                    DialogResult message = MessageBox.Show("Não existem dados cadastrais. Deseja importar por um backup?.", "Acesso dados",
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                    if (message == DialogResult.Yes)
-                    {
-                        string dialogFileName = OpenFileDialog("Backup File | *.bak");
-                        if (!String.IsNullOrEmpty(dialogFileName)) Backup.RestoreLocalBackup(dialogFileName);
-                    }
+                    MessageBox.Show("Falha ao carregar os dados. Verifique com o administrador", "Load Dados", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }

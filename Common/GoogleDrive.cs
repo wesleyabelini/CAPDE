@@ -1,4 +1,5 @@
 ﻿using Google.Apis.Auth.OAuth2;
+using Google.Apis.Download;
 using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
@@ -8,11 +9,14 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Common
 {
     public static class GoogleDrive
     {
+        public static long progressDownloaded = 0;
+
         public static void Upload(DriveService service, string caminhoArquivo, string pastaId = "")
         {
             var arquivo = new Google.Apis.Drive.v3.Data.File();
@@ -29,6 +33,39 @@ namespace Common
                 else request = service.Files.Update(arquivo, ids.First(), stream, arquivo.MimeType);
                 request.Upload();
             }
+        }
+
+        public static MemoryStream DownloadFile(DriveService service, string fileId)
+        {
+            var file = service.Files.Get(fileId);
+            MemoryStream saveCurrentFile = new MemoryStream();
+
+            file.MediaDownloader.ProgressChanged += (IDownloadProgress progress) =>
+            {
+                switch (progress.Status)
+                {
+                    case DownloadStatus.Downloading:
+                        {
+                            progressDownloaded = progress.BytesDownloaded;
+                            break;
+                        }
+                    case DownloadStatus.Completed:
+                        {
+                            progressDownloaded = 0;
+                            break;
+                        }
+                    case DownloadStatus.Failed:
+                        {
+                            progressDownloaded = 0;
+                            break;
+                        }
+                }
+            };
+
+            Task ts = Task.Factory.StartNew(() => { file.Download(saveCurrentFile); });
+            ts.Wait();
+
+            return saveCurrentFile;
         }
 
         public static void CreateFolder(DriveService service, string pathName, string folderId = "")
@@ -54,13 +91,7 @@ namespace Common
             var resultado = request.Execute();
             var arquivos = resultado.Files;
 
-            if (arquivos != null && arquivos.Any())
-            {
-                foreach (var arquivo in arquivos)
-                {
-                    retorno.Add(arquivo.Id);
-                }
-            }
+            if (arquivos != null && arquivos.Any()) foreach (var arquivo in arquivos) retorno.Add(arquivo.Id);
 
             return retorno.ToArray();
         }
@@ -87,10 +118,7 @@ namespace Common
 
         public static DriveService AbrirServico(UserCredential credential)
         {
-            return new DriveService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = credential
-            });
+            return new DriveService(new BaseClientService.Initializer() { HttpClientInitializer = credential });
         }
     }
 }

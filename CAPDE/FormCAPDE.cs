@@ -11,17 +11,23 @@ using System.Windows.Forms;
 using static Common.Backup;
 using static Common.CAPDEEnums;
 using CAPDELogin;
+using System.Diagnostics;
 
 namespace CAPDE
 {
     public partial class FormCAPDE : Form
     {
         Common.Common common = new Common.Common();
+        Common.FormLoading formLoading = new Common.FormLoading();
+
+        FileVersionInfo thisAssemblyVersion = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
+
         int capacitadoId = (int)FiltroCapacitado.All;
 
         bool isRequireAdmin = false;
         bool isAdmin = false;
         bool hasUserAdmin = false;
+        bool hasUpdate = false;
 
         private string userName = String.Empty;
         private string logedUser = String.Empty;
@@ -32,19 +38,35 @@ namespace CAPDE
         {
             InitializeComponent();
 
-            ProcessInitial();
+            Task ts = Task.Factory.StartNew(() =>
+            {
+                FormUpdate fUpdate = new FormUpdate();
+                if (fUpdate.hasUpdate && fUpdate.ShowDialog() == DialogResult.OK) hasUpdate = fUpdate.hasUpdate;
+            });
+
+            ts.Wait();
+
+            Task t = Task.Factory.StartNew(() => 
+            {
+                if (!hasUpdate) ProcessInitial();
+                formLoading.DialogResult = DialogResult.Abort;
+            });
+
+            if(formLoading.ShowDialog() == DialogResult.Abort) formLoading.Close();
+            t.Wait();
         }
 
         private void ProcessInitial()
         {
             if (File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "capdeRestore.mdf")))
                 FixRestauredDatabase();
-
+                
             isRequireAdmin = Form.ModifierKeys == Keys.Shift;
             if (isRequireAdmin) isAdmin = ShowLogin((int)TypeForm.Login, (int)SizeForm.Login);
             hasUserAdmin = (isAdmin) ? true : verifyUserAdmin_OnDatabase();
 
             VerifiBackupSuccess();
+
             AtualizaPreencheInicial();
 
             tslUser.Text = userName;
@@ -65,6 +87,7 @@ namespace CAPDE
         private bool ShowLogin(int form, int heightForm)
         {
             FormLogin fLogin = new FormLogin(form, heightForm, String.Empty);
+            fLogin.BringToFront();
             if (fLogin.ShowDialog() == DialogResult.Yes)
             {
                 userName = fLogin.LogedUserName;
@@ -87,13 +110,14 @@ namespace CAPDE
                 {
                     Usuario user = context.Usuarios.Where(x => x.IsAdmin == true).FirstOrDefault();
                     if (user != null) return true;
-                    else ShowLogin((int)TypeForm.LoginAdmin, (int)SizeForm.Login_Cad);
+                    else
+                    {
+                        formLoading.DialogResult = DialogResult.Abort;
+                        ShowLogin((int)TypeForm.LoginAdmin, (int)SizeForm.Login_Cad);
+                    }
                 }
             }
-            catch (TimeoutException ex)
-            {
-                common.MessageBox_TryConnection(ex.ToString());
-            }
+            catch (TimeoutException ex) { common.MessageBox_TryConnection(ex.ToString()); }
 
             return false;
         }
@@ -111,35 +135,17 @@ namespace CAPDE
             }
         }
 
-        private void cidadeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newFormCad((int)TypeForm.Cidade, (int)SizeForm.Cidade);
-        }
+        private void cidadeToolStripMenuItem_Click(object sender, EventArgs e) { newFormCad((int)TypeForm.Cidade, (int)SizeForm.Cidade); }
 
-        private void sairToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+        private void sairToolStripMenuItem_Click(object sender, EventArgs e) { this.Close(); }
 
-        private void cJToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newFormCad((int)TypeForm.CJ, (int)SizeForm.CJ);
-        }
+        private void cJToolStripMenuItem_Click(object sender, EventArgs e) { newFormCad((int)TypeForm.CJ, (int)SizeForm.CJ); }
 
-        private void rAJToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newFormCad((int)TypeForm.RAJ, (int)SizeForm.RAJ);
-        }
+        private void rAJToolStripMenuItem_Click(object sender, EventArgs e) { newFormCad((int)TypeForm.RAJ, (int)SizeForm.RAJ); }
 
-        private void setorToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newFormCad((int)TypeForm.Setor, (int)SizeForm.Setor);
-        }
+        private void setorToolStripMenuItem_Click(object sender, EventArgs e) { newFormCad((int)TypeForm.Setor, (int)SizeForm.Setor); }
 
-        private void capacitacaoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newFormCad((int)TypeForm.Lote_Capacitar, (int)SizeForm.Lote);
-        }
+        private void capacitacaoToolStripMenuItem_Click(object sender, EventArgs e) { newFormCad((int)TypeForm.Lote_Capacitar, (int)SizeForm.Lote); }
 
         private void pessoaToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -147,15 +153,9 @@ namespace CAPDE
             if (pessoa.ShowDialog() == DialogResult.OK) AtualizaPreencheInicial();
         }
 
-        private void cargoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newFormCad((int)TypeForm.Cargo, (int)SizeForm.Cargo);
-        }
+        private void cargoToolStripMenuItem_Click(object sender, EventArgs e) { newFormCad((int)TypeForm.Cargo, (int)SizeForm.Cargo); }
 
-        private void turmaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            newFormCad((int)TypeForm.Turma, (int)SizeForm.Turma);
-        }
+        private void turmaToolStripMenuItem_Click(object sender, EventArgs e) { newFormCad((int)TypeForm.Turma, (int)SizeForm.Turma); }
 
         private void sobreToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -163,10 +163,7 @@ namespace CAPDE
             sobre.Show();
         }
 
-        private void tsbRAJ_Click(object sender, EventArgs e)
-        {
-            newFormCad((int)TypeForm.RAJ, (int)SizeForm.RAJ);
-        }
+        private void tsbRAJ_Click(object sender, EventArgs e) { newFormCad((int)TypeForm.RAJ, (int)SizeForm.RAJ); }
 
         private void newFormCad(int formType, int heightForm)
         {
@@ -174,30 +171,15 @@ namespace CAPDE
             if (cad.ShowDialog() == DialogResult.OK) AtualizaPreencheInicial();
         }
 
-        private void tsbCJ_Click(object sender, EventArgs e)
-        {
-            newFormCad((int)TypeForm.CJ, (int)SizeForm.CJ);
-        }
+        private void tsbCJ_Click(object sender, EventArgs e) { newFormCad((int)TypeForm.CJ, (int)SizeForm.CJ); }
 
-        private void tsbCidade_Click(object sender, EventArgs e)
-        {
-            newFormCad((int)TypeForm.Cidade, (int)SizeForm.Cidade);
-        }
+        private void tsbCidade_Click(object sender, EventArgs e) { newFormCad((int)TypeForm.Cidade, (int)SizeForm.Cidade); }
 
-        private void tsbSetor_Click(object sender, EventArgs e)
-        {
-            newFormCad((int)TypeForm.Setor, (int)SizeForm.Setor);
-        }
+        private void tsbSetor_Click(object sender, EventArgs e) { newFormCad((int)TypeForm.Setor, (int)SizeForm.Setor); }
 
-        private void tsbCargo_Click(object sender, EventArgs e)
-        {
-            newFormCad((int)TypeForm.Cargo, (int)SizeForm.Cargo);
-        }
+        private void tsbCargo_Click(object sender, EventArgs e) { newFormCad((int)TypeForm.Cargo, (int)SizeForm.Cargo); }
 
-        private void tsbTurma_Click(object sender, EventArgs e)
-        {
-            newFormCad((int)TypeForm.Turma, (int)SizeForm.Turma);
-        }
+        private void tsbTurma_Click(object sender, EventArgs e) { newFormCad((int)TypeForm.Turma, (int)SizeForm.Turma); }
 
         private void tsbPessoa_Click(object sender, EventArgs e)
         {
@@ -507,11 +489,7 @@ namespace CAPDE
             Task_PreencherGrid();
         }
 
-        private async void Task_PreencherGrid()
-        {
-            await FilterGrid();
-            //if(Convert.ToInt32(tslValorTotal.Text) > 0) tsProgressBar.Maximum = Convert.ToInt32(tslValorTotal.Text);
-        }
+        private async void Task_PreencherGrid() { await FilterGrid(); }
 
         private async Task FilterGrid()
         {
@@ -533,9 +511,7 @@ namespace CAPDE
                         this.Invoke((MethodInvoker)delegate
                         {
                             if (tscRAJ.ComboBox.SelectedValue != null && tscRAJ.ComboBox.Text != StringBase.TODOS.ToString())
-                            {
                                 pessoas = pessoas.Where(x => x.Setor.Cidade.CJ.RajId == (int)tscRAJ.ComboBox.SelectedValue).ToList();
-                            }
                         });
                     }
 
@@ -544,9 +520,7 @@ namespace CAPDE
                         this.Invoke((MethodInvoker)delegate
                         {
                             if (tscCJ.ComboBox.SelectedValue != null && tscCJ.ComboBox.Text != StringBase.TODOS.ToString())
-                            {
                                 pessoas = pessoas.Where(x => x.Setor.Cidade.CjId == (int)tscCJ.ComboBox.SelectedValue).ToList();
-                            }   
                         });
                     }
 
@@ -555,9 +529,7 @@ namespace CAPDE
                         this.Invoke((MethodInvoker)delegate
                         {
                             if (tscCidade.ComboBox.SelectedValue != null && tscCidade.ComboBox.Text != StringBase.TODOS.ToString())
-                            {
                                 pessoas = pessoas.Where(x => x.Setor.CidadeId == (int)tscCidade.ComboBox.SelectedValue).ToList();
-                            }
                         });
                     }
 
@@ -606,13 +578,8 @@ namespace CAPDE
                 }
 
                 tslValorCapacitados.Text = totalCapacitados.ToString();
-                //tsProgressBar.ToolTipText = porcentagemCapacitados().ToString();
-                //tsProgressBar.Value = totalCapacitados;
             }
-            catch(IndexOutOfRangeException f)
-            {
-                MessageBox.Show(String.Empty + f);
-            }  
+            catch(IndexOutOfRangeException f) { MessageBox.Show(String.Empty + f); } 
         }
 
         private float porcentagemCapacitados()
@@ -623,32 +590,17 @@ namespace CAPDE
             return (float)(capacitados * 100) / total;
         }
 
-        private void txtNome_KeyDown(object sender, KeyEventArgs e)
-        {
-            enterPressed_Atualizar(e);
-        }
+        private void txtNome_KeyDown(object sender, KeyEventArgs e) { enterPressed_Atualizar(e); }
 
-        private void txtEmail_KeyDown(object sender, KeyEventArgs e)
-        {
-            enterPressed_Atualizar(e);
-        }
+        private void txtEmail_KeyDown(object sender, KeyEventArgs e) { enterPressed_Atualizar(e); }
 
-        private void txtRegistro_KeyDown(object sender, KeyEventArgs e)
-        {
-            enterPressed_Atualizar(e);
-        }
+        private void txtRegistro_KeyDown(object sender, KeyEventArgs e) { enterPressed_Atualizar(e); }
 
-        private void txtOBS_KeyDown(object sender, KeyEventArgs e)
-        {
-            enterPressed_Atualizar(e);
-        }
+        private void txtOBS_KeyDown(object sender, KeyEventArgs e) { enterPressed_Atualizar(e); }
 
         private void enterPressed_Atualizar(KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-            {
-                btAtualizar.PerformClick();
-            }
+            if (e.KeyCode == Keys.Enter) btAtualizar.PerformClick();
         }
 
         private void dtGrid_MouseClick(object sender, MouseEventArgs e)
@@ -688,6 +640,8 @@ namespace CAPDE
                     }
                 }   
             }
+
+            if(hasUpdate) Process.Start(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\copy.bat");
         }
 
         private void VerifiBackupSuccess()
@@ -705,10 +659,8 @@ namespace CAPDE
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "capdeRestore.mdf")))
-            {
+            if (hasUpdate || File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "capdeRestore.mdf")))
                 this.Close();
-            }
         }
 
         private void backupToolStripMenuItem_Click(object sender, EventArgs e)
@@ -730,29 +682,16 @@ namespace CAPDE
         private void restoreToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string fileBak = common.OpenFileDialog("Backup File | *.bak");
-            if (String.IsNullOrEmpty(fileBak)) RestoreLocalBackup(fileBak);
-            this.Close();
+            if (!String.IsNullOrEmpty(fileBak)) RestoreLocalBackup(fileBak);
         }
 
-        private void aposentadoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AposentarServidor(StatusServidor.Aposentar.ToString(), true);
-        }
+        private void aposentadoToolStripMenuItem_Click(object sender, EventArgs e) { AposentarServidor(StatusServidor.Aposentar.ToString(), true); }
 
-        private void desaposentarToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            AposentarServidor(StatusServidor.Desaposentar.ToString(), false);
-        }
+        private void desaposentarToolStripMenuItem_Click(object sender, EventArgs e) { AposentarServidor(StatusServidor.Desaposentar.ToString(), false); }
 
-        private void ExcluirtoolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ExcluirServidor(StatusServidor.Excluir.ToString(), true);
-        }
+        private void ExcluirtoolStripMenuItem_Click(object sender, EventArgs e) { ExcluirServidor(StatusServidor.Excluir.ToString(), true); }
 
-        private void IncluirtoolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ExcluirServidor(StatusServidor.Incluir.ToString(), false);
-        }
+        private void IncluirtoolStripMenuItem_Click(object sender, EventArgs e) { ExcluirServidor(StatusServidor.Incluir.ToString(), false); }
 
         private void AposentarServidor(string statusServidor, bool status)
         {

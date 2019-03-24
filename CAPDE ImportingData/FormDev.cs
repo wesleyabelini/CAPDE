@@ -1,20 +1,28 @@
 ﻿using CAPDEData;
+using Common;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Drive.v3;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
-using System.Drawing;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Common.CAPDEEnums;
 
 namespace CAPDE_ImportingData
 {
-    public partial class Form1 : Form
+    public partial class FormDev : Form
     {
+        UserCredential credential = GoogleDrive.Autenticate();
+        List<string> listDirectories = new List<string>();
+
         string[] matricula;
         string[] nome;
         string[] cargo;
@@ -26,70 +34,47 @@ namespace CAPDE_ImportingData
         string[] cidade;
         string[] setor;
 
+        string[] files = Directory.GetFiles(ConfigurationManager.AppSettings["AssemblyLocation"]);
+        string[] folders = Directory.GetDirectories(ConfigurationManager.AppSettings["AssemblyLocation"]);
+
         List<string> logMatricula = new List<string>();
 
-        public Form1()
+        public FormDev()
         {
             InitializeComponent();
+
+            chkListFilesFolders.Items.AddRange(files);
+            if(chkFolders.Checked) chkListFilesFolders.Items.AddRange(folders);
+            SelDeSelTodos(true);
         }
 
         private string getFileLocation()
         {
             OpenFileDialog dialog = new OpenFileDialog();
 
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                return dialog.FileName;
-            }
+            if (dialog.ShowDialog() == DialogResult.OK) return dialog.FileName;
             else return String.Empty;
         }
 
         #region botao getLocationFile
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            textBox2.Text = getFileLocation();
-        }
+        private void button2_Click(object sender, EventArgs e) { textBox2.Text = getFileLocation(); }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            textBox3.Text = getFileLocation();
-        }
+        private void button3_Click(object sender, EventArgs e) { textBox3.Text = getFileLocation(); }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            textBox4.Text = getFileLocation();
-        }
+        private void button4_Click(object sender, EventArgs e) { textBox4.Text = getFileLocation(); }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            textBox5.Text = getFileLocation();
-        }
+        private void button5_Click(object sender, EventArgs e) { textBox5.Text = getFileLocation(); }
 
-        private void button7_Click(object sender, EventArgs e)
-        {
-            textBox7.Text = getFileLocation();
-        }
+        private void button7_Click(object sender, EventArgs e) { textBox7.Text = getFileLocation(); }
 
-        private void button12_Click(object sender, EventArgs e)
-        {
-            textBox11.Text = getFileLocation();
-        }
+        private void button12_Click(object sender, EventArgs e) { textBox11.Text = getFileLocation(); }
 
-        private void button11_Click(object sender, EventArgs e)
-        {
-            textBox10.Text = getFileLocation();
-        }
+        private void button11_Click(object sender, EventArgs e) { textBox10.Text = getFileLocation(); }
 
-        private void button10_Click(object sender, EventArgs e)
-        {
-            textBox9.Text = getFileLocation();
-        }
+        private void button10_Click(object sender, EventArgs e) { textBox9.Text = getFileLocation(); }
 
-        private void button9_Click(object sender, EventArgs e)
-        {
-            textBox8.Text = getFileLocation();
-        }
+        private void button9_Click(object sender, EventArgs e) { textBox8.Text = getFileLocation(); }
 
         #endregion
 
@@ -121,10 +106,7 @@ namespace CAPDE_ImportingData
             MessageBox.Show("Dados salvos");
         }
 
-        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            progressBar1.Value = e.ProgressPercentage;
-        }
+        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e) { progressBar1.Value = e.ProgressPercentage; }
 
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -170,33 +152,15 @@ namespace CAPDE_ImportingData
             MessageBox.Show("Dados salvos");
         }
 
-        private void BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            progressBar1.Value = e.ProgressPercentage;
-        }
+        private void BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e) { progressBar1.Value = e.ProgressPercentage; }
 
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             CadastroRaj(StringBase.TODOS.ToString());
 
-            matricula = File.ReadAllLines(textBox2.Text, Encoding.Default);
-            nome = File.ReadAllLines(textBox3.Text, Encoding.Default);
-            email = File.ReadAllLines(textBox7.Text, Encoding.Default);
-            cargo = File.ReadAllLines(textBox4.Text, Encoding.Default);
-            obs = File.ReadAllLines(textBox5.Text, Encoding.Default);
+            AdjustVariables();
 
-            raj = File.ReadAllLines(textBox11.Text, Encoding.Default);
-            cj = File.ReadAllLines(textBox10.Text, Encoding.Default);
-            cidade = File.ReadAllLines(textBox9.Text, Encoding.Default);
-            setor = File.ReadAllLines(textBox8.Text, Encoding.Default);
-
-            if (progressBar1.InvokeRequired)
-            {
-                this.Invoke((MethodInvoker) delegate
-                {
-                    progressBar1.Maximum = matricula.Length;
-                });
-            }
+            if (progressBar1.InvokeRequired) { this.Invoke((MethodInvoker)delegate { progressBar1.Maximum = matricula.Length; }); }
 
             using (capdeEntities context = new capdeEntities())
             {
@@ -221,10 +185,7 @@ namespace CAPDE_ImportingData
                     if (setorId == 0) setorId = CadastroSetor(a_setor, cidadeId);
                     if (cargoId == 0) cargoId = CadastroCargo(a_cargo);
 
-                    Capacitacao capacitacao = new Capacitacao
-                    {
-                        IsCapacitado = false,
-                    };
+                    Capacitacao capacitacao = new Capacitacao { IsCapacitado = false, };
 
                     context.Capacitacaos.Add(capacitacao);
 
@@ -247,6 +208,43 @@ namespace CAPDE_ImportingData
                     (sender as BackgroundWorker).ReportProgress(i);
                 }
             }
+        }
+
+        private void AdjustVariables()
+        {
+            matricula = RemoveSpace(matricula, textBox2);
+            nome = RemoveSpace(nome, textBox3);
+            email = RemoveSpace(email, textBox7);
+            cargo = RemoveSpace(cargo, textBox4);
+            obs = RemoveSpace(obs, textBox5);
+            raj = RemoveSpace(raj, textBox11);
+            cj = RemoveSpace(cj, textBox10);
+            cidade = RemoveSpace(cidade, textBox9);
+            setor = RemoveSpace(setor, textBox8);
+        }
+
+        private string[] RemoveSpace(string[] stringValue, TextBox text)
+        {
+            stringValue = File.ReadAllLines(text.Text, Encoding.Default);
+
+            for(int i = 0; i < stringValue.Length; i++)
+            {
+                string resultado = String.Empty;
+                bool hasText = false;
+                for(int j = 0; j < stringValue[i].Length; j++)
+                {
+                    if (!String.IsNullOrWhiteSpace(stringValue[i][j].ToString()))
+                    {
+                        hasText = true;
+                        resultado += stringValue[i][j].ToString();
+                    }
+                    else if(String.IsNullOrWhiteSpace(stringValue[i][j].ToString()) && hasText) resultado += stringValue[i][j].ToString();
+                }
+
+                stringValue[i] = resultado;
+            }
+
+            return stringValue;
         }
 
         #region Novas Entidades
@@ -364,14 +362,89 @@ namespace CAPDE_ImportingData
 
         #endregion
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private void radioButton1_CheckedChanged(object sender, EventArgs e) { groupBox1.Enabled = false; }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e) { groupBox1.Enabled = true; }
+
+        private void radioSelTodos_CheckedChanged(object sender, EventArgs e) { if (radioSelTodos.Checked) SelDeSelTodos(true); }
+
+        private void radioDeSelTodos_CheckedChanged(object sender, EventArgs e) { if (radioDeSelTodos.Checked) SelDeSelTodos(false); }
+
+        private void SelDeSelTodos(bool status)
         {
-            groupBox1.Enabled = false;
+            for (int i = 0; i < chkListFilesFolders.Items.Count; i++)
+            {
+                if(!status || !new List<string> { ".mdf", ".ldf", ".json", ".bat" }.Contains(Path.GetExtension(chkListFilesFolders.Items[i].ToString())))
+                    chkListFilesFolders.SetItemChecked(i, status);
+            }
         }
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        private void btnUploading_Click(object sender, EventArgs e)
         {
-            groupBox1.Enabled = true;
+            listDirectories = chkListFilesFolders.CheckedItems.OfType<String>().Select(x => x.ToString()).ToList();
+            List<string> listFilesDirectory = listDirectories.Select(x => x.ToString()
+                .Replace(ConfigurationManager.AppSettings["AssemblyLocation"] + "\\", "")).ToList();
+
+            AppVersion version = new AppVersion()
+            {
+                nome = "CAPDE",
+                data = DateTime.Now.ToString(),
+                dev = (chkIsAdmin.Checked) ? "true" : "false",
+                versao = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion,
+                obs = txtObs.Text,
+                updatefields = String.Join(",", listFilesDirectory),
+            };
+
+            File.WriteAllText(ConfigurationManager.AppSettings["AssemblyLocation"] + "\\update.json", JsonConvert.SerializeObject(version));
+            listDirectories.Add(ConfigurationManager.AppSettings["AssemblyLocation"] + "\\update.json");
+            listFilesDirectory.Add("update.json");
+
+            progressBar1.Maximum = listDirectories.Count;
+
+            BackgroundWorker work = new BackgroundWorker();
+            work.ProgressChanged += Work_ProgressChanged;
+            work.DoWork += Work_DoWork;
+            work.RunWorkerCompleted += Work_RunWorkerCompleted;
+            work.WorkerReportsProgress = true;
+
+            work.RunWorkerAsync();
+        }
+
+        private void Work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            progressBar1.Value = 0;
+            MessageBox.Show("Arquivos Enviados");
+        }
+
+        private void Work_DoWork(object sender, DoWorkEventArgs e)
+        {
+            string gbackupFolder = ConfigurationManager.AppSettings["UpdatePathNameGDrive"];
+
+            using (DriveService service = GoogleDrive.AbrirServico(credential))
+            {
+                string[] capdeUpdate = GoogleDrive.ProcurarArquivoId(service, gbackupFolder);
+                if (capdeUpdate.Length == 0) GoogleDrive.CreateFolder(service, gbackupFolder);
+
+                for(int i=0; i < listDirectories.Count; i++)
+                {
+                    GoogleDrive.Upload(service, listDirectories[i], capdeUpdate[0]);
+                    (sender as BackgroundWorker).ReportProgress(i);
+                }
+            }
+        }
+
+        private void Work_ProgressChanged(object sender, ProgressChangedEventArgs e) { progressBar1.Value = e.ProgressPercentage; }
+
+        private void chkFolders_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkFolders.Checked) chkListFilesFolders.Items.AddRange(folders);
+            else
+            {
+                chkListFilesFolders.Items.Clear();
+                chkListFilesFolders.Items.AddRange(files);
+            }
+
+            if (radioSelTodos.Checked) SelDeSelTodos(true);
         }
     }
 }

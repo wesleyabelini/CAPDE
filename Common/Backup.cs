@@ -2,6 +2,7 @@
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
 using System;
+using System.Configuration;
 using System.Data.Entity;
 using System.IO;
 using System.IO.Compression;
@@ -17,12 +18,12 @@ namespace Common
 
         static string local = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-        static string localDb = Path.Combine(local, "capde.mdf");
-        static string localDbLog = Path.Combine(local, "capde_log.ldf");
-        static string restoreLocalDb = Path.Combine(local, "capdeRestore.mdf");
-        static string restoreLocalDbLog = Path.Combine(local, "capdeRestore_log.ldf");
+        static string localDb = Path.Combine(local, ConfigurationManager.AppSettings["DatabaseName"]);
+        static string localDbLog = Path.Combine(local, ConfigurationManager.AppSettings["DatabaseLogName"]);
+        static string restoreLocalDb = Path.Combine(local, ConfigurationManager.AppSettings["DatabaseRestoreName"]);
+        static string restoreLocalDbLog = Path.Combine(local, ConfigurationManager.AppSettings["DatabaseRestoreLogName"]);
 
-        static string zipPath = Path.Combine(local, "origin.zip");
+        static string zipPath = Path.Combine(local, ConfigurationManager.AppSettings["DatabaseOriginPathName"]);
 
         static string backupDb = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "backup");
         static string backupDateMonth = Path.Combine(backupDb, month + year);
@@ -42,7 +43,7 @@ namespace Common
                     @"EXEC [dbo].[Backup] @myBackupLocation = '" + fileBak + "', @myBaseName = '" + localDb + "'");
             }
 
-            if(File.Exists(Path.Combine(local, "client_secret.json"))) UploadGoogleDrive();
+            if(File.Exists(Path.Combine(local, ConfigurationManager.AppSettings["ClientFileSecretName"]))) UploadGoogleDrive();
         }
 
         public static void CreateLocalBackup(string fileBackup)
@@ -56,16 +57,16 @@ namespace Common
 
         public static void UploadGoogleDrive()
         {
-            string googleDrivePathName = "CAPDE Backup";
+            string googleDrivePathName = ConfigurationManager.AppSettings["BackupPathNameGDrive"];
             UserCredential credential = GoogleDrive.Autenticate();
 
             using(DriveService service = GoogleDrive.AbrirServico(credential))
             {
-                string[] capdeBackup = GoogleDrive.ProcurarArquivoId(service, "CAPDE Backup");
+                string[] capdeBackup = GoogleDrive.ProcurarArquivoId(service, googleDrivePathName);
                 if (capdeBackup.Length == 0)
                 {
                     GoogleDrive.CreateFolder(service, googleDrivePathName);
-                    capdeBackup = GoogleDrive.ProcurarArquivoId(service, "CAPDE Backup");
+                    capdeBackup = GoogleDrive.ProcurarArquivoId(service, googleDrivePathName);
                 }
 
                 string[] monthPath = GoogleDrive.ProcurarArquivoId(service, month + year);

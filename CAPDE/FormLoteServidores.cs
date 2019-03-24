@@ -62,7 +62,7 @@ namespace CAPDE
                 dataGridView1.Columns[6].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 dataGridView1.Columns[7].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 dataGridView1.Columns[8].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                dataGridView1.Columns[9].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dataGridView1.Columns[9].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
 
                 ExcludeNullableRow();
                 if (VerifyCorrectData()) btnCadastrar.Enabled = true;
@@ -147,7 +147,7 @@ namespace CAPDE
                         cargo = context.Cargoes.Where(x => x.NomeCargo == nomeCargo).FirstOrDefault();
 
                         if (String.IsNullOrEmpty(matricula)) row[9] = "Matrícula não pode ser nula";
-                        else if (pessoa != null) row[9] = "Matrícula existente. Registro não será casastrado";
+                        else if (pessoa != null) row[9] = "Matrícula existente. Registro não será cadastrado";
                         else if (String.IsNullOrEmpty(nome)) row[9] = "Nome não pode ser nulo";
                         else if (String.IsNullOrEmpty(rajValue)) row[9] = "RAJ não encontrada";
                         else if (cj == null) row[9] = "CJ não encontrada";
@@ -180,7 +180,6 @@ namespace CAPDE
                 else i++;
             }
             
-
             return false;
         }
 
@@ -212,11 +211,7 @@ namespace CAPDE
 
         private bool VerifyCorrectData()
         {
-            foreach (DataGridViewRow row in dataGridView1.Rows)
-            {
-                if (!String.IsNullOrEmpty(row.Cells[9].Value.ToString())) return false;
-            }
-
+            foreach (DataGridViewRow row in dataGridView1.Rows) if (!String.IsNullOrEmpty(row.Cells[9].Value.ToString())) return false;
             return true;
         }
 
@@ -241,14 +236,17 @@ namespace CAPDE
                 string nomeCidade = dataGridView1.CurrentRow.Cells[6].Value.ToString();
 
                 if (dataGridView1.CurrentCell.ColumnIndex == 4) data = context.RAJs.Where(x=>x.NomeRaj != StringBase.TODOS.ToString())
-                        .Select(x => x.NomeRaj).ToList();
+                        .OrderBy(x=>x.NomeRaj).Select(x => x.NomeRaj).ToList();
                 else if (dataGridView1.CurrentCell.ColumnIndex == 5)
-                    data = context.CJs.Where(x => x.RAJ.NomeRaj == nomeRAJ && x.CjNome != StringBase.TODOS.ToString()).Select(x => x.CjNome).ToList();
+                    data = context.CJs.Where(x => x.RAJ.NomeRaj == nomeRAJ && x.CjNome != StringBase.TODOS.ToString())
+                        .OrderBy(x=>x.CjNome).Select(x => x.CjNome).ToList();
                 else if (dataGridView1.CurrentCell.ColumnIndex == 6) data = context.Cidades
-                        .Where(x => x.CJ.CjNome == nomeCJ && x.NomeCidade != StringBase.TODOS.ToString()).Select(x => x.NomeCidade).ToList();
+                        .Where(x => x.CJ.CjNome == nomeCJ && x.NomeCidade != StringBase.TODOS.ToString())
+                        .OrderBy(x=>x.NomeCidade).Select(x => x.NomeCidade).ToList();
                 else if (dataGridView1.CurrentCell.ColumnIndex == 7) data = context.Setors.Where(x => x.Cidade.NomeCidade == nomeCidade)
-                        .Select(x => x.NomeSetor).ToList();
-                else if (dataGridView1.CurrentCell.ColumnIndex == 3) data = context.Cargoes.Select(x => x.NomeCargo).ToList();
+                        .OrderBy(x=>x.NomeSetor).Select(x => x.NomeSetor).ToList();
+                else if (dataGridView1.CurrentCell.ColumnIndex == 3) data = context.Cargoes
+                        .OrderBy(x=>x.NomeCargo).Select(x => x.NomeCargo).ToList();
             }
 
             using(FormDialogItem dialogItem = new FormDialogItem(data))
@@ -273,6 +271,14 @@ namespace CAPDE
                 MessageBox.Show("O arquivo Lote - Servidores foi transferido com sucesso", "Lote - Servidor", MessageBoxButtons.OK, 
                     MessageBoxIcon.Information);
             }
+        }
+
+        private void excluirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int rowIndex = dataGridView1.CurrentCell.RowIndex;
+            string matricula = dataGridView1.Rows[rowIndex].Cells[0].ToString();
+            if (MessageBox.Show("Deseja excluir o registro com a matrícula " + matricula + " do cadastro em Lote de Servidores?", "Remover " + matricula, 
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) dataGridView1.Rows.RemoveAt(rowIndex);
         }
     }
 }
