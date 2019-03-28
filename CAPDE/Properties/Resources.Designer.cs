@@ -143,6 +143,16 @@ namespace CAPDE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Book_Search__2_ {
+            get {
+                object obj = ResourceManager.GetObject("Book Search (2)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Briefcase__6_ {
             get {
                 object obj = ResourceManager.GetObject("Briefcase (6)", resourceCulture);

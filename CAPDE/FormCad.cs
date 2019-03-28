@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using static Common.CAPDEEnums;
 
@@ -14,19 +16,25 @@ namespace CAPDE
     public partial class FormCad : Form
     {
         Common.Common common = new Common.Common();
+        Common.SendLog commonLog = new Common.SendLog();
+
+        FileVersionInfo thisAssemblyVersion = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
+
         int formAtual = 0;
         bool isAdmin = false;
         bool registerInserted = false;
+        string logedUser = String.Empty;
 
         bool isEditing = false;
         int? idEditing = null;
 
-        public FormCad(int typeForm, int heightForm, bool _isAdmin)
+        public FormCad(int typeForm, int heightForm, bool _isAdmin, string user)
         {
             InitializeComponent();
 
             this.Height = heightForm;
             isAdmin = _isAdmin;
+            logedUser = user;
             formAtual = typeForm;
             condicaoInicial(typeForm);
             if (isAdmin) incluirToolStripMenuItem.Visible = true;
@@ -223,22 +231,27 @@ namespace CAPDE
                     else isFirst = true;
                 }
 
-                if (formAtual == (int)TypeForm.RAJ) CadastroRAJ();
-                else if (formAtual == (int)TypeForm.Turma) CadastroTurma();
-                else if (formAtual == (int)TypeForm.Cargo) CadastroCargo();
-                else if (formAtual == (int)TypeForm.CJ) CadastroCJ();
-                else if (formAtual == (int)TypeForm.Cidade) CadastroCidade();
-                else if (formAtual == (int)TypeForm.Setor) CadastroSetor();
-                else if (formAtual == (int)TypeForm.Lote_Capacitar) CadastroLote();
-
-                if (formAtual != (int)TypeForm.Lote_Capacitar)
+                try
                 {
-                    textBox1.Clear();
-                    condicaoInicial(formAtual);
-                }
+                    if (formAtual == (int)TypeForm.RAJ) CadastroRAJ();
+                    else if (formAtual == (int)TypeForm.Turma) CadastroTurma();
+                    else if (formAtual == (int)TypeForm.Cargo) CadastroCargo();
+                    else if (formAtual == (int)TypeForm.CJ) CadastroCJ();
+                    else if (formAtual == (int)TypeForm.Cidade) CadastroCidade();
+                    else if (formAtual == (int)TypeForm.Setor) CadastroSetor();
+                    else if (formAtual == (int)TypeForm.Lote_Capacitar) CadastroLote();
 
-                registerInserted = true;
-            }
+                    if (formAtual != (int)TypeForm.Lote_Capacitar)
+                    {
+                        textBox1.Clear();
+                        condicaoInicial(formAtual);
+                    }
+
+                    registerInserted = true;
+                }
+                catch (Exception ex) { commonLog.SendLogError(thisAssemblyVersion.FileVersion, ex.Message + "\r\n" + ex.StackTrace, logedUser); }
+
+                }
             else
             {
                 MessageBox.Show("Para realizar o cadastro, o respectivo compo não deve estar em branco", "Falha Cadastro", 
@@ -804,7 +817,8 @@ namespace CAPDE
                         else MessageBox_ExcludeValueImpossible();
                     }
 
-                    common.SaveChanges_Database(context, true);
+                    try { common.SaveChanges_Database(context, true); }
+                    catch(Exception ex) { commonLog.SendLogError(thisAssemblyVersion.FileVersion, ex.Message + "\r\n" + ex.StackTrace, logedUser); }
 
                     condicaoInicial(formAtual);
                     OutEditing();

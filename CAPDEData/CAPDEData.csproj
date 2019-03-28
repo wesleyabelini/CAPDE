@@ -127,6 +127,9 @@
     <Compile Include="DatabaseConfig.cs">
       <DependentUpon>capdeEntity.tt</DependentUpon>
     </Compile>
+    <Compile Include="Log.cs">
+      <DependentUpon>capdeEntity.tt</DependentUpon>
+    </Compile>
     <Compile Include="Pessoa.cs">
       <DependentUpon>capdeEntity.tt</DependentUpon>
     </Compile>

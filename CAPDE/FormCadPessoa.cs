@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using static Common.CAPDEEnums;
 
@@ -11,14 +13,20 @@ namespace CAPDE
     public partial class FormCadPessoa : Form
     {
         Common.Common common = new Common.Common();
+        Common.SendLog commonLog = new Common.SendLog();
+
+        FileVersionInfo thisAssemblyVersion = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
+
         bool insertedData = false;
         bool isAdmin = false;
+        string logedUser = String.Empty;
 
-        public FormCadPessoa(bool _isAdmin)
+        public FormCadPessoa(bool _isAdmin, string user)
         {
             InitializeComponent();
 
             isAdmin = _isAdmin;
+            logedUser = user;
             common.PreencheCombos_Pessoa(cmbRAJ, cmbCJ, cmbCidade, cmbCargo, cmbSetor, cmbCapacitacao);
         }
 
@@ -60,10 +68,14 @@ namespace CAPDE
                     IsAposentado = false,
                 };
 
-                context.Capacitacaos.Add(capacitacao);
-                context.Pessoas.Add(pessoa);
+                try
+                {
+                    context.Capacitacaos.Add(capacitacao);
+                    context.Pessoas.Add(pessoa);
 
-                common.SaveChanges_Database(context, true);
+                    common.SaveChanges_Database(context, true);
+                }
+                catch(Exception ex) { commonLog.SendLogError(thisAssemblyVersion.FileVersion, ex.Message + "\r\n" + ex.StackTrace, logedUser); }
             }
 
             LimpaCampos();
@@ -171,7 +183,7 @@ namespace CAPDE
 
         public void newFormCad(int form, int heightForm)
         {
-            FormCad cad = new FormCad(form, heightForm, isAdmin);
+            FormCad cad = new FormCad(form, heightForm, isAdmin, logedUser);
             if (cad.ShowDialog() == DialogResult.OK)
             {
                 common.PreencheCombos_Pessoa(cmbRAJ, cmbCJ, cmbCidade, cmbCargo, cmbSetor, cmbCapacitacao);

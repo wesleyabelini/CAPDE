@@ -3,11 +3,7 @@ using Google.Apis.Auth.OAuth2;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Google.Apis.Drive.v3;
 using System.IO;
@@ -16,11 +12,14 @@ using System.Reflection;
 using System.Diagnostics;
 using System.Configuration;
 using System.Security.Principal;
+using CAPDEData;
 
 namespace CAPDELogin
 {
     public partial class FormUpdate : Form
     {
+        Common.SendLog commonLog = new SendLog();
+
         private static FileVersionInfo thisAssemblyVersion = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
         private static UserCredential credential = GoogleDrive.Autenticate();
         private static AppVersion serverVersion;
@@ -122,6 +121,8 @@ namespace CAPDELogin
                 Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\CAPDE.exe'").Replace("'", "\"")));
             using(FileStream fs = new FileStream(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\copy.bat",
                 FileMode.Create, FileAccess.Write)) ms.WriteTo(fs);
+
+            commonLog.SendLogError(thisAssemblyVersion.FileVersion, "CAPDE UPDATE from " + thisAssemblyVersion.FileVersion + "to " + serverVersion.versao, String.Empty);
 
             this.DialogResult = DialogResult.OK;
             this.Close();

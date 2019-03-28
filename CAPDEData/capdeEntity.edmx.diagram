@@ -23,6 +23,7 @@
         <AssociationConnector Association="capdeModel.FK__CJ__RajId__3B75D760" />
         <AssociationConnector Association="capdeModel.FK__Pessoa__SetorId__37A5467C" />
         <EntityTypeShape EntityType="capdeModel.Usuario" Width="1.5" PointX="7.375" PointY="7.75" />
+        <EntityTypeShape EntityType="capdeModel.Log" Width="1.5" PointX="7.75" PointY="1.625" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

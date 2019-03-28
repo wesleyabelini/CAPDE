@@ -53,7 +53,9 @@
             this.loteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.capacitaçãoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.servidoresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sobreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.sobreToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tsInferior = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
@@ -149,7 +151,7 @@
             this.cadastroToolStripMenuItem2,
             this.gerenciaToolStripMenuItem,
             this.toolsToolStripMenuItem,
-            this.sobreToolStripMenuItem});
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1171, 24);
@@ -172,7 +174,7 @@
             this.cadastroToolStripMenuItem1.BackColor = System.Drawing.SystemColors.Control;
             this.cadastroToolStripMenuItem1.Image = global::CAPDE.Properties.Resources.Adobe_Acrobat_CS3;
             this.cadastroToolStripMenuItem1.Name = "cadastroToolStripMenuItem1";
-            this.cadastroToolStripMenuItem1.Size = new System.Drawing.Size(121, 22);
+            this.cadastroToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.cadastroToolStripMenuItem1.Text = "Relatório";
             this.cadastroToolStripMenuItem1.Click += new System.EventHandler(this.cadastroToolStripMenuItem1_Click);
             // 
@@ -180,14 +182,14 @@
             // 
             this.toolStripSeparator1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(118, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // sairToolStripMenuItem
             // 
             this.sairToolStripMenuItem.BackColor = System.Drawing.SystemColors.Control;
             this.sairToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Exit_Door;
             this.sairToolStripMenuItem.Name = "sairToolStripMenuItem";
-            this.sairToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.sairToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.sairToolStripMenuItem.Text = "Sair";
             this.sairToolStripMenuItem.Click += new System.EventHandler(this.sairToolStripMenuItem_Click);
             // 
@@ -210,7 +212,7 @@
             // 
             this.cidadeToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Christ_The_Redeemer;
             this.cidadeToolStripMenuItem.Name = "cidadeToolStripMenuItem";
-            this.cidadeToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+            this.cidadeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.cidadeToolStripMenuItem.Text = "Cidade";
             this.cidadeToolStripMenuItem.Click += new System.EventHandler(this.cidadeToolStripMenuItem_Click);
             // 
@@ -218,7 +220,7 @@
             // 
             this.cJToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Building__7_;
             this.cJToolStripMenuItem.Name = "cJToolStripMenuItem";
-            this.cJToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+            this.cJToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.cJToolStripMenuItem.Text = "CJ";
             this.cJToolStripMenuItem.Click += new System.EventHandler(this.cJToolStripMenuItem_Click);
             // 
@@ -226,7 +228,7 @@
             // 
             this.rAJToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Globe__13_;
             this.rAJToolStripMenuItem.Name = "rAJToolStripMenuItem";
-            this.rAJToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+            this.rAJToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.rAJToolStripMenuItem.Text = "RAJ";
             this.rAJToolStripMenuItem.Click += new System.EventHandler(this.rAJToolStripMenuItem_Click);
             // 
@@ -234,20 +236,20 @@
             // 
             this.setorToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Table__3_;
             this.setorToolStripMenuItem.Name = "setorToolStripMenuItem";
-            this.setorToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+            this.setorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.setorToolStripMenuItem.Text = "Setor";
             this.setorToolStripMenuItem.Click += new System.EventHandler(this.setorToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(108, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // cargoToolStripMenuItem
             // 
             this.cargoToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Judge;
             this.cargoToolStripMenuItem.Name = "cargoToolStripMenuItem";
-            this.cargoToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+            this.cargoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.cargoToolStripMenuItem.Text = "Cargo";
             this.cargoToolStripMenuItem.Click += new System.EventHandler(this.cargoToolStripMenuItem_Click);
             // 
@@ -255,7 +257,7 @@
             // 
             this.pessoaToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Audience__2_;
             this.pessoaToolStripMenuItem.Name = "pessoaToolStripMenuItem";
-            this.pessoaToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+            this.pessoaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.pessoaToolStripMenuItem.Text = "Pessoa";
             this.pessoaToolStripMenuItem.Click += new System.EventHandler(this.pessoaToolStripMenuItem_Click);
             // 
@@ -263,7 +265,7 @@
             // 
             this.turmaToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Computer___Laptop__2_;
             this.turmaToolStripMenuItem.Name = "turmaToolStripMenuItem";
-            this.turmaToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+            this.turmaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.turmaToolStripMenuItem.Text = "Turma";
             this.turmaToolStripMenuItem.Click += new System.EventHandler(this.turmaToolStripMenuItem_Click);
             // 
@@ -280,7 +282,7 @@
             // 
             this.usuariosToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Contacts__4_;
             this.usuariosToolStripMenuItem.Name = "usuariosToolStripMenuItem";
-            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.usuariosToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.usuariosToolStripMenuItem.Text = "Usuários";
             this.usuariosToolStripMenuItem.Click += new System.EventHandler(this.usuariosToolStripMenuItem_Click);
             // 
@@ -333,7 +335,7 @@
             // 
             this.capacitaçãoToolStripMenuItem.Image = global::CAPDE.Properties.Resources.capgraduate;
             this.capacitaçãoToolStripMenuItem.Name = "capacitaçãoToolStripMenuItem";
-            this.capacitaçãoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.capacitaçãoToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.capacitaçãoToolStripMenuItem.Text = "Capacitação";
             this.capacitaçãoToolStripMenuItem.Click += new System.EventHandler(this.capacitacaoToolStripMenuItem_Click);
             // 
@@ -341,23 +343,38 @@
             // 
             this.servidoresToolStripMenuItem.Image = global::CAPDE.Properties.Resources.People___Group4_Meeting_Dark;
             this.servidoresToolStripMenuItem.Name = "servidoresToolStripMenuItem";
-            this.servidoresToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.servidoresToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.servidoresToolStripMenuItem.Text = "Servidores";
             this.servidoresToolStripMenuItem.Click += new System.EventHandler(this.servidoresToolStripMenuItem_Click);
             // 
-            // sobreToolStripMenuItem
+            // helpToolStripMenuItem
             // 
-            this.sobreToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.logToolStripMenuItem,
+            this.toolStripSeparator9,
             this.sobreToolStripMenuItem1});
-            this.sobreToolStripMenuItem.Name = "sobreToolStripMenuItem";
-            this.sobreToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.sobreToolStripMenuItem.Text = "Sobre!";
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // logToolStripMenuItem
+            // 
+            this.logToolStripMenuItem.Image = global::CAPDE.Properties.Resources.Book_Search__2_;
+            this.logToolStripMenuItem.Name = "logToolStripMenuItem";
+            this.logToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.logToolStripMenuItem.Text = "Log";
+            this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(177, 6);
             // 
             // sobreToolStripMenuItem1
             // 
             this.sobreToolStripMenuItem1.Image = global::CAPDE.Properties.Resources.logocadalltransparency_kOq_icon;
             this.sobreToolStripMenuItem1.Name = "sobreToolStripMenuItem1";
-            this.sobreToolStripMenuItem1.Size = new System.Drawing.Size(104, 22);
+            this.sobreToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
             this.sobreToolStripMenuItem1.Text = "Sobre";
             this.sobreToolStripMenuItem1.Click += new System.EventHandler(this.sobreToolStripMenuItem1_Click);
             // 
@@ -1184,7 +1201,7 @@
         private System.Windows.Forms.ToolStripButton tsbCidade;
         private System.Windows.Forms.ToolStripButton tsbSetor;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem sobreToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sobreToolStripMenuItem1;
         private System.Windows.Forms.ToolStripButton tsbCargo;
         private System.Windows.Forms.ToolStripButton tsbTurma;
@@ -1258,6 +1275,8 @@
         private System.Windows.Forms.ToolStripMenuItem gerenciaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem usuariosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem servidoresToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem logToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
     }
 }
 

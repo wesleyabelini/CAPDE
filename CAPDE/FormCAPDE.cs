@@ -18,6 +18,7 @@ namespace CAPDE
     public partial class FormCAPDE : Form
     {
         Common.Common common = new Common.Common();
+        Common.SendLog comLog = new Common.SendLog();
         Common.FormLoading formLoading = new Common.FormLoading();
 
         FileVersionInfo thisAssemblyVersion = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
@@ -149,7 +150,7 @@ namespace CAPDE
 
         private void pessoaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormCadPessoa pessoa = new FormCadPessoa(isAdmin);
+            FormCadPessoa pessoa = new FormCadPessoa(isAdmin, logedUser);
             if (pessoa.ShowDialog() == DialogResult.OK) AtualizaPreencheInicial();
         }
 
@@ -167,7 +168,7 @@ namespace CAPDE
 
         private void newFormCad(int formType, int heightForm)
         {
-            FormCad cad = new FormCad(formType, heightForm, isAdmin);
+            FormCad cad = new FormCad(formType, heightForm, isAdmin, logedUser);
             if (cad.ShowDialog() == DialogResult.OK) AtualizaPreencheInicial();
         }
 
@@ -183,7 +184,7 @@ namespace CAPDE
 
         private void tsbPessoa_Click(object sender, EventArgs e)
         {
-            FormCadPessoa pessoa = new FormCadPessoa(isAdmin);
+            FormCadPessoa pessoa = new FormCadPessoa(isAdmin, logedUser);
             if (pessoa.ShowDialog() == DialogResult.OK) AtualizaPreencheInicial();
         }
 
@@ -635,8 +636,8 @@ namespace CAPDE
                     }
                     catch(Exception ex)
                     {
-                        MessageBox.Show("Houve um erro ao executar o backup. \nErro:" + ex, "Falha Backup", 
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        comLog.SendLogError(thisAssemblyVersion.FileVersion, ex.Message + "\r\n" + ex.StackTrace, logedUser);
+                        MessageBox.Show("Houve um erro ao executar o backup", "Falha Backup", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }   
             }
@@ -755,6 +756,12 @@ namespace CAPDE
         {
             FormLoteServidores loteServidores = new FormLoteServidores();
             loteServidores.Show();
+        }
+
+        private void logToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Common.FormLogs fLogs = new Common.FormLogs();
+            fLogs.Show();
         }
     }
 }

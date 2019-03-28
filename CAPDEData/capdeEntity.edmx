@@ -51,6 +51,18 @@
           <Property Name="DatabaseConfigId" Type="int" Nullable="false" />
           <Property Name="HasChanged" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="30" />
+          <Property Name="Maquina" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Version" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="MethodTitle" Type="varchar" MaxLength="50" />
+          <Property Name="Message" Type="varchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="Pessoa">
           <Key>
             <PropertyRef Name="PessoaId" />
@@ -213,6 +225,7 @@
           <EntitySet Name="Cidade" EntityType="Self.Cidade" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CJ" EntityType="Self.CJ" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DatabaseConfig" EntityType="Self.DatabaseConfig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pessoa" EntityType="Self.Pessoa" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RAJ" EntityType="Self.RAJ" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Setor" EntityType="Self.Setor" Schema="dbo" store:Type="Tables" />
@@ -314,6 +327,7 @@
             <End Role="Pessoa" EntitySet="Pessoas" />
           </AssociationSet>
           <EntitySet Name="Usuarios" EntityType="capdeModel.Usuario" />
+          <EntitySet Name="Logs" EntityType="capdeModel.Log" />
           </EntityContainer>
         <EntityType Name="Capacitacao">
           <Key>
@@ -525,6 +539,18 @@
           <Property Name="Senha" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="LogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Usuario" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Maquina" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Version" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MethodTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -638,6 +664,19 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Nome" ColumnName="Nome" />
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="capdeModel.Log">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="MethodTitle" ColumnName="MethodTitle" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="Maquina" ColumnName="Maquina" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
