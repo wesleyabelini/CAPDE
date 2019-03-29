@@ -122,7 +122,8 @@ namespace CAPDELogin
             using(FileStream fs = new FileStream(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\copy.bat",
                 FileMode.Create, FileAccess.Write)) ms.WriteTo(fs);
 
-            commonLog.SendLogError(thisAssemblyVersion.FileVersion, "CAPDE UPDATE from " + thisAssemblyVersion.FileVersion + "to " + serverVersion.versao, String.Empty);
+            commonLog.SendLogError(thisAssemblyVersion.FileVersion, "Update Version", "CAPDE UPDATE from " + 
+                thisAssemblyVersion.FileVersion + "to " + serverVersion.versao, String.Empty);
 
             this.DialogResult = DialogResult.OK;
             this.Close();

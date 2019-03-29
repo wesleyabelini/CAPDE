@@ -66,6 +66,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabImportData = new System.Windows.Forms.TabPage();
             this.tabUploading = new System.Windows.Forms.TabPage();
+            this.chkFolders = new System.Windows.Forms.CheckBox();
             this.lblObs = new System.Windows.Forms.Label();
             this.txtObs = new System.Windows.Forms.TextBox();
             this.chkIsAdmin = new System.Windows.Forms.CheckBox();
@@ -73,7 +74,8 @@
             this.radioSelTodos = new System.Windows.Forms.RadioButton();
             this.btnUploading = new System.Windows.Forms.Button();
             this.chkListFilesFolders = new System.Windows.Forms.CheckedListBox();
-            this.chkFolders = new System.Windows.Forms.CheckBox();
+            this.listCmdSql = new System.Windows.Forms.ListBox();
+            this.btnAdd = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabImportData.SuspendLayout();
@@ -449,6 +451,8 @@
             // 
             // tabUploading
             // 
+            this.tabUploading.Controls.Add(this.btnAdd);
+            this.tabUploading.Controls.Add(this.listCmdSql);
             this.tabUploading.Controls.Add(this.chkFolders);
             this.tabUploading.Controls.Add(this.lblObs);
             this.tabUploading.Controls.Add(this.txtObs);
@@ -464,6 +468,17 @@
             this.tabUploading.TabIndex = 1;
             this.tabUploading.Text = "Uploading";
             this.tabUploading.UseVisualStyleBackColor = true;
+            // 
+            // chkFolders
+            // 
+            this.chkFolders.AutoSize = true;
+            this.chkFolders.Location = new System.Drawing.Point(16, 363);
+            this.chkFolders.Name = "chkFolders";
+            this.chkFolders.Size = new System.Drawing.Size(90, 17);
+            this.chkFolders.TabIndex = 28;
+            this.chkFolders.Text = "Show Folders";
+            this.chkFolders.UseVisualStyleBackColor = true;
+            this.chkFolders.CheckedChanged += new System.EventHandler(this.chkFolders_CheckedChanged);
             // 
             // lblObs
             // 
@@ -543,19 +558,25 @@
             this.chkListFilesFolders.FormattingEnabled = true;
             this.chkListFilesFolders.Location = new System.Drawing.Point(6, 15);
             this.chkListFilesFolders.Name = "chkListFilesFolders";
-            this.chkListFilesFolders.Size = new System.Drawing.Size(564, 259);
+            this.chkListFilesFolders.Size = new System.Drawing.Size(564, 154);
             this.chkListFilesFolders.TabIndex = 0;
             // 
-            // chkFolders
+            // listCmdSql
             // 
-            this.chkFolders.AutoSize = true;
-            this.chkFolders.Location = new System.Drawing.Point(16, 363);
-            this.chkFolders.Name = "chkFolders";
-            this.chkFolders.Size = new System.Drawing.Size(90, 17);
-            this.chkFolders.TabIndex = 28;
-            this.chkFolders.Text = "Show Folders";
-            this.chkFolders.UseVisualStyleBackColor = true;
-            this.chkFolders.CheckedChanged += new System.EventHandler(this.chkFolders_CheckedChanged);
+            this.listCmdSql.FormattingEnabled = true;
+            this.listCmdSql.Location = new System.Drawing.Point(6, 175);
+            this.listCmdSql.Name = "listCmdSql";
+            this.listCmdSql.Size = new System.Drawing.Size(522, 95);
+            this.listCmdSql.TabIndex = 29;
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Image = global::CAPDE_ImportingData.Properties.Resources.Zoom______2_;
+            this.btnAdd.Location = new System.Drawing.Point(534, 185);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(36, 32);
+            this.btnAdd.TabIndex = 30;
+            this.btnAdd.UseVisualStyleBackColor = true;
             // 
             // FormDev
             // 
@@ -626,6 +647,8 @@
         private System.Windows.Forms.Label lblObs;
         private System.Windows.Forms.TextBox txtObs;
         private System.Windows.Forms.CheckBox chkFolders;
+        private System.Windows.Forms.ListBox listCmdSql;
+        private System.Windows.Forms.Button btnAdd;
     }
 }
 

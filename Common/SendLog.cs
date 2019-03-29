@@ -6,7 +6,7 @@ namespace Common
     public class SendLog
     {
         Common common = new Common();
-        public void SendLogError(string version, string message, string usuario)
+        public void SendLogError(string version, string title, string message, string usuario)
         {
             using (capdeEntities context = new capdeEntities())
             {
@@ -16,7 +16,7 @@ namespace Common
                     Usuario = usuario,
                     Maquina = Environment.MachineName,
                     Version = version,
-                    MethodTitle = "Falha Backup",
+                    MethodTitle = title,
                     Message = message,
                 };
 

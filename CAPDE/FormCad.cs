@@ -249,7 +249,8 @@ namespace CAPDE
 
                     registerInserted = true;
                 }
-                catch (Exception ex) { commonLog.SendLogError(thisAssemblyVersion.FileVersion, ex.Message + "\r\n" + ex.StackTrace, logedUser); }
+                catch (Exception ex) { commonLog.SendLogError(thisAssemblyVersion.FileVersion, "Cadastro " + formAtual, 
+                    ex.Message + "\r\n" + ex.StackTrace, logedUser); }
 
                 }
             else
@@ -818,7 +819,8 @@ namespace CAPDE
                     }
 
                     try { common.SaveChanges_Database(context, true); }
-                    catch(Exception ex) { commonLog.SendLogError(thisAssemblyVersion.FileVersion, ex.Message + "\r\n" + ex.StackTrace, logedUser); }
+                    catch(Exception ex) { commonLog.SendLogError(thisAssemblyVersion.FileVersion, "Incluir / Excluir Registro", 
+                        ex.Message + "\r\n" + ex.StackTrace, logedUser); }
 
                     condicaoInicial(formAtual);
                     OutEditing();

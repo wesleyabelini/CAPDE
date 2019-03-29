@@ -14,5 +14,6 @@ namespace Common
         public string obs { get; set; }
         public string dev { get; set; }
         public string updatefields { get; set; }
+        public List<string> collectionCmd { get; set; }
     }
 }

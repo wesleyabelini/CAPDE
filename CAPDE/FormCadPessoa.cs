@@ -75,7 +75,8 @@ namespace CAPDE
 
                     common.SaveChanges_Database(context, true);
                 }
-                catch(Exception ex) { commonLog.SendLogError(thisAssemblyVersion.FileVersion, ex.Message + "\r\n" + ex.StackTrace, logedUser); }
+                catch(Exception ex) { commonLog.SendLogError(thisAssemblyVersion.FileVersion, "Cadastro Pessoa", 
+                    ex.Message + "\r\n" + ex.StackTrace, logedUser); }
             }
 
             LimpaCampos();

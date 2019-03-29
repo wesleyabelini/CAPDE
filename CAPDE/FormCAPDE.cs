@@ -636,7 +636,7 @@ namespace CAPDE
                     }
                     catch(Exception ex)
                     {
-                        comLog.SendLogError(thisAssemblyVersion.FileVersion, ex.Message + "\r\n" + ex.StackTrace, logedUser);
+                        comLog.SendLogError(thisAssemblyVersion.FileVersion, "Closing - Falha Backup", ex.Message + "\r\n" + ex.StackTrace, logedUser);
                         MessageBox.Show("Houve um erro ao executar o backup", "Falha Backup", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }   
@@ -683,7 +683,7 @@ namespace CAPDE
         private void restoreToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string fileBak = common.OpenFileDialog("Backup File | *.bak");
-            if (!String.IsNullOrEmpty(fileBak)) RestoreLocalBackup(fileBak);
+            if (!String.IsNullOrEmpty(fileBak)) RestoreLocalBackup(fileBak, logedUser);
         }
 
         private void aposentadoToolStripMenuItem_Click(object sender, EventArgs e) { AposentarServidor(StatusServidor.Aposentar.ToString(), true); }

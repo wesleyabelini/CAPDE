@@ -34,8 +34,10 @@ namespace CAPDE_ImportingData
         string[] cidade;
         string[] setor;
 
-        string[] files = Directory.GetFiles(ConfigurationManager.AppSettings["AssemblyLocation"]);
-        string[] folders = Directory.GetDirectories(ConfigurationManager.AppSettings["AssemblyLocation"]);
+        string[] files = Directory.GetFiles(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).ToString()
+            .Replace("CAPDE ImportingData\\bin\\Debug", "") + ConfigurationManager.AppSettings["AssemblyLocation"]);
+        string[] folders = Directory.GetDirectories(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).ToString()
+            .Replace("CAPDE ImportingData\\bin\\Debug", "") + ConfigurationManager.AppSettings["AssemblyLocation"]);
 
         List<string> logMatricula = new List<string>();
 

@@ -4,14 +4,19 @@ using Google.Apis.Drive.v3;
 using System;
 using System.Configuration;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace Common
 {
     public static class Backup
     {
+        static SendLog comLog = new SendLog();
+        static FileVersionInfo thisAssemblyVersion = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location);
+
         static string day = DateTime.Now.Day.ToString();
         static string month = DateTime.Now.Month.ToString();
         static string year = DateTime.Now.Year.ToString();
@@ -87,14 +92,24 @@ namespace Common
             }
         }
 
-        public static void RestoreLocalBackup(string restoreLocation)
+        public static void RestoreLocalBackup(string restoreLocation, string logedUser)
         {
             if (!File.Exists(restoreLocalDb)) ZipFile.ExtractToDirectory(zipPath, local);
 
-            using (capdeEntities context = new capdeEntities())
+            try
             {
-                context.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction,
-                    @"EXEC [dbo].[Restore] @myBackup = '" + restoreLocation + "', @myBaseName = '" + restoreLocalDb + "'");
+                using (capdeEntities context = new capdeEntities())
+                {
+                    context.Database.ExecuteSqlCommand(TransactionalBehavior.DoNotEnsureTransaction,
+                        @"EXEC [dbo].[Restore] @myBackup = '" + restoreLocation + "', @myBaseName = '" + restoreLocalDb + "'");
+                }
+            }
+            catch (Exception ex)
+            {
+                comLog.SendLogError(thisAssemblyVersion.FileVersion, "Restore Local Backup", ex.Message + "\r\n" + ex.StackTrace, logedUser);
+                FixErrorRestoreDatabase();
+                MessageBox.Show("Não foi possível restaurar a base.\r\nPara mais informações, consulte Log.", "Falha Restauração", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -105,6 +120,12 @@ namespace Common
 
             File.Move(restoreLocalDb, localDb);
             File.Move(restoreLocalDbLog, localDbLog);
+        }
+
+        public static void FixErrorRestoreDatabase()
+        {
+            File.Delete(restoreLocalDb);
+            File.Delete(restoreLocalDbLog);
         }
     }
 }
